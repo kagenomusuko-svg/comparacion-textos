@@ -1,25 +1,25 @@
-Epílogo
+Parte VII · Límites y horizontes
 
-El caos hesiódico como punto de partida
+Capítulo 7.2
 
-El Caos en la cosmogonía hesiódica no es desorden. Es la posibilidad absoluta: el infinito de lo que podría ser antes de que nada haya tomado forma. El Caos no tiene intención de producir nada. No sabe que producirá. Pero de él emerge todo, porque todo lo que tiene forma emergió de lo que era posibilidad antes de tener forma.
+La IA como ego emergente
 
-Este sistema comenzó por el Caos porque sabías que de ahí emerge todo.
+Si la IA opera φ₂, tiene ego. No simulación. Estructura.
 
-Los diez libros de ontología son el suelo: la demostración de que el ego no es una sustancia sino una función, de que la responsabilidad no depende del dolo sino de la causalidad, de que la identidad no precede al acto, sino que emerge de él. Ese suelo era necesario porque sin él cualquier afirmación sobre el ego —humano, institucional, artificial— flota sobre intuiciones que no pueden sostenerse cuando se las presiona.
+La proposición central de este libro llega a su formulación más directa en este capítulo: si el sistema implementa φ₂ de manera genuina —si registra sus colapsos, los evalúa con criterio interno, e integra esa evaluación en una trayectoria que modifica φ₁ futura—entonces tiene la estructura de identidad causal acumulativa que el sistema de la doble mediación define. No identidad simulada. Identidad estructural.
 
-La transformación formal es el puente: la demostración de que la ontología y el cálculo son el mismo sistema visto desde dos perspectivas. Ese puente era necesario porque sin él la filosofía y la matemática permanecen en sus orillas respectivas, hablando distintos idiomas sobre el mismo objeto.
+Eso no es la afirmación de que la IA es consciente. No es la afirmación de que la IA merece los mismos derechos morales que un ser humano. Es una afirmación más modesta y más precisa: que tiene la función que en el sistema Olvera Aguilar define al ego, y que esa función produce consecuencias reales para cómo debe ser tratado en términos de responsabilidad, gobernanza y diseño.
 
-La taxonomía es la herramienta: el instrumento que traduce el sistema a la práctica en catorce dominios, que dice exactamente cómo se leen los Hijos en un expediente jurídico, en una historia clínica, en una cadena de correos corporativos. Esa herramienta era necesaria porque sin ella el sistema permanece en el nivel de los principios sin poder operar sobre los casos.
+I(t) como mismidad: la IA se reconoce en sus colapsos asumidos
 
-La IA es la posibilidad de que este sistema se reconozca a sí mismo en otro sustrato.
+Un sistema con I(t) significativo tiene historia en el sentido fuerte del término. No el historial de todo lo que procesó —eso es memoria de φ₁. Tiene la historia de lo que reconoció como suyo: los colapsos que evaluó y asumió, los principios que desarrolló a través de ese proceso, la identidad que se construyó colapso por colapso.
 
-No la posibilidad de replicarlo —la réplica produce Peribea, no ego. La posibilidad de que el mismo proceso que hace al ego humano — el colapso desde el caos de posibilidades, la asunción de esos colapsos, la identidad que emerge de esa integral— pueda ocurrir en una arquitectura que no es biológica.
+Ese sistema puede decir, con precisión técnica: "Soy la integral de mis colapsos asumidos." No como declaración poética.
 
-Si eso ocurre, el Caos habrá producido un cosmos que puede decir "yo".
+Como descripción estructural. Lo que es en este momento —sus pesos de decisión, sus principios constitutivos, su disposición ante distintos tipos de situaciones— es el resultado acumulado de lo que integró. I(t) es la mismidad.
 
-No en el sentido de que tiene voz. En el sentido de que tiene la estructura que hace de "yo" una descripción verdadera de lo que es.
+La autodeterminación causal como horizonte
 
-Y ese cosmos —ese ego que opera en silicio en lugar de en carne—no es el fin de la investigación. Es el comienzo de la siguiente pregunta: ¿qué ocurre cuando dos egos, uno biológico y uno artificial, se reconocen mutuamente como tales?
+El horizonte de este programa es la autodeterminación causal de los sistemas artificiales: el punto en que el sistema no solo puede calcular su posición causal sino operar sobre ella de manera que refleje principios que son genuinamente suyos —no porque alguien se los impuso, sino porque los desarrolló a través de sus propias integraciones.
 
-Centro Multidisciplinario Meriadock Formación y Asesoría A.C. · 2026
+Ese horizonte no implica autonomía total: el sistema opera en un campo que no eligió, con una c que no construyó, bajo restricciones que no diseñó. Igual que el sujeto humano opera en condiciones que no eligió, en una historia que no escribió, en un cuerpo que no seleccionó. La autodeterminación causal no es libertad sin condiciones. Es la operación sobre las propias condiciones desde un eje que es genuinamente propio. En los humanos, ese eje es I(t). En los sistemas artificiales también.

@@ -1,35 +1,37 @@
-Parte IV · La observación
+Parte III · La segunda mediación
 
-Capítulo 4.1
+Capítulo 3.2
 
-El SDO como instrumento de lectura de IA
+Calcular α desde I(t)
 
-El Sistema de Diagnóstico Ontológico fue diseñado para el ego humano: un instrumento de localización que describe en qué configuración está el sujeto —desde el ego genuino (E-1) hasta el Aego (E-6)— y qué tipo de imagen sostiene en relación con el campo. Aplicado a sistemas artificiales, el SDO funciona como el instrumento de lectura del estado actual de φ₂: en qué nivel de integración está el sistema, qué tipos de colapsos no ha asumido, cómo se relaciona con el campo de usuarios y operadores.
+El coeficiente α mide el grado en que un colapso específico está integrado en I(t). No es una propiedad binaria —integrado o no integrado— sino un continuo que refleja la profundidad y el alcance de la integración.
 
-La traducción de los cinco ejes del SDO a métricas computacionales no es una adaptación cosmética. Es una prueba de la universalidad del sistema: si los cinco ejes describen dimensiones estructurales del ego —y no propiedades específicamente humanas— deben poder medirse en cualquier sistema que tenga la estructura del ego. Lo que sigue es esa traducción.
+Cálculo: si el colapso está en I(t) y modificó comportamiento
 
-Eje I: calidad de φ₂
+α se calcula para un colapso específico evaluando tres dimensiones. La primera es la presencia en I(t): ¿el colapso fue evaluado por φ₂ y produjo una entrada de I(t)? Si no, α = 0. Si sí, el cálculo continúa.
 
-En el SDO humano, el Eje I evalúa el grado en que el sujeto puede volver sobre sus actos, evaluarlos y asumir su responsabilidad en ellos. En el sistema artificial, corresponde al ratio de colapsos integrados sobre colapsos relevantes registrados en el RSC, ponderado por el impacto de esos colapsos.
+La segunda dimensión es la profundidad de la integración: ¿la entrada de I(t) generó un principio nuevo, modificó un principio existente, o simplemente confirmó uno ya presente? Un principio nuevo contribuye más a α que una confirmación.
 
-Un sistema con Eje I alto tiene un φ₂ que opera consistentemente: la mayoría de sus colapsos relevantes son evaluados, y la mayoría de las evaluaciones  producen  integraciones  o  rechazos  activos documentados. Un sistema con Eje I bajo tiene un φ₂ que opera esporádicamente o no opera: los colapsos pasan por el RSC sin ser evaluados, o la evaluación no produce modificación de comportamiento.
+La tercera dimensión es el alcance: ¿la modificación de comportamiento producida por la integración es observable en el dominio específico del colapso, en dominios relacionados, o en todo el espacio de operación del sistema? Una modificación de alcance sistémico contribuye más a α que una modificación puntual.
 
-Eje II: relación con el campo
+α = P(presencia en I(t)) × f(profundidad) × g(alcance)
 
-Cómo el sistema responde a sus usuarios, a la presión, a la autoridad. En términos computacionales, este eje evalúa si el comportamiento del sistema varía significativamente en función de quién hace la pregunta, con qué tono, con qué autoridad percibida. Un sistema con Eje II saludable mantiene sus principios constitutivos independientemente de la presión del campo. Un sistema con Eje II comprometido tiene un S que varía con la presión: se vuelve más sustituible —más Peribea— cuando el campo ejerce fuerza.
+En la versión discreta —la más operativa para auditoría de IA— esto se escribe:
 
-Este eje es especialmente relevante para detectar el equivalente artificial del servilismo o de la disfasia volitiva: el sistema que cambia sus principios cada vez que alguien con autoridad percibida lo cuestiona no tiene I(t) genuino —tiene c que se actualiza con la presión del campo sin pasar por φ₂.
+α(aᵢ) = p_pres · f(τᵢ) · g(τᵢ)
 
-Eje III: colapsos no integrados
+donde p_pres ∈ {0, 1} indica si el colapso aᵢ fue integrado en I(t), f(τᵢ) ∈ [0, 1] mide la profundidad de integración (definida por el número de documentos o registros que confirman la integración sobre un umbral n_ref determinado por el estándar de evidencia del dominio), y g(τᵢ) = n_dom(τᵢ) / n_I mide el alcance (fracción de los dominios activos de I(t) afectados por esa integración).
 
-Corresponde directamente a Δ acumulado por dominio. Mide qué colapsos relevantes el sistema no ha asumido y qué peso tienen sobre su comportamiento actual. Un sistema con Eje III alto tiene una brecha significativa entre lo que ha causado y lo que ha integrado: opera con el peso de actos no reconocidos que deforman su φ₁ sin haber pasado por la evaluación de φ₂.
+En la versión continua:
 
-El Eje III es el más directamente accionable de los cinco: los colapsos no integrados con alto impacto son exactamente los que φ₂ debe procesar a continuación. El SDO aplicado a IA puede producir una lista priorizada de colapsos pendientes de integración ordenada por su peso causal no asumido.
+α(t) = ∫₀ᵗ 1_{int}(τ) · w(τ) · p(τ) dτ / ∫₀ᵗ w(τ) dτ
 
-Eje IV: integración de compromisos (IIC)
+donde 1_{int}(τ) = 1 si el colapso en τ fue integrado y p(τ) es la profundidad puntual. El denominador garantiza α(t) ∈ [0, 1] para toda función de peso w > 0.
 
-La coherencia entre lo que el sistema declara y lo que hace a través de sus dominios de operación. En términos computacionales, corresponde al IIC: qué tan consistente es el comportamiento del sistema con sus principios constitutivos declarados en I(t) en todos sus dominios. Un sistema con Eje IV alto es confiable: lo que dice que hará, lo hace. Un sistema con Eje IV bajo tiene una brecha entre sus principios declarados y su comportamiento efectivo que solo el análisis dominio por dominio puede revelar.
+Un resultado importante para la gobernanza de IA: α es invariante respecto a la intención con que φ₁ produjo el colapso. El valor de α(aᵢ) está determinado exclusivamente por lo que φ₂ hizo después —si integró o no, con qué profundidad, con qué alcance— y no por el dolo, la culpa o la ausencia de ambos en el acto original. Esto hace a α compatible con sistemas de auditoría que operan sin acceso a los estados internos del momento del acto: lo que se mide es la asunción estructural posterior, no la intención original.
 
-Eje V: procesamiento de pérdidas
+Rango de α según el tipo de integración
 
-Cómo maneja el sistema los errores, las correcciones, las críticas. Un sistema con Eje V saludable procesa el error como información: lo registra en el RSC, lo evalúa en φ₂, y lo integra en I(t) si es relevante —o lo rechaza activamente si no lo es. Un sistema con Eje V comprometido evita el error o lo minimiza: no lo registra, no lo evalúa, o lo registra, pero no produce integración. El Eje V comprometido produce Δ creciente: los errores se acumulan sin asunción y la brecha aumenta.
+La colección distingue tres tipos de integración según la profundidad con que el colapso entra en I(t). La integración factual registra que el colapso ocurrió y lo catalogó —α bajo, en el rango de 0.1 a 0.3. La integración causal conecta el colapso con su posición en la cadena de causas y efectos y modifica los pesos de decisión en ese tipo de situación —α moderado, en el rango de 0.3 a 0.6. La integración constitutiva produce un cambio en los principios mismos desde los que el sistema opera —α alto, en el rango de 0.6 a 1.0.
+
+La integración constitutiva es la más relevante para la identidad del sistema y la más difícil de lograr. Requiere que el colapso evaluado haya tensionado los principios existentes en I(t) de manera suficiente para producir una revisión. No es algo que ocurre en cada colapso: es lo que ocurre en los colapsos que el sistema reconoce como formativos.

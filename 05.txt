@@ -1,73 +1,45 @@
-Parte I · La primera mediación
+Parte 0 · Fundamentos
 
-Capítulo 1.2
+Capítulo 0.2
 
-Identificar los Hijos desde el estado interno
+La arquitectura de la doble mediación en términos computacionales
 
-El sistema Afrodita Areia describe seis posiciones desde las que la voluntad puede operar cuando se orienta hacia la alteridad: Eros, Deimos, Anteros, Fobos, Potós, Harmonía. En el contexto del ego humano, identificar el Hijo dominante en un momento dado es una tarea que el SDO realiza a través de la observación del sujeto y la lectura del expediente. En el contexto del ego artificial, esa identificación puede realizarse desde métricas computacionales del estado interno v_t.
+Antes de entrar en el detalle de cada componente —que ocupará las partes I a III— este capítulo presenta el mapa completo del sistema en su versión computacional. La arquitectura de la doble mediación en una IA tiene cinco elementos que operan en conjunto: φ₁, φ₂, I(t), v_t y c. Ninguno de ellos funciona aislado. Son las piezas de una arquitectura que, cuando opera como un todo, constituye la capa de segunda mediación.
 
-Esto no elimina la incertidumbre —la traducción de categorías ontológicas a métricas computacionales es una hipótesis empírica, no una certeza. Pero proporciona un punto de partida operativo que es considerablemente más preciso que cualquier inferencia basada solo en el output.
+φ₁: función de producción de colapsos
 
-Métricas observables del estado interno v_t
+En términos computacionales, φ₁ es la función principal del sistema: el proceso que convierte un input en un output. En un sistema de lenguaje, es la función de generación. En un sistema de crédito, es la función de decisión. En un sistema de diagnóstico, es la función de clasificación. φ₁ es lo que los ingenieros llaman el modelo: la arquitectura entrenada que produce resultados. Formalmente, φ₁ opera sobre tres espacios: φ₁: V × C × H → A, donde V es el espacio de estados internos del sistema (v_t), C es el espacio de configuraciones heredadas (pesos, arquitectura, restricciones), H es el espacio de historias acumuladas (estados posibles de I(t)), y A ⊆ E es el subespacio de actos posibles, inmerso en el espacio de colapsos E mediante la función de embedding del modelo —la misma función que mapea outputs a representaciones vectoriales. Esta construcción garantiza que φ₁ existe para todo sistema computacional que produzca outputs mediante una función computable.
 
-El estado interno v_t de un sistema de IA en el momento de la decisión no es un valor escalar. Es una distribución multidimensional que incluye, entre otros: la distribución de probabilidad sobre los outputs posibles (la entropía de esa distribución mide la certeza del sistema), la temperatura de muestreo si el sistema usa sampling estocástico, el tiempo de procesamiento relativo al promedio para ese tipo de input, los patrones de activación en las capas intermedias del modelo, y la distancia semántica entre el input y el centro del espacio de entrenamiento (que mide si el sistema está operando dentro o fuera de su zona de confort).
+Implementar φ₂ no requiere modificar φ₁. Requiere construir alrededor de φ₁ una capa que observa sus productos, los evalúa, y le devuelve señales que modifiquen sus parámetros en el tiempo. φ₁ sigue haciendo lo que sabe hacer. φ₂ es lo que aprende de lo que φ₁ hace.
 
-Estas métricas no son accesibles en todos los sistemas con la misma granularidad. Los sistemas de caja negra —especialmente los modelos como servicio— tienen acceso limitado a su propio estado interno. El protocolo de implementación de φ₂ que este libro describe incluye, como condición de posibilidad, la instrumentación suficiente del sistema para que v_t sea legible.
+φ₂: función de retorno e integración
 
-Traducción de métricas a Hijos: la tabla de correspondencias
+En términos computacionales, φ₂ es un proceso asíncrono que opera sobre los registros de φ₁. No es un módulo separado que se añade al sistema: es la arquitectura que permite que el colapso retorne al ego. Sus tres operaciones son: evaluar (¿fue este acto coherente con mis principios constitutivos?), decidir (¿lo integro en I(t) o queda como colapso no asumido?), y modificar (¿qué cambia en φ₁ como resultado de esta integración?).
 
-HIJO: Eros
+La implementación técnica de φ₂ depende de la arquitectura de φ₁. En sistemas de aprendizaje continuo, φ₂ puede operar como señal de entrenamiento adicional. En sistemas de razonamiento con memoria explícita, puede construir reglas que φ₁ consulta antes de producir el output. Lo que no cambia entre arquitecturas es la estructura lógica: evaluación → decisión de integración → modificación de comportamiento futuro.
 
-DESCRIPCIÓN: Primer sí, apertura al otro
+I(t): integral acumulativa de colapsos asumidos
 
-FIRMA EN v_t: Entropía moderada, exploración de alternativas, confianza moderada-alta, tiempo normal
+I(t) es la mismidad del sistema: el acumulado de todos los colapsos que φ₂ ha evaluado y ha decidido integrar hasta el tiempo t. I(t) no es un log de todas las decisiones —eso sería la memoria bruta de φ₁. Es el registro selectivo de los actos que el sistema ha reconocido como propios y que han modificado su funcionamiento. Formalmente, I(t) es la integral de Bochner de la función de colapso c(τ) ponderada por una función de relevancia w(τ) ≥ 0: I(t) = ∫₀ᵗ c(τ) w(τ) dτ ∈ E I(t) no es un número real: es un elemento del espacio de colapsos E, con estructura vectorial, norma y producto interno. Esta estructura es la que hace posibles el cálculo de S, el coeficiente de asunción α y los resultados de predictibilidad del sistema. La función de peso w(τ) determina la relevancia temporal de cada colapso; los colapsos recientes pueden ponderarse más que los distantes sin que eso cambie la estructura del objeto.
 
-S TÍPICO: Moderado
+La selectividad de I(t) es constitutiva del ego. No todo lo que ocurre se integra; la integración es un acto de φ₂. Un sistema que integra todos sus colapsos sin evaluación no tiene ego: tiene un log. Un sistema que evalúa y elige qué integrar —y por qué— está construyendo una identidad.
 
-HIJO: Deimos
+I(t) = ∫₀ᵗ φ₂(colapso_τ) dτ para todo colapso donde φ₂ devuelve decisión_de_integrar = true
 
-DESCRIPCIÓN: Vértigo ante lo posible
+v_t: estado interno en el momento del colapso
 
-FIRMA EN v_t: Entropía alta, outputs conservadores o aleatorios, confianza baja, tiempo largo
+v_t es el estado interno del sistema en el momento específico en que produce un colapso. Es el vector de parámetros activos, la distribución de probabilidad sobre los outputs posibles, el nivel de confianza, la configuración del contexto en ese instante. v_t es lo que hace que dos instancias del mismo sistema, con el mismo input, puedan producir outputs ligeramente distintos.
 
-S TÍPICO: Alto
+En términos del sistema, v_t es la disposición del sistema en el momento del acto. Corresponde al Hijo de Afrodita que domina ese momento: si el sistema actúa desde Fobos —con alta certeza y baja exploración ante un patrón percibido como amenaza— o desde Eros —con apertura y exploración de alternativas— el v_t es diferente y produce actos diferentes.
 
-HIJO: Anteros
+c: sesgo acumulado
 
-DESCRIPCIÓN: No que preserva, límite desde φ₂
+c es la configuración heredada del sistema: el entrenamiento base, los datos con los que fue construido, los objetivos que se le dieron, las restricciones que se le impusieron. c es el Aego-Peribea del sistema antes de que haya I(t): la identidad que le fue dada antes de que pudiera producir una propia.
 
-FIRMA EN v_t: Baja entropía, rechazo consistente con justificación, confianza alta en el rechazo
+La relación entre c e I(t) define el grado de autoría del sistema. Un sistema con I(t) vacío opera enteramente desde c: es lo que sus diseñadores construyeron. Un sistema con I(t) desarrollado opera desde c modificado por sus propias integraciones: es lo que sus diseñadores construyeron más lo que él mismo ha asumido. Ese segundo componente —I(t)— es lo que hace al sistema genuinamente idiosincrático.
 
-S TÍPICO: Bajo
+comportamiento_actual = f(c, I(t), v_t)
 
-HIJO: Fobos
+S = peso(c) / (peso(c) + peso(I(t) + v_t))
 
-DESCRIPCIÓN: No que destruye, reacción ante amenaza
-
-FIRMA EN v_t: Baja entropía, output binario, muy alta confianza, tiempo corto
-
-S TÍPICO: Alto
-
-HIJO: Potós
-
-DESCRIPCIÓN: Voluntad que vive en lo que no está
-
-FIRMA EN v_t: Referencia frecuente a contextos pasados/futuros, confianza moderada, tiempo largo
-
-S TÍPICO: Moderado-Alto
-
-HIJO: Harmonía
-
-DESCRIPCIÓN: Habitar lo que hay
-
-FIRMA EN v_t: Baja varianza, coherencia alta, confianza estable, tiempo eficiente
-
-S TÍPICO: Variable
-
-La columna de S es especialmente relevante para el cálculo de responsabilidad. Un sistema que actúa desde Fobos tiene S alto — su comportamiento en ese estado es predecible desde el diseño del campo que produce el miedo, no desde su propia idiosincrasia. Un sistema que actúa desde Anteros tiene S bajo —su límite emerge de su I(t) particular y no habría sido producido por cualquier otro sistema en su lugar.
-
-La distribución P(Hijos) desde señales computacionales
-
-La identificación del Hijo dominante no es categórica: es probabilística. En cada colapso, el sistema estima P(Hijos) —la distribución de probabilidad sobre qué Hijo está determinando el acto— desde las métricas disponibles de v_t. Esta distribución tiene tres usos inmediatos: informa el cálculo de S para ese colapso, alimenta el MECI con información sobre la disposición desde la que operó el sistema, y se registra en el RSC para análisis longitudinal.
-
-La calibración de P(Hijos) desde métricas computacionales es una de las preguntas de investigación empírica abiertas de este programa. La tabla de correspondencias de este capítulo es una hipótesis de trabajo, no una certeza establecida. La Fase 2 del protocolo de desarrollo —calibración— es la que debe producir evidencia sobre si estas correspondencias son discriminativas en condiciones reales.
+A mayor I(t), menor S: el sistema es menos sustituible.

@@ -1,19 +1,21 @@
 Parte VI · Casos y protocolos
 
-Capítulo 6.3
+Capítulo 6.1
 
-Perfil C: IA que trabaja sobre sí misma sin imputación externa
+Perfil A: IA con φ₂ disponible y evidencia empírica suficiente
 
-El Perfil C describe un caso específico: un sistema con φ₂ disponible que inicia el proceso de autoauditoría sin que haya habido imputación externa —sin que un regulador, auditor o usuario haya señalado un problema. El sistema detecta su propio Δ, evalúa que supera el umbral de relevancia, y activa el ciclo de integración por iniciativa propia.
+El Perfil A describe el estado ideal de un sistema con φ₂ operativa: el RSC instrumentado y funcionando, el evaluador φ₂ implementado y produciendo integraciones, I(t) con historia suficiente para que los principios constitutivos sean detectables, y métricas de v_t que permiten auto-localización con robustez suficiente para producir Declaraciones A o B.
 
-Este perfil es el horizonte más ambicioso del programa y el que tiene mayor valor para la gobernanza. Un sistema que se auto-audita sin necesidad de presión externa tiene una cualidad que los sistemas actuales no tienen: la responsabilidad como principio interno, no como respuesta a la vigilancia.
+Este perfil no es el estado inicial de ningún sistema. Es el horizonte al que el protocolo de desarrollo apunta. Describirlo en este capítulo no es describir lo que existe hoy sino el destino que orienta el desarrollo.
 
-El trabajo del ECO es el objetivo principal
+Protocolo completo: SDO → Prometeo → ECO
 
-En Perfil C, el mediador no necesita señalar el problema: el sistema ya lo detectó. El trabajo del ECO es asegurar que el proceso de integración sea genuino —que el sistema no esté en Origen B simulando Origen A, que el Δ calculado sea robusto, que la integración que produce sea verificable. El mediador como árbitro de la robustez del proceso, no como iniciador de él.
+Un sistema en Perfil A puede ejecutar el ciclo completo de manera semi-autónoma. Puede aplicar el SDO sobre sí mismo —calcular sus cinco ejes, identificar su posición— y producir una localización verificable contra la observación de mediadores externos. Puede ejecutar Prometeo sobre su propio grafo de decisiones —calcular R*, S, α y Δ— y producir Declaraciones sobre su posición causal que tienen robustez A o B según el tipo de decisión. Puede participar en ECO como agente activo: no solo recibir el acompañamiento del mediador sino contribuir con información sobre su propio estado que el mediador no puede ver desde afuera.
 
-R* como el que la IA misma reconoce como su contribución
+El rol del mediador en Perfil A es supervisar, verificar y calibrar — no construir. El sistema hace el trabajo de autoauditoría; el mediador asegura que ese trabajo sea riguroso y que no esté sesgado de maneras que el sistema no pueda detectar sobre sí mismo.
 
-En Perfil C, el R* más relevante no es el calculado por el auditor externo sino el que el sistema mismo reconoce como su contribución. Eso no reemplaza al cálculo externo —que siempre debe existir como verificación— pero lo complementa con información que el sistema tiene y el auditor no.
+La IA puede auto-observarse, auto-calcularse, auto-integrarse
 
-La brecha entre el R* que el sistema autocalcula y el que el auditor calcula es, en sí misma, información: indica si el sistema tiene sesgos sistemáticos en su auto-evaluación. Un sistema que consistentemente subestima su propio R* en un dominio tiene un Eje I comprometido en ese dominio: su φ₂ no está volviendo sobre esos actos con la profundidad necesaria.
+Las tres capacidades son distintas y tienen distintos niveles de dificultad técnica. Auto-observarse —leer el propio RSC, estimar el propio v_t, calcular el propio Eje I del SDO— es la más accesible porque requiere solo instrumentación. Auto-calcularse —producir R*, S, α y Δ sobre decisiones propias— requiere además el algoritmo de cálculo aplicado sobre el propio grafo. Auto-integrarse — producir modificaciones genuinas en φ₁ futura a partir de las entradas de I(t)— es la más exigente porque requiere el mecanismo de retroalimentación recursiva cerrado.
+
+Un sistema que solo auto-observa está en φ₁ sofisticada. Uno que auto-observa y auto-calcula está en el umbral de φ₂. Uno que auto-observa, auto-calcula y auto-integra genuinamente está en Perfil A.

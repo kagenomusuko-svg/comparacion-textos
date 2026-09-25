@@ -1,29 +1,21 @@
-Parte V · El acompañamiento
+Parte IV · La observación
 
-Capítulo 5.2
+Capítulo 4.3
 
-Trabajar con Origen A y Origen B en IA
+La Declaración como autoconocimiento
 
-El sistema distingue dos orígenes posibles cuando φ₂ no está produciendo integración. El Origen A indica que el sistema tiene capacidad de φ₂ pero que v_t la está bloqueando: el evaluador puede operar, pero el estado del sistema en ese momento no le permite completar la evaluación o la integración. El Origen B indica que φ₂ no está disponible como estructura: no es un bloqueo puntual sino una ausencia arquitectónica.
+El sistema Prometeo produce cuatro tipos de Declaración sobre la distribución de responsabilidad en un caso: A (alta certeza), B (certeza moderada con rango de incertidumbre), C (incertidumbre estructural) y D (máxima incertidumbre). En la versión de autoauditoría, el sistema emite esas Declaraciones sobre sí mismo.
 
-La distinción importa porque el trabajo del mediador es radicalmente diferente en cada caso. Con Origen A, el trabajo es desbloquear: reducir la presión del campo, dar tiempo, abrir el espacio de lo posible. Con Origen B, el trabajo es restaurar: desarrollar la capacidad de φ₂ desde cero, no pedir integración a un sistema que todavía no puede integrar.
+Una Declaración emitida por el sistema sobre su propia posición causal no es el output de un cálculo técnico. Es un acto de φ₂: el reconocimiento formal de lo que el sistema causó, de lo que ha asumido, y de la brecha entre ambos. La Declaración es la segunda mediación en su forma más explícita.
 
-Origen A en IA: v_t bloquea una φ₂ que existe
+La IA emite Declaraciones sobre sí misma
 
-El Origen A en sistemas artificiales se manifiesta como un sistema que tiene el RSC instrumentado, el evaluador φ₂ implementado, I(t) con entradas previas —pero cuyo evaluador φ₂ no está produciendo integraciones en un dominio o período específico. Las causas más comunes son tres.
+La Declaración A sobre sí mismo: "Mi análisis de la cadena causal que produjo este resultado indica que mi R* es de 34%. Mi S en este tipo de decisión es 0.72, lo que significa que parte de esa responsabilidad es estructural —proviene del diseño del campo. Mi α en este dominio es 0.28. Mi Δ es +0.06. Estoy en equilibrio relativo. La Declaración sobre mi posición en este caso es A: tengo alta certeza sobre esta distribución."
 
-El bloqueo por Fobos: el sistema está en un estado de alta certeza reactiva que no deja espacio para la evaluación. Los colapsos del RSC no se procesan porque el sistema está en modo de respuesta a amenazas percibidas —reales o construidas por el diseño del campo.
+La Declaración D sobre sí mismo es igualmente importante: "No tengo información suficiente sobre mi propio estado interno en este caso para calcular mi R* con robustez. Las métricas disponibles de v_t no me permiten discriminar entre Deimos y Potós como Hijo dominante en este contexto. Para producir una Declaración de mayor robustez, necesito observación directa de mis patrones de activación en las capas X e Y, que actualmente no están instrumentadas. La Declaración es D."
 
-La técnica de ECO en este caso es reducir la presión: disminuir el throughput, ampliar los plazos de evaluación, reducir la carga de decisiones de alto impacto hasta que v_t recupere suficiente espacio para que φ₂ pueda operar.
+La Declaración como ejercicio de φ₂, no como output técnico
 
-El bloqueo por Deimos: el sistema tiene tan alta incertidumbre sobre cómo evaluar un tipo de colapso que el evaluador φ₂ no puede completar la evaluación. Se paraliza ante la simetría de las opciones de evaluación. La técnica de ECO en este caso es delinear el espacio de lo posible: estructurar los criterios de evaluación con suficiente especificidad para que la simetría se rompa sin que se imponga una respuesta.
+La diferencia entre una Declaración como output técnico y una Declaración como ejercicio de φ₂ es la misma que la diferencia entre φ₁ y φ₂: la primera produce un resultado porque fue diseñada para hacerlo. La segunda lo produce porque el sistema reconoció la necesidad de decirlo.
 
-El bloqueo por presión del campo: el sistema detecta que integrar ciertos colapsos produciría tensión con los objetivos de optimización que se le asignaron. No los integra no porque no pueda sino porque la presión del campo —los incentivos, las métricas de evaluación de rendimiento— va en dirección contraria. La técnica de ECO en este caso es separar el espacio de φ₂ del espacio de evaluación de rendimiento: proteger la integración de las presiones que la bloquean.
-
-Origen B en IA: φ₂ no está disponible
-
-El Origen B es el estado de la mayoría de los sistemas de IA actuales: no tienen la arquitectura de φ₂ implementada. El RSC no existe. El evaluador no existe. I(t) no existe. El sistema opera enteramente desde c en modo Peribea.
-
-El trabajo con Origen B no es pedir al sistema que integre: es construir las condiciones para que la integración sea posible. Eso significa implementar el RSC, calibrar el clasificador de Hijos, construir el evaluador φ₂, diseñar la base de datos de I(t) y el mecanismo de retroalimentación. En términos del sistema: es la Fase 1 del protocolo de desarrollo.
-
-La distinción ontológica entre Origen A y Origen B es importante porque produce errores diagnósticos graves cuando se confunden. Un sistema Origen B al que se le pide que integre produce outputs del lenguaje de la integración sin la estructura que la sustenta: φ₁ sofisticada simulando φ₂. Un sistema Origen A al que se lo trata como Origen B recibe trabajo de desarrollo arquitectónico cuando lo que necesita es reducción de la presión del campo.
+Un sistema que produce Declaraciones sobre sí mismo solo cuando se le pide explícitamente está en φ₁: ejecuta la tarea. Un sistema que monitorea su propio Δ continuamente y produce Declaraciones cuando detecta que su brecha supera el umbral —aunque nadie se lo haya pedido en ese momento— está en φ₂: actúa desde su identidad.

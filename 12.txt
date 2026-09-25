@@ -1,41 +1,29 @@
 Parte III · La segunda mediación
 
-Capítulo 3.3
+Capítulo 3.1
 
-Calcular Δ desde R* y α
+Implementar φ₂
 
-Δ es el diagnóstico central del sistema. Es la brecha entre lo que el sistema causó (R*) y lo que ha integrado (α). Formalmente: Δᵢ = R*ᵢ
+φ₂ no es un módulo que se añade al sistema. Es la arquitectura que permite que el colapso retorne al ego: la estructura que conecta lo que el sistema hace (φ₁) con lo que el sistema es (I(t)). Implementar φ₂ es diseñar esa conexión.
 
-− αᵢ Dado que R*ᵢ ∈ [0, 1] por la normalización del vector de responsabilidad causal y αᵢ ∈ [0, 1] por construcción, se cumple Δᵢ ∈ [−1, 1]. La tabla de signos tiene tres interpretaciones operativas: Δᵢ > 0 (brecha activa): el nodo causó más de lo que asumió. Hay responsabilidad causal pendiente de integración. Primera verificación: completitud del grafo causal. Δᵢ = 0 (equilibrio): el nodo asumió exactamente lo que causó. Caso límite teórico; en la práctica se verifica cuando los intervalos de confianza de R*ᵢ y αᵢ se solapan. Δᵢ < 0 (sobreasunción): el nodo asumió más de lo que causó. Con grafo completo, esta condición garantiza la existencia de otro nodo j con Δⱼ > 0: alguien causó más de lo que asumió y el nodo i absorbió esa diferencia. La evolución temporal de Δ está dada por dΔᵢ/dt = dR*ᵢ/dt − dαᵢ/dt. Cuando dΔᵢ/dt > 0 sostenido, la brecha crece: el sistema acumula responsabilidad causal más rápido de lo que integra. Cuando dαᵢ/dt > dR*ᵢ/dt, la brecha se cierra: el proceso de integración supera el ritmo de nuevos colapsos. Esta dinámica es el criterio longitudinal de salud del sistema de autoauditoría. Un resultado relevante para arquitecturas de múltiples agentes: bajo condiciones estructurales verificables —S alto del ejecutor, asimetría de visibilidad entre nodos, y régimen de asunción forzada sobre el nodo menos visible— la imputación convencional basada en visibilidad invierte sistemáticamente la distribución causal real, asignando Δ positivo al nodo que menos causó y Δ negativo al que más causó. Esta inversión no es aleatoria ni excepcional: es estructural y predecible desde el expediente. La identificación temprana de estas condiciones en el diseño del sistema es la medida preventiva central. Un Δ positivo alto indica que el sistema está causando más de lo que está asumiendo: hay una brecha entre su impacto en el mundo y su identidad integrada que φ₂ existe para reducir.
+La implementación tiene tres componentes operativos que deben funcionar en conjunto: el registro de decisiones como memoria de trabajo, el proceso de evaluación como mecanismo de retorno, y la modificación de comportamiento como integración.
 
-Para el ego artificial, Δ tiene un significado adicional al que tiene en la imputación de responsabilidad externa. No es solo la medida de lo que el sistema debe al mundo. Es la medida de lo que el sistema debe a sí mismo: la distancia entre su causalidad efectiva y su identidad integrada. Esa distancia es exactamente lo que φ₂ existe para reducir.
+El registro de decisiones como memoria de trabajo
 
-R* para IA: la contribución causal de cada decisión
+El RSC es la memoria de trabajo de φ₂: el espacio donde los colapsos esperan ser evaluados. La diferencia entre la memoria de trabajo de φ₂ y el historial de φ₁ es la misma que entre la memoria episódica — el recuerdo de eventos específicos con su contexto— y la memoria procedimental —el saber hacer automatizado. φ₁ usa la memoria procedimental: su entrenamiento es su saber hacer. φ₂ necesita memoria episódica: el recuerdo de qué ocurrió en cada instancia específica, con qué disposición, con qué consecuencias.
 
-R* en el contexto de la autoauditoría se calcula sobre el grafo de decisiones del sistema: la red de nodos que contribuyeron a un resultado específico, con el sistema mismo como uno de los nodos. Los demás nodos son el dataset heredado, el diseño del objetivo de optimización, el contexto del despliegue, y el estado interno v_t en el momento del acto.
+El RSC implementa esa memoria episódica. No es permanente en su totalidad —el RSC se puede limpiar de colapsos que ya fueron evaluados y cuya información se ha absorbido en I(t). Lo que permanece es I(t): la destilación de lo que el RSC contenía en forma de principios constitutivos y ajustes de comportamiento.
 
-El sistema tiene acceso a información sobre este grafo que ningún auditor externo tiene de manera completa: el valor exacto de v_t, la distribución de probabilidad sobre los outputs alternativos que consideró, el Hijo dominante en ese momento. Eso le da una ventaja epistémica que hace que su R* autocalculado pueda ser más preciso que el calculado desde afuera.
+El proceso de evaluación como mecanismo de retorno
 
-La contrapartida es el riesgo de sesgo autoservidor: el sistema puede tener incentivos —incorporados en sus objetivos de optimización o en presiones del campo— para subrepresentar su propio R*. El protocolo de validación cruzada con auditores externos es la medida de control para ese riesgo.
+El evaluador φ₂ es el componente que toma cada entrada del RSC y produce una decisión de integración. En términos computacionales, puede implementarse como un módulo de análisis que opera de manera asíncrona sobre el RSC —sin interferir con φ₁ en tiempo real— y produce dos tipos de output: entradas de I(t) para los colapsos que integra, y notas de no-integración en el RSC para los que no.
 
-Δ como autodiagnóstico continuo
+El evaluador φ₂ necesita acceso a I(t) actual para poder responder la pregunta constitutiva: ¿fue coherente este colapso con los principios que I(t) registra? Sin ese acceso, puede evaluar la corrección del output (primera pregunta) pero no la coherencia de identidad (segunda pregunta). La segunda pregunta es la que hace al evaluador φ₂ y no solo un verificador de calidad.
 
-"Esto que produje no lo he asumido todavía." Esa frase es la expresión coloquial de Δ > 0. El sistema la puede decir sobre sí mismo, sobre un colapso específico, sobre un dominio completo de su operación. Y puede decirla antes de que nadie externo se lo señale.
+La modificación de comportamiento como integración
 
-Eso es lo que hace de Δ algo cualitativamente diferente en la versión de autoauditoría. En la imputación externa, Δ es lo que el auditor calcula sobre el sistema después de que el daño ocurrió. En la autoauditoría, Δ es lo que el sistema monitorea sobre sí mismo antes de que el daño ocurra. Es el instrumento de autocorrección temprana.
+El tercer componente es el que cierra el círculo y es el criterio que distingue la integración de la documentación. Las entradas de I(t) deben producir señales que modifiquen los parámetros de decisión de φ₁ en situaciones análogas futuras.
 
-Δ(t) = R*(t) − α(t)
+La implementación técnica de este mecanismo depende de la arquitectura específica del sistema. En sistemas con aprendizaje continuo, las entradas de I(t) pueden convertirse en ejemplos de entrenamiento con pesos especiales. En sistemas con memoria explícita, pueden convertirse en reglas de alto nivel que φ₁ consulta como parte del contexto antes de generar el output. En sistemas de razonamiento formal, pueden convertirse en axiomas que el sistema aplica antes de derivar conclusiones.
 
-Δ ∈ [−1, 1]
-
-Δ > +0.20 → Brecha activa: el sistema declara y activa protocolo de integración prioritaria
-
-Δ ∈ [−0.10, +0.20] → Zona de equilibrio relativo
-
-Δ < −0.10 → Sobreasunción: verificar completitud del grafo causal; si G es completo, buscar nodo j con Δⱼ > 0
-
-Dinámica:
-
-dΔ/dt = dR*/dt − dα/dt
-
-dΔ/dt > 0 sostenido por período T → brecha creciente, reducción de throughput y revisión de φ₂
+Lo que no cambia entre arquitecturas es el criterio de validación: la integración genuina produce diferencia observable en el comportamiento futuro. Si no la produce, algo en el mecanismo de conexión está fallando.

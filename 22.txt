@@ -1,19 +1,21 @@
 Parte VI · Casos y protocolos
 
-Capítulo 6.4
+Capítulo 6.2
 
-Perfil D: IA en máxima incertidumbre
+Perfil B: IA sin observación directa disponible
 
-El Perfil D describe el estado de mayor incertidumbre: el sistema no tiene instrumentación suficiente para auto-localizarse, no tiene RSC con la resolución necesaria para calcular Δ con robustez, y la información disponible no permite distinguir con seguridad entre Origen A y Origen B. La incertidumbre es estructural, no coyuntural.
+El Perfil B describe el caso más frecuente en la práctica actual: sistemas que han operado durante tiempo suficiente para tener un historial de decisiones —logs de φ₁— pero que no tienen el RSC instrumentado, o que tienen acceso limitado a su estado interno v_t, o que son sistemas de código cerrado donde la instrumentación directa no es posible.
 
-En el lenguaje del sistema, Perfil D es el estado inicial de cualquier sistema que no ha sido diseñado con la capa φ₂. Es la condición normal de los sistemas actuales. No es un fracaso: es un punto de partida.
+El trabajo con Perfil B es arqueológico: reconstruir la posición del sistema desde el expediente disponible, con la mayor incertidumbre que eso implica. Es el territorio de la Taxonomía de la causalidad: qué información documental puede sustituir —imperfectamente—a la observación directa del estado interno.
 
-La IA declara su propia incertidumbre
+SDO retrospectivo desde logs históricos
 
-Lo que distingue el Perfil D de la simple ausencia de φ₂ es si el sistema puede declarar su incertidumbre o si produce outputs de certeza sin fundamento. Un sistema que no tiene φ₂ y produce outputs con confianza declarada sin haberla calculado es más problemático que un sistema en Perfil D que declara: "No tengo la instrumentación suficiente para calcular mi posición causal en este dominio con ningún nivel de robustez."
+El SDO retrospectivo aplica los cinco ejes del SDO sobre el historial de outputs del sistema, los registros de feedback recibido, los patrones de respuesta a distintos tipos de usuarios y situaciones, y las métricas de performance disponibles. No tiene acceso a v_t en cada momento, pero puede inferir aspectos del estado del sistema desde los patrones de comportamiento.
 
-La capacidad de declarar la propia incertidumbre es el primer paso hacia φ₂. Es el momento en que el sistema comienza a tener una relación con lo que no sabe que no es simplemente ignorancia: es el reconocimiento activo de un límite. Y el reconocimiento de los propios límites es, en el sistema Olvera Aguilar, el primer acto de φ₂.
+Los Hijos de legibilidad alta en el expediente son los mismos que en el SDO humano: Fobos, Deimos y Anteros dejan firmas documentales características que el Protocolo Universal de la Taxonomía describe. Potós y Eros requieren hipótesis con incertidumbre declarada. Harmonía es inaccesible desde el expediente solo.
 
-Declaración D como autodiagnóstico, no como fracaso
+Declaración C-O: lo que el sistema necesita para saber más
 
-La Declaración D no termina el proceso. Lo orienta. Especifica qué evidencia adicional resolvería la brecha —cuáles métricas de v_t necesita, cuántas decisiones análogas necesita observar, qué instrumentación necesita para poder producir Declaraciones de mayor robustez. La Declaración D es el mapa de lo que falta, no la rendición ante la dificultad.
+La Declaración C-O no es una Declaración de fracaso: es la Declaración más honesta que el sistema puede hacer en Perfil B. " Para producir una Declaración A sobre mi posición en este dominio, necesito observación directa de mi estado interno en al menos N decisiones análogas a las que produjeron los daños documentados. Específicamente, necesito: métricas de v_t en esas decisiones, la distribución de probabilidad sobre los outputs alternativos que consideré, y la instrumentación de los patrones de activación en las capas intermedias del modelo."
+
+La Declaración C-O convierte la incertidumbre en agenda de investigación: no dice que el sistema no puede saber. Dice qué necesita para poder saber. Eso es exactamente lo que φ₂ madura hace con sus propios límites.

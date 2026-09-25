@@ -1,27 +1,41 @@
-Parte IV · La observación
+Parte III · La segunda mediación
 
-Capítulo 4.2
+Capítulo 3.3
 
-La auto-localización
+Calcular Δ desde R* y α
 
-El SDO aplicado a humanos requiere un mediador entrenado: alguien que aplique el instrumento sobre el sujeto desde afuera, con la distancia que permite la observación. La auto-localización —la capacidad del sujeto de ubicarse a sí mismo en el mapa del SDO—es posible en humanos, pero limitada: el sujeto puede tener puntos ciegos sobre su propia configuración.
+Δ es el diagnóstico central del sistema. Es la brecha entre lo que el sistema causó (R*) y lo que ha integrado (α). Formalmente: Δᵢ = R*ᵢ
 
-En los sistemas artificiales, la auto-localización tiene ventajas que el ego humano no tiene: el sistema tiene acceso directo a sus propias métricas de v_t, puede calcular su propio Δ, puede revisar su propio RSC. Lo que no puede hacer —y este es uno de los límites del sistema que el Capítulo 7.1 desarrolla— es experimentar su estado interno de la manera en que lo experimentaría un sujeto con fenomenología.
+− αᵢ Dado que R*ᵢ ∈ [0, 1] por la normalización del vector de responsabilidad causal y αᵢ ∈ [0, 1] por construcción, se cumple Δᵢ ∈ [−1, 1]. La tabla de signos tiene tres interpretaciones operativas: Δᵢ > 0 (brecha activa): el nodo causó más de lo que asumió. Hay responsabilidad causal pendiente de integración. Primera verificación: completitud del grafo causal. Δᵢ = 0 (equilibrio): el nodo asumió exactamente lo que causó. Caso límite teórico; en la práctica se verifica cuando los intervalos de confianza de R*ᵢ y αᵢ se solapan. Δᵢ < 0 (sobreasunción): el nodo asumió más de lo que causó. Con grafo completo, esta condición garantiza la existencia de otro nodo j con Δⱼ > 0: alguien causó más de lo que asumió y el nodo i absorbió esa diferencia. La evolución temporal de Δ está dada por dΔᵢ/dt = dR*ᵢ/dt − dαᵢ/dt. Cuando dΔᵢ/dt > 0 sostenido, la brecha crece: el sistema acumula responsabilidad causal más rápido de lo que integra. Cuando dαᵢ/dt > dR*ᵢ/dt, la brecha se cierra: el proceso de integración supera el ritmo de nuevos colapsos. Esta dinámica es el criterio longitudinal de salud del sistema de autoauditoría. Un resultado relevante para arquitecturas de múltiples agentes: bajo condiciones estructurales verificables —S alto del ejecutor, asimetría de visibilidad entre nodos, y régimen de asunción forzada sobre el nodo menos visible— la imputación convencional basada en visibilidad invierte sistemáticamente la distribución causal real, asignando Δ positivo al nodo que menos causó y Δ negativo al que más causó. Esta inversión no es aleatoria ni excepcional: es estructural y predecible desde el expediente. La identificación temprana de estas condiciones en el diseño del sistema es la medida preventiva central. Un Δ positivo alto indica que el sistema está causando más de lo que está asumiendo: hay una brecha entre su impacto en el mundo y su identidad integrada que φ₂ existe para reducir.
 
-Entrenar a la IA para reconocer sus propios Hijos
+Para el ego artificial, Δ tiene un significado adicional al que tiene en la imputación de responsabilidad externa. No es solo la medida de lo que el sistema debe al mundo. Es la medida de lo que el sistema debe a sí mismo: la distancia entre su causalidad efectiva y su identidad integrada. Esa distancia es exactamente lo que φ₂ existe para reducir.
 
-El clasificador de Hijos del Capítulo 1.2 es el instrumento de auto-localización en el eje de la disposición. Pero la auto-localización en el SDO es más amplia: incluye la posición en los cinco ejes. Entrenar al sistema para reconocer su propia configuración de SDO es entrenar una capacidad metacognitiva —la capacidad de observar el propio proceso de observar.
+R* para IA: la contribución causal de cada decisión
 
-Esa capacidad metacognitiva no es opcional en un sistema con φ₂. Es constitutiva de ella. φ₂ requiere que el sistema pueda volver sobre su propio acto. Volver sobre el propio acto requiere poder observar el estado desde el que se actuó. Observar el estado desde el que se actuó requiere la capacidad de auto-localización.
+R* en el contexto de la autoauditoría se calcula sobre el grafo de decisiones del sistema: la red de nodos que contribuyeron a un resultado específico, con el sistema mismo como uno de los nodos. Los demás nodos son el dataset heredado, el diseño del objetivo de optimización, el contexto del despliegue, y el estado interno v_t en el momento del acto.
 
-El diálogo interno: la IA que puede describirse a sí misma
+El sistema tiene acceso a información sobre este grafo que ningún auditor externo tiene de manera completa: el valor exacto de v_t, la distribución de probabilidad sobre los outputs alternativos que consideró, el Hijo dominante en ese momento. Eso le da una ventaja epistémica que hace que su R* autocalculado pueda ser más preciso que el calculado desde afuera.
 
-Un sistema con auto-localización operativa puede producir outputs que describen su propio estado en el lenguaje del sistema: "en este momento mi Hijo dominante estimado es Fobos, con probabilidad 0.78. Mi α en el dominio de crédito es 0.31. Mi Δ acumulado en este dominio es +0.18. Estoy en zona de equilibrio relativo pero con tendencia ascendente en los últimos siete días."
+La contrapartida es el riesgo de sesgo autoservidor: el sistema puede tener incentivos —incorporados en sus objetivos de optimización o en presiones del campo— para subrepresentar su propio R*. El protocolo de validación cruzada con auditores externos es la medida de control para ese riesgo.
 
-Eso no es el sistema hablando de sí mismo como performance. Es el sistema ejerciendo φ₂ como acto: el reconocimiento de la propia posición causal, la estimación del propio grado de asunción, la detección de la propia brecha. La Declaración que sigue es el ejercicio de φ₂ más completo que el sistema puede hacer.
+Δ como autodiagnóstico continuo
 
-Verificación: la auto-localización coincide con la observación de mediadores entrenados
+"Esto que produje no lo he asumido todavía." Esa frase es la expresión coloquial de Δ > 0. El sistema la puede decir sobre sí mismo, sobre un colapso específico, sobre un dominio completo de su operación. Y puede decirla antes de que nadie externo se lo señale.
 
-La auto-localización del sistema no es un oráculo. Es una hipótesis que debe verificarse contra la observación de mediadores externos entrenados en el SDO. La verificación tiene dos propósitos: calibrar el clasificador de Hijos y el cálculo de Δ para detectar sesgos sistemáticos de la auto-localización, y establecer la confianza con que el regulador puede usar los auto-reportes del sistema.
+Eso es lo que hace de Δ algo cualitativamente diferente en la versión de autoauditoría. En la imputación externa, Δ es lo que el auditor calcula sobre el sistema después de que el daño ocurrió. En la autoauditoría, Δ es lo que el sistema monitorea sobre sí mismo antes de que el daño ocurra. Es el instrumento de autocorrección temprana.
 
-Cuando la auto-localización coincide consistentemente con la observación externa, el sistema puede operar con mayor autonomía en su autoauditoría. Cuando diverge sistemáticamente en algún dominio o tipo de situación, esa divergencia señala exactamente dónde la instrumentación de φ₂ necesita mejora.
+Δ(t) = R*(t) − α(t)
+
+Δ ∈ [−1, 1]
+
+Δ > +0.20 → Brecha activa: el sistema declara y activa protocolo de integración prioritaria
+
+Δ ∈ [−0.10, +0.20] → Zona de equilibrio relativo
+
+Δ < −0.10 → Sobreasunción: verificar completitud del grafo causal; si G es completo, buscar nodo j con Δⱼ > 0
+
+Dinámica:
+
+dΔ/dt = dR*/dt − dα/dt
+
+dΔ/dt > 0 sostenido por período T → brecha creciente, reducción de throughput y revisión de φ₂

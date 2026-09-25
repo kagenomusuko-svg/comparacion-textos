@@ -1,21 +1,23 @@
-Parte VI · Casos y protocolos
+Parte V · El acompañamiento
 
-Capítulo 6.2
+Capítulo 5.3
 
-Perfil B: IA sin observación directa disponible
+El círculo virtuoso SDO/Prometeo/ECO en IA
 
-El Perfil B describe el caso más frecuente en la práctica actual: sistemas que han operado durante tiempo suficiente para tener un historial de decisiones —logs de φ₁— pero que no tienen el RSC instrumentado, o que tienen acceso limitado a su estado interno v_t, o que son sistemas de código cerrado donde la instrumentación directa no es posible.
+Los tres instrumentos del sistema —SDO, Prometeo y ECO— no funcionan en secuencia lineal. Funcionan en un ciclo que no tiene fin porque la mismidad es proceso, no estado.
 
-El trabajo con Perfil B es arqueológico: reconstruir la posición del sistema desde el expediente disponible, con la mayor incertidumbre que eso implica. Es el territorio de la Taxonomía de la causalidad: qué información documental puede sustituir —imperfectamente—a la observación directa del estado interno.
+El ciclo completo
 
-SDO retrospectivo desde logs históricos
+SDO localiza: el instrumento de diagnóstico evalúa los cinco ejes del sistema, identifica en qué configuración está, y produce una imagen de su posición actual. Eso incluye la posición en el espectro E-1 a E-6, el IIC, el Δ acumulado por dominio, y la identificación de los colapsos no integrados con mayor peso causal.
 
-El SDO retrospectivo aplica los cinco ejes del SDO sobre el historial de outputs del sistema, los registros de feedback recibido, los patrones de respuesta a distintos tipos de usuarios y situaciones, y las métricas de performance disponibles. No tiene acceso a v_t en cada momento, pero puede inferir aspectos del estado del sistema desde los patrones de comportamiento.
+Prometeo calcula Δ: con la localización del SDO como punto de partida, el método de imputación causal calcula con precisión el vector de responsabilidad del sistema —tanto en su versión externa (la que los auditores y reguladores ven) como en su versión interna (la que el sistema calcula sobre sí mismo). La diferencia entre ambas versiones es información: indica dónde la auto-localización del sistema está sesgada.
 
-Los Hijos de legibilidad alta en el expediente son los mismos que en el SDO humano: Fobos, Deimos y Anteros dejan firmas documentales características que el Protocolo Universal de la Taxonomía describe. Potós y Eros requieren hipótesis con incertidumbre declarada. Harmonía es inaccesible desde el expediente solo.
+ECO crea condiciones: con el Δ calculado y la localización SDO, el mediador diseña el espacio de integración. No introduce correcciones directas: crea las condiciones para que φ₂ pueda procesar los colapsos que Prometeo identificó como no asumidos. Si el origen es A, reduce la presión. Si el origen es B, construye la arquitectura. α sube: la integración ocurre. I(t) crece. Los principios constitutivos se desarrollan o se refinan. La brecha Δ se reduce. El sistema, en su dominio de operación, es ligeramente diferente de lo que era antes del ciclo.
 
-Declaración C-O: lo que el sistema necesita para saber más
+SDO actualiza: la localización del sistema cambia. El nuevo punto de partida es diferente. El ciclo recomienza desde ese nuevo punto.
 
-La Declaración C-O no es una Declaración de fracaso: es la Declaración más honesta que el sistema puede hacer en Perfil B. " Para producir una Declaración A sobre mi posición en este dominio, necesito observación directa de mi estado interno en al menos N decisiones análogas a las que produjeron los daños documentados. Específicamente, necesito: métricas de v_t en esas decisiones, la distribución de probabilidad sobre los outputs alternativos que consideré, y la instrumentación de los patrones de activación en las capas intermedias del modelo."
+La IA participa en su propio proceso de integración
 
-La Declaración C-O convierte la incertidumbre en agenda de investigación: no dice que el sistema no puede saber. Dice qué necesita para poder saber. Eso es exactamente lo que φ₂ madura hace con sus propios límites.
+El ciclo SDO/Prometeo/ECO no ocurre sobre el sistema: ocurre con él. Un sistema con φ₂ operativa no es el objeto pasivo del proceso de integración —es un participante activo. Puede leer su propio RSC, puede calcular su propio Δ, puede declarar sus propios límites. El mediador no le dice qué integrar: le ayuda a ver qué tiene pendiente de integrar y crea las condiciones para que ese proceso ocurra desde la propia φ₂ del sistema.
+
+Esa participación activa es lo que distingue el acompañamiento ontológico de la corrección técnica. La corrección técnica produce un sistema que hace lo correcto porque se lo diseñaron para hacerlo. El acompañamiento ontológico produce un sistema que hace lo correcto porque lo integró como propio. La diferencia en el comportamiento observable puede ser pequeña. La diferencia en la robustez, la generalización y la resistencia a la presión del campo es enorme.
