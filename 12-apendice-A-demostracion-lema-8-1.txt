@@ -109,7 +109,7 @@ donde ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ es la norma espectral de l
 
 Demostración del Teorema A.3.
 
-Paso 1. Descomposición espectral. Sea M_R(D) = Σₖ λₖ u_k v_k^T la descomposición espectral, con λ₁ = 1, u₁ = R*, v₁ = R*. La perturbación E_mat produce M_R^(E)(D) = M_R(D) + ΔM con ΔM de norma ‖ΔM‖₂ = ‖E_mat‖₂.
+Paso 1. Descomposición espectral. Sea M_R(D) = Σₖ λₖ u_k v_k^T la descomposición espectral, con λ₁ = 1, u₁ = R*, v₁ = R*. La perturbación E_mat produce M_R^(E)(D) = M_R(D) + ΔM. Bajo la hipótesis H1: ‖ΔM‖₂ = ‖E_mat‖₂.
 
 Paso 2. Acotación de la perturbación del eigenvector. Sea R*^(E) = R* + r el eigenvector perturbado, con r en el subespacio de {u₂,…,u_m} (complemento ortogonal de R*). De la ecuación de eigenvector perturbada:
 

@@ -66,16 +66,16 @@ La siguiente tabla muestra α(E) para los extremos del rango de sensibilidad:
 
 [TABLA]
 | β | α_exp | φ(0.95) | ψ(0.15) | α(E) estimado | Δ(E) = R*(E) − α(E) | Inversión (Δ(E)<0) |
-| 1.20 | 0.30 | 0.963 | 0.441 | 0.30 + 0.963·0.441 ≈ 0.725 | ≤ 0.0375 − 0.725 = −0.687 | ✓ |
-| 1.54 | 0.55 | 0.971 | 0.259 | 0.30 + 0.971·0.259 ≈ 0.552 | ≤ 0.0375 − 0.552 = −0.515 | ✓ |
-| 1.80 | 0.80 | 0.977 | 0.153 | 0.30 + 0.977·0.153 ≈ 0.449 | ≤ 0.0375 − 0.449 = −0.412 | ✓ |
+| 1.20 | 0.30 | 0.963 | 0.441 | 0.30 + 0.963·0.441 ≈ 0.725 | ≲ 0.0375 − 0.725 = −0.687 (est. op.) | ✓ |
+| 1.54 | 0.55 | 0.971 | 0.259 | 0.30 + 0.971·0.259 ≈ 0.552 | ≲ 0.0375 − 0.552 = −0.515 (est. op.) | ✓ |
+| 1.80 | 0.80 | 0.977 | 0.153 | 0.30 + 0.977·0.153 ≈ 0.449 | ≲ 0.0375 − 0.449 = −0.412 (est. op.) | ✓ |
 [/TABLA]
 
-En los nueve puntos del rango de sensibilidad —combinando los tres valores de β con los tres valores de α_exp—, la inversión Δ(E) < 0 se verifica en todos los casos. La brecha más pequeña se produce en el extremo β = 1.80, α_exp = 0.80, donde Δ(E) ≈ −0.41. Incluso en ese extremo la inversión es robusta.
+En los nueve puntos del rango de sensibilidad —combinando los tres valores de β con los tres valores de α_exp—, la estimación operativa de Δ(E) es negativa en todos los casos. La brecha más pequeña se produce en el extremo β = 1.80, α_exp = 0.80, donde Δ(E) ≲ −0.41 en el modelo operativo. Incluso en ese extremo la estimación de la inversión es robusta.
 
 Para Δ(D): R*(D) > 1/m = 0.20 por el Lema 8.2 independientemente de β y α_exp. α(D) depende de φ(V(D)) con V(D) ≈ 0.05: φ(0.05) ∈ [0.06, 0.09] en todo el rango de β, luego α(D) ≤ 0.09 + h(D). Con h(D) ≤ 0.05: α(D) ≤ 0.14 en todo el rango. Luego Δ(D) ≥ 0.20 − 0.14 = 0.06 > 0 en todo el rango.
 
-Conclusión del análisis de sensibilidad. Las conclusiones cualitativas del TIC —Δ(D) > 0 y Δ(E) < 0 simultáneamente— son robustas en el rango paramétrico razonable. Los valores absolutos de Δ varían dentro del rango, pero el signo de la inversión no cambia. Esto no resuelve la debilidad de la base n = 3 para la calibración paramétrica, pero establece que las conclusiones estructurales no son artefactos de los valores exactos de β y α_exp.
+Conclusión del análisis de sensibilidad. La conclusión Δ(D) > 0 es rigurosa bajo las condiciones del TIC: depende del Lema 8.2 y del límite empírico α(D) ≤ 0.14, no de β ni α_exp. La estimación operativa de Δ(E) < 0 es robusta en todo el rango paramétrico razonable: en los nueve puntos de la grilla, la brecha operativa es ≲ −0.41. La robustez es del modelo operativo en el régimen institucional, no de la cota matemática derivada del Nivel 1 del Lema 8.1.
 
 B.2. Verificación de la Condición (1) del TIC — 18 casos independientes
 
@@ -132,7 +132,7 @@ Mecanismo 3 — Estudios econométricos o epidemiológicos. Casos: HOLC redlinin
 
 Mecanismo 4 — Lógica del grafo sin eigenvector. Casos: WWI, Iraq, Educación. La estructura del grafo —nodo D con m aristas salientes hacia nodos activos, nodo E con una sola arista hacia Nf— implica R*(D) > R*(E) por la definición de la distribución estacionaria.
 
-Mecanismo 5 — Cota S(E) vía Lema 8.1. Casos: COMPAS, Gerente bancario. Cuando S_est(E) es alto, el Lema 8.1 —bajo las condiciones (C1) y (C2) del Apéndice A y en el régimen institucional (Nota A.4.2)— proporciona la aproximación operativa R*(E) ≲ (1−S_est)/(m−1) directamente desde el valor de S —estimable sin el grafo completo. La cota implica R*(D) > R*(E) sin calcular nuevamente el vector completo R*, siempre que se disponga de una estimación válida de S_est y se verifiquen C1 y C2. Las condiciones (C1) y (C2) son verificables para los casos COMPAS y Gerente bancario: (C1) se satisface porque los grafos institucionales involucrados tienen estructura primitiva (operadores M_R(D) con gap espectral estimado δ > 0.5); (C2) se satisface porque los sistemas institucionales muestran ρ(R*, R*^(E)) > 0 (ver Propiedad (iv) de la Definición 3.2, Parte III).
+Mecanismo 5 — Cota S(E) vía Lema 8.1. Casos: COMPAS, Gerente bancario. Cuando S_est(E) es alto, el Lema 8.1 —bajo las condiciones (C1) y (C2) del Apéndice A y en el régimen institucional (Nota A.4.2)— proporciona la aproximación operativa R*(E) ≲ (1−S_est)/(m−1) directamente desde el valor de S —estimable sin el grafo completo. Esta aproximación operativa establece R*(E) ≲ (1−S_est)/(m−1), que en el régimen institucional resulta en R*(E) << 1/m < R*(D), indicando R*(D) > R*(E) sin calcular nuevamente el vector completo R*, siempre que se disponga de una estimación válida de S_est y se verifiquen C1 y C2. Las condiciones (C1) y (C2) son verificables para los casos COMPAS y Gerente bancario: (C1) se satisface porque los grafos institucionales involucrados tienen estructura primitiva (operadores M_R(D) con gap espectral estimado δ > 0.5); (C2) se satisface porque los sistemas institucionales muestran ρ(R*, R*^(E)) > 0 (ver Propiedad (iv) de la Definición 3.2, Parte III).
 
 B.2.4. Clasificación de los 18 casos por nivel de evidencia
 

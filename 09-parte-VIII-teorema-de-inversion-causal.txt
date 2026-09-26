@@ -118,9 +118,9 @@ R*(E). Por el Lema 8.1 y la Condición (2), aplicando la aproximación operativa
 
 α(E). Por la Condición (3), V(E) ≈ 1, y el Axioma 8.3: α(E) ≥ β·φ(0.95)·ψ(0.15) + h(E). Con φ(0.95) ≈ 0.97 y h_min(E) ≥ 0.30 (despido + proceso penal): α(E) ≥ 0.60.
 
-Combinación. Δ(E) = R*(E) − α(E) ≲ 0.0375 − 0.60 = −0.5625 < 0. ✓
+Combinación. La estimación operativa del déficit es Δ(E) = R*(E) − α(E) ≲ 0.0375 − 0.60 = −0.5625.
 
-Δ(E) < 0. ∎
+En el régimen institucional definido (S_est(E) > 0.75, m ∈ [4, 10]), el modelo operativo estima Δ(E) < 0: el ejecutor asumió más de lo que causó según la distribución de responsabilidad causal calculada. ∎
 
 Los Teoremas 8.1 y 8.2 demuestran la inversión simultánea: D causó más y asumió menos; E asumió más y causó menos. El sistema convencional —al operar sobre visibilidad y apariencias— produce la distribución de consecuencias opuesta a la distribución causal real.
 
@@ -141,7 +141,7 @@ I_inv es decreciente en V(D)/V(E): mayor asimetría de visibilidad implica mayor
 
 Demostración.
 
-Monotonicidad en S_est(E). ∂R*(E)/∂S_est ≲ −1/(m−1) < 0 (derivada de la aproximación operativa del Lema 8.1). ∂α(E)/∂S_est > 0 (Axioma 8.3 con ψ_real decreciente). Luego ∂|Δ(E)|/∂S_est > 0. El numerador |Δ(D)| no depende directamente de S_est(E). Luego ∂I_inv/∂S_est > 0. ✓
+Monotonicidad en S_est(E). En el modelo operativo (régimen institucional del Lema 8.1): ∂R*(E)/∂S_est ≲ −1/(m−1) < 0 (derivada de la aproximación operativa). ∂α(E)/∂S_est > 0 (Axioma 8.3 con ψ_real decreciente). Con Δ(E) < 0 en ese régimen: ∂|Δ(E)|/∂S_est = ∂α(E)/∂S_est − ∂R*(E)/∂S_est > 0. El numerador |Δ(D)| no depende directamente de S_est(E). Luego ∂I_inv/∂S_est > 0 en el modelo operativo. ✓
 
 Monotonicidad en V(D)/V(E). ∂α(D)/∂V(D) = β·φ'(V(D))·ψ > 0 (Axioma 8.1). Mayor V(D) → mayor α(D) → menor |Δ(D)| → menor I_inv. ✓
 
@@ -189,7 +189,7 @@ Las tres condiciones del fraude annona se verifican bajo las condiciones del TIC
 | α(D) | ≤ 0.10 | V(D) ≈ 0; Axioma 8.1 → φ(V(D)) ≈ 0 | El diseñador no asumió proporcional a R*(D) |
 | α(E) | ≥ 0.60 | V(E) ≈ 1; Axioma 8.3 + h_min(E) ≥ 0.30 | El ejecutor asumió mucho más de R*(E) |
 | Δ(D) | ≥ 0.10 | R*(D) − α(D) > 0.20 − 0.10 | Positivo: inversión confirmada |
-| Δ(E) | ≤ −0.56 | R*(E) − α(E) < 0.0375 − 0.60 | Negativo: sobreasunción confirmada |
+| Δ(E) | ≲ −0.56 (est. op.) | R*(E) − α(E) ≲ 0.0375 − 0.60 | Negativo en el modelo operativo |
 | I_inv | ≈ 0.18 | 0.10 / 0.56 | Por cada unidad de brecha del banco, el asesor absorbe 5.6 |
 [/TABLA]
 
@@ -203,14 +203,14 @@ Procedimiento de verificación para el caso banco.
    Cota superior de α(D): 0.10 (Apéndice B).
    Δ(D) ≥ 0.20 − 0.10 = 0.10 > 0. ✓
 
-3. Verificar Δ(E) < 0:
-   Cota superior de R*(E): 0.0375.
+3. Estimación operativa de Δ(E):
+   Estimación operativa de R*(E) (Lema 8.1, régimen institucional): ≲ 0.0375.
    Cota inferior de α(E): 0.60.
-   Δ(E) ≤ 0.0375 − 0.60 = −0.5625 < 0. ✓
+   Δ(E) ≲ 0.0375 − 0.60 = −0.5625. La estimación operativa es negativa. ✓
 
 4. Calcular I_inv:
    |Δ(D)| = 0.10 (cota inferior del numerador).
-   |Δ(E)| = 0.5625 (cota superior del denominador).
+   |Δ(E)| ≈ 0.5625 (estimación operativa del denominador).
    I_inv ≈ 0.10 / 0.5625 ≈ 0.18.
    Por cada unidad de brecha que el banco no asumió, el asesor absorbió 5.6 unidades.
 
@@ -227,7 +227,7 @@ Procedimiento de verificación para el caso banco.
 | φ(V) | 1−(1−V)^{1.54} | Calibrada, n=3 (Apéndice B) | Axioma 8.1 |
 | ψ_real(x) | 0.21·x^{−0.55} | Decreciente en 1−S_est | Axioma 8.2 |
 | Δ(D) > 0 | Teorema 8.1 | Diseñador causó más de lo que asumió | Teorema 8.1 |
-| Δ(E) < 0 | Teorema 8.2 | Ejecutor asumió más de lo que causó | Teorema 8.2 |
+| Δ(E) < 0 (est. op.) | Teorema 8.2 | Estimación operativa en régimen institucional: ejecutor asumió más de lo que causó | Teorema 8.2 |
 | I_inv | |Δ(D)|/|Δ(E)| | Magnitud de la inversión | Def. 8.6 |
 | Monotonicidad | Teorema 8.3 | I_inv ↑ en S_est(E), ↓ en V(D)/V(E) | Teorema 8.3 |
 | Fraude annona | Def. 8.7 (a)+(b)+(c) | S_est alto, α(E)>R*(E), α(D)≈0 | Def. 8.7 |

@@ -176,13 +176,13 @@ Cota del impacto contrafactual
 
 ‖𝒞 (G, i, W'_i) − R*(G)‖₁ ≤ (m/δ) · ‖W'_i − W_{i·} ‖₂
 
-δ = 1 − |λ₂| gap espectral de W · m = |N| número de nodos · la cota es la misma que el Teorema A.4
+δ = 1 − |λ₂(M_R(D))| gap espectral del operador M_R(D) · m = |N| número de nodos · la cota requiere la hipótesis H1 y la condición C1 del Apéndice A (Teorema A.3)
 
 Demostración del Teorema D.2
 
-La perturbación E = W' − W tiene ‖E‖₂ = ‖W'_i − W_{i·} ‖₂ (la perturbación es no cero solo en la fila i). Por el Teorema A.4 (Apéndice A): ‖R*(G') − R*(G)‖₁ ≤ (m/δ) ·‖E‖₂ = (m/δ) ·‖W'_i − W_{i·} ‖₂. ∎
+La perturbación E = W' − W tiene ‖E‖₂ = ‖W'_i − W_{i·} ‖₂ (la perturbación es no cero solo en la fila i). Por el Teorema A.3 del Apéndice A, bajo la hipótesis H1 y la condición C1: ‖R*(G') − R*(G)‖₁ ≤ (m/δ) ·‖E‖₂ = (m/δ) ·‖W'_i − W_{i·} ‖₂, donde δ = 1 − |λ₂(M_R(D))|. ∎
 
-La cota es la misma que el Teorema A.4. El operador 𝒞 hereda directamente la estabilidad de Davis-Kahan. ∎
+La cota hereda la estabilidad de Davis-Kahan del Teorema A.3; δ es el gap espectral de M_R(D), no de W directamente. ∎
 
 Definición D.6. Métrica de impacto causal V (G, G')
 
@@ -237,7 +237,7 @@ El Corolario D.3 tiene consecuencias prácticas: si se quiere reducir Δ_net(D) 
 | Identificabilidad | Proposición D.2 | Bajo (I-1)–(I-4); intervalo de incertidumbre trazable | Proposición D.2 |
 | Operador contrafactual | 𝒞(G, i, W'_i) = R*(G') | Función de grafos a Δⁿ | Definición D.5 |
 | Métrica de impacto | 𝒱(G,G') = ‖R*(G')−R*(G)‖₁ | Escalar ≥ 0; acotado por Davis-Kahan | Definición D.6 |
-| Cota contrafactual | ‖𝒞−R*‖₁ ≤ (m/δ)‖W'_i−W_{i·}‖₂ | Desigualdad; hereda Teorema A.4 | Teorema D.2 |
+| Cota contrafactual | ‖𝒞−R*‖₁ ≤ (m/δ)‖W'_i−W_{i·}‖₂ | Bajo H1, C1; δ = 1−|λ₂(M_R(D))|; hereda Teorema A.3 | Teorema D.2 |
 | Δ_net bajo contrafactual | Corolario D.3 | Cambio acotado por la magnitud de la intervención | Corolario D.3 |
 [/TABLA]
 
@@ -271,7 +271,7 @@ La demostración es directa desde la Definición D.4. La potencia del resultado 
 
 El Teorema D.3 tiene tres corolarios que traducen condiciones estructurales en imputación neta:
 
-Corolario D.4.1 — Sustituibilidad anula imputación neta. Si S_est(i) → 1, entonces R*_net(i) = R*(i) − R*^(i)_i → 0 por el Lema 8.1. Luego Δ_net(i) → −α_vol(i) ≤ 0. Un nodo altamente sustituible no tiene imputación neta positiva independientemente de su posición en el grafo. Este resultado ya estaba implícito en la cadena Davis-Kahan del Apéndice A; el Teorema D.3 lo posiciona en el marco dinámico.
+Corolario D.4.1 — Sustituibilidad anula imputación neta. Si S_est(i) → 1, entonces R*_net(i) = R*(i) − R*^(i)_i → 0: la sustitución de la fila i por el promedio no altera la componente i de R*. En el régimen institucional, la aproximación operativa del Lema 8.1 establece R*_net(i) ≲ (1−S_est(i))/(m−1) → 0 cuando S_est(i) → 1. Luego Δ_net(i) → −α_vol(i) ≤ 0. Un nodo altamente sustituible no tiene imputación neta positiva independientemente de su posición en el grafo. Este resultado ya estaba implícito en la cadena Davis-Kahan del Apéndice A; el Teorema D.3 lo posiciona en el marco dinámico.
 
 Corolario D.4.2 — Migración de imputación. Si R*_net(a) ≈ R*_net(b) pero α_vol(a) > α_vol(b), entonces Δ_net(b) > Δ_net(a). La imputación neta migra hacia el nodo que menos asumió voluntariamente, no necesariamente hacia el de mayor responsabilidad causal bruta.
 
