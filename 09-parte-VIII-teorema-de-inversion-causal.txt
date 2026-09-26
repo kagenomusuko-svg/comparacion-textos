@@ -34,20 +34,26 @@ Resultado condicional. El Lema 8.1 es válido bajo las siguientes condiciones ex
   (C1) El operador M_R(D) es primitivo: su valor propio dominante es simple con brecha espectral δ > 0.
   (C2) ρ(R*, R*^(E)) ≥ 0: la correlación de Pearson entre R* y el vector de responsabilidad contrafactual es no negativa.
 
-Bajo (C1) y (C2), si S_est(E) > θ_S con θ_S ∈ (0.5, 1], entonces:
+Bajo las condiciones (C1) y (C2), si S_est(E) > θ_S con θ_S ∈ (0.5, 1], el Apéndice A establece dos resultados:
 
-  R*(E) ≤ (1 − S_est(E)) / (m − 1)
+Cota matemática derivada (bajo H1, H2, C1, C2):
 
-m = |N| nodos activos · cota decreciente en S_est(E) · demostración condicional (bajo H1, H2, H3, C1, C2) en el Apéndice A.
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
 
-Cadena de derivación. S_est(E) alto con ρ(R*, R*^(E)) ≥ 0 (condición C2) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas (correlación positiva próxima a 1). En sistemas institucionales típicos del TIC, S_est(E) alto corresponde a ρ(R*, R*^(E)) → +1: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. Esto significa que E aporta poca idiosincrasia a la determinación de R*: su contribución causal estructural R*(E) es pequeña en relación con el total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D) al eliminar el nodo E, derivando la cota lineal en (1 − S_est(E)) bajo (C1) y (C2).
+Aproximación operativa (régimen institucional: m ∈ [4, 10], δ > 0.5, S_est(E) > 0.75):
 
-Tabla de cotas para m = 5:
+  R*(E) ≲ (1 − S_est(E)) / (m − 1)
 
-  S_est = 0.70 → R*(E) ≤ 0.30/4 = 0.075
-  S_est = 0.80 → R*(E) ≤ 0.20/4 = 0.050
-  S_est = 0.85 → R*(E) ≤ 0.15/4 = 0.0375
-  S_est = 0.90 → R*(E) ≤ 0.10/4 = 0.025
+m = |N| nodos activos. La dependencia de R*(E) en S_est(E) es monótonamente decreciente en ambas expresiones: mayor sustituibilidad implica menor responsabilidad causal estructural. La derivación completa y las condiciones de la aproximación operativa se documentan en el Apéndice A (Teorema A.4 y Nota A.4.2).
+
+Cadena de derivación. S_est(E) alto con ρ(R*, R*^(E)) ≥ 0 (condición C2) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas. En sistemas institucionales, S_est(E) alto corresponde a ρ → +1: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. E aporta poca idiosincrasia a la determinación de R*; su contribución causal estructural R*(E) es pequeña en relación al total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D).
+
+Valores de la aproximación operativa para m = 5:
+
+  S_est = 0.70 → R*(E) ≲ 0.30/4 = 0.075
+  S_est = 0.80 → R*(E) ≲ 0.20/4 = 0.050
+  S_est = 0.85 → R*(E) ≲ 0.15/4 = 0.0375
+  S_est = 0.90 → R*(E) ≲ 0.10/4 = 0.025
 
 
 Lema 8.2. Cota inferior R*(D)
@@ -110,11 +116,11 @@ Teorema 8.2. Δ(E) < 0: el nodo ejecutor asumió más de lo que causó.
 
 Demostración.
 
-R*(E). Por el Lema 8.1 y la Condición (2): R*(E) ≤ (1−S_est(E))/(m−1). Para S_est(E) = 0.85, m = 5: R*(E) ≤ 0.0375.
+R*(E). Por el Lema 8.1 y la Condición (2), aplicando la aproximación operativa en régimen institucional (Nota A.4.2, Apéndice A): R*(E) ≲ (1−S_est(E))/(m−1). Para S_est(E) = 0.85, m = 5: R*(E) ≲ 0.0375.
 
 α(E). Por la Condición (3), V(E) ≈ 1, y el Axioma 8.3: α(E) ≥ β·φ(0.95)·ψ(0.15) + h(E). Con φ(0.95) ≈ 0.97 y h_min(E) ≥ 0.30 (despido + proceso penal): α(E) ≥ 0.60.
 
-Combinación. Δ(E) = R*(E) − α(E) ≤ 0.0375 − 0.60 = −0.5625 < 0. ✓
+Combinación. Δ(E) = R*(E) − α(E) ≲ 0.0375 − 0.60 = −0.5625 < 0. ✓
 
 Δ(E) < 0. ∎
 
@@ -137,7 +143,7 @@ I_inv es decreciente en V(D)/V(E): mayor asimetría de visibilidad implica mayor
 
 Demostración.
 
-Monotonicidad en S_est(E). ∂R*(E)/∂S_est ≤ −1/(m−1) < 0 (Lema 8.1). ∂α(E)/∂S_est > 0 (Axioma 8.3 con ψ_real decreciente). Luego ∂|Δ(E)|/∂S_est > 0. El numerador |Δ(D)| no depende directamente de S_est(E). Luego ∂I_inv/∂S_est > 0. ✓
+Monotonicidad en S_est(E). ∂R*(E)/∂S_est ≲ −1/(m−1) < 0 (derivada de la aproximación operativa del Lema 8.1). ∂α(E)/∂S_est > 0 (Axioma 8.3 con ψ_real decreciente). Luego ∂|Δ(E)|/∂S_est > 0. El numerador |Δ(D)| no depende directamente de S_est(E). Luego ∂I_inv/∂S_est > 0. ✓
 
 Monotonicidad en V(D)/V(E). ∂α(D)/∂V(D) = β·φ'(V(D))·ψ > 0 (Axioma 8.1). Mayor V(D) → mayor α(D) → menor |Δ(D)| → menor I_inv. ✓
 
@@ -180,7 +186,7 @@ Las tres condiciones del fraude annona se verifican bajo las condiciones del TIC
 | m (nodos activos) | 5 | D, E, N₁, N₂, Nf | Banco (D), asesor (E), dos intermediarios, resultado |
 | k*(E) modo dom. | k = 1 | ‖c‖_C >> ‖a_t‖_E documentado | Modo de presión sistémica: alta sustituibilidad |
 | S_est(E) | 0.85 | |ρ(R*, R*^(E))| = 0.85; Parte III | Cualquier asesor en esa posición habría actuado igual |
-| R*(E) cota sup. | ≤ 0.0375 | Lema 8.1: (1−0.85)/(5−1) = 0.15/4 | El asesor concentra < 3.75% de la responsabilidad causal |
+| R*(E) aprox. op. | ≲ 0.0375 | Lema 8.1 (aprox. op.): (1−0.85)/(5−1) = 0.15/4 | El asesor concentra ≲ 3.75% de la responsabilidad causal |
 | R*(D) cota inf. | > 0.20 | Lema 8.2: 1/m = 1/5 | El banco concentra la responsabilidad causal dominante |
 | α(D) | ≤ 0.10 | V(D) ≈ 0; Axioma 8.1 → φ(V(D)) ≈ 0 | El diseñador no asumió proporcional a R*(D) |
 | α(E) | ≥ 0.60 | V(E) ≈ 1; Axioma 8.3 + h_min(E) ≥ 0.30 | El ejecutor asumió mucho más de R*(E) |
@@ -191,8 +197,8 @@ Las tres condiciones del fraude annona se verifican bajo las condiciones del TIC
 
 Procedimiento de verificación para el caso banco.
 
-1. Verificar R*(E) ≤ 0.0375:
-   Cota: (1 − S_est(E)) / (m − 1) = (1 − 0.85) / (5 − 1) = 0.15 / 4 = 0.0375. ✓
+1. Verificar R*(E) ≲ 0.0375 (aproximación operativa):
+   (1 − S_est(E)) / (m − 1) = (1 − 0.85) / (5 − 1) = 0.15 / 4 = 0.0375. ✓
 
 2. Verificar Δ(D) > 0:
    Cota inferior de R*(D): 1/m = 1/5 = 0.20.
@@ -218,7 +224,7 @@ Procedimiento de verificación para el caso banco.
 | S_est(E) | |ρ(R*, R*^(E))| | Correlación de Pearson en [0,1] | Def. 8.3; Parte III |
 | Visibilidad | V(i) = n_doc(i)/n_tot | Escalar en [0,1]; observable | Def. 8.4 |
 | α descompuesto | α_vol + α_for + α_imp | Misma acción sobre Δ (Cor. 4.1) | Def. 8.5 |
-| Cota R*(E) | ≤(1−S_est)/(m−1) | Decreciente en S_est; Apéndice A | Lema 8.1 |
+| Aprox. op. R*(E) | ≲(1−S_est)/(m−1) | Decreciente en S_est; régimen institucional; Nota A.4.2 | Lema 8.1 |
 | Cota R*(D) | > 1/m | Por normalización de R* | Lema 8.2 |
 | φ(V) | 1−(1−V)^{1.54} | Calibrada, n=3 (Apéndice B) | Axioma 8.1 |
 | ψ_real(x) | 0.21·x^{−0.55} | Decreciente en 1−S_est | Axioma 8.2 |

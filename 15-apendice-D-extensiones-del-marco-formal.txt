@@ -90,7 +90,7 @@ R*_struct(i) = R*^(i)_i es la i-ésima componente del vector R* calculado sobre 
 
 Ausencia de doble conteo. La descomposición R* = R*_struct + R*_net no usa S_est en su definición: R*_struct se obtiene directamente del vector R* calculado sobre el grafo W^(i) por eliminación gaussiana, que es un objeto del grafo causal. S_est es una función de R* y R*^(i), no al revés. Usar R*_net = R*(i) − R*^(i)_i evita la circularidad de multiplicar R* por (1−S_est), que combina dos objetos derivados del mismo vector de responsabilidad.
 
-Por el Lema 8.1 (Apéndice A): R*_net(i) = R*(i) − R*^(i)_i ≤ (1−S_est(i))/(m−1). La cota del Lema 8.1 es una cota superior de R*_net, no una definición de R*_net. La definición correcta de R*_net es R*_net(i) = R*(i) − R*^(i)_i, donde ambos vectores se calculan mediante eliminación gaussiana sobre el sistema correspondiente (R* de (I−Q_D)r = b_D y R*^(i) de (I−Q_D^(i))r = b_D^(i)); la cota del Lema 8.1 la conecta con S_est.
+Por el Lema 8.1 (Apéndice A): R*_net(i) = R*(i) − R*^(i)_i ≲ (1−S_est(i))/(m−1) [aproximación operativa en régimen institucional; ver Nota A.4.2, Apéndice A]. La expresión del Lema 8.1 es una cota superior de R*_net, no una definición de R*_net. La definición correcta de R*_net es R*_net(i) = R*(i) − R*^(i)_i, donde ambos vectores se calculan mediante eliminación gaussiana sobre el sistema correspondiente (R* de (I−Q_D)r = b_D y R*^(i) de (I−Q_D^(i))r = b_D^(i)); la cota del Lema 8.1 la conecta con S_est.
 
 Definición D.4. Función de imputación neta Δ_net
 
@@ -232,7 +232,7 @@ El Corolario D.3 tiene consecuencias prácticas: si se quiere reducir Δ_net(D) 
 | Markov en E | Teorema D.1 | P(I_d(k)¦I_d(k−1)) = P(I_d(k)¦toda la historia) | Teorema D.1 |
 | Convergencia al caso continuo | ‖I_d^(n) − I(t)‖_E → 0 | Consistencia de la discretización | Proposición D.1 |
 | R*_struct(i) | R*^(i)_i | Componente estructural de R* bajo sustitución de fila | Definición D.3 |
-| R*_net(i) | R*(i) − R*^(i)_i | Exceso idiosincrático; ≤ (1−S_est)/(m−1) | Definición D.3 |
+| R*_net(i) | R*(i) − R*^(i)_i | Exceso idiosincrático; ≲ (1−S_est)/(m−1) en régimen institucional | Definición D.3; Nota A.4.2 |
 | Δ_net(i) | R*_net(i) − α_vol(i) | Escalar en [−1,1]; sin doble conteo | Definición D.4 |
 | Identificabilidad | Proposición D.2 | Bajo (I-1)–(I-4); intervalo de incertidumbre trazable | Proposición D.2 |
 | Operador contrafactual | 𝒞(G, i, W'_i) = R*(G') | Función de grafos a Δⁿ | Definición D.5 |

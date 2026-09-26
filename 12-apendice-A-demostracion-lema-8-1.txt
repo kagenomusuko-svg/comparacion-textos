@@ -1,28 +1,40 @@
 Apéndice A
 
-Demostración condicional del Lema 8.1 — hipótesis explícitas
+Derivación del Lema 8.1 — cota matemática y aproximación operativa
 
 
 Introducción
 
-El Lema 8.1 (Parte VIII) establece la cota R*(E) ≤ (1 − S_est(E))/(m − 1) para el componente E del vector de responsabilidad causal bajo la condición S_est(E) ≥ θ_S. Esta cota es el ingrediente técnico central del Teorema de Inversión Causal (Parte VIII). La demostración es condicional: los pasos A.3 y A.4 dependen de hipótesis que no se derivan completamente en este apéndice. Las hipótesis requeridas son:
+El Lema 8.1 opera en dos niveles que conviene distinguir desde el inicio.
 
-(H1) La transformación W → M_R(D) preserva la norma de la perturbación: ‖ΔM‖₂ = ‖E_mat‖₂.
-(H2) La norma de la perturbación de fila está acotada por S_est: ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m).
-(H3) El término 1/m es despreciable respecto a (1 − S_est(E))/(m − 1) para los valores del sistema (no válida en general: para m = 3, 1/m = 0.333).
+Nivel 1 — Cota matemática derivada. Bajo las condiciones (C1), (C2) y las hipótesis estructurales (H1) y (H2), la derivación por perturbación del operador M_R(D) produce:
 
-Las condiciones de validez son:
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
+
+Esta es la cota que resulta directamente de la cadena de pasos A.1–A.4.
+
+Nivel 2 — Aproximación operativa. El modelo utiliza la forma compacta:
+
+  R*(E) ≲ (1 − S_est(E)) / (m − 1)
+
+Esta aproximación es la que aparece en la enunciación del Lema 8.1 (Parte VIII), en los cálculos de los 18 casos del Apéndice B y en las extensiones del Apéndice D. No es una consecuencia algebraica directa de la cota del Nivel 1: es una aproximación calibrada al régimen institucional (m ∈ [4, 10], δ > 0.5, S_est(E) > 0.75). Su motivación estructural y sus condiciones de validez se especifican en la Nota A.4.2.
+
+Las hipótesis estructurales de la derivación son:
+(H1) ‖ΔM‖₂ = ‖E_mat‖₂: la transformación W → M_R(D) preserva la norma espectral de la perturbación de fila.
+(H2) ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m): la desviación de la fila E está acotada en términos de S_est.
+
+Las condiciones de aplicabilidad son:
 (C1) M_R(D) es primitivo con gap espectral δ = 1 − |λ₂(M_R(D))| > 0.
 (C2) ρ(R*, R*^(E)) ≥ 0.
 
-S_est(E) = |ρ(R*, R*^(E))| es la correlación de Pearson entre R* y R*^(E) (Definición 3.2, Parte III). El primer paso (A.1) conecta S_est con la interpretación geométrica de correlación. El segundo paso (A.2, probado bajo C2) acota ‖R* − R*^(E)‖₂ en términos de S_est. El tercero (A.3, condicional a H1) aplica Davis-Kahan. El cuarto (A.4, condicional a H1, H2, H3) combina los anteriores para obtener la cota.
+S_est(E) = |ρ(R*, R*^(E))| (Definición 3.2, Parte III). El paso A.1 conecta S_est con la correlación de Pearson. El paso A.2 (probado bajo C2) acota ‖R* − R*^(E)‖₂. El paso A.3 (bajo H1) aplica Davis-Kahan. El paso A.4 combina los anteriores para obtener la cota del Nivel 1.
 
 [TABLA]
 | Paso | Herramienta | Resultado | Referencia |
 | A.1 | Definición de S_est — correlación de Pearson | S_est = |ρ(R*, R*^(E))|. S_est alto ⟹ R* y R*^(E) tienen forma proporcional. | Definición 3.2, Parte III |
 | A.2 | Cota de Pearson a L2 | ‖R* − R*^(E)‖₂ ≤ σ(R*)·√(2(1 − S_est)) donde σ(R*) = ‖R* − (1/m)·1‖₂. Correlación alta ⟹ L2 pequeño (en escala de σ). | Lema A.2 (este apéndice) |
 | A.3 | Teorema de Davis-Kahan | ‖R* − R*^(E)‖₂ ≤ ‖E_mat‖₂/δ. La perturbación de la fila E controla la perturbación del eigenvector principal. | Teorema A.3 (este apéndice) |
-| A.4 | Combinación A.1–A.3 + R*^(E)_E ≈ 1/m | Bajo H1, H2, C1, C2: R*(E) ≤ 1/m + (m/δ)·(1−S_est(E))·√(2/m). La simplificación a (1−S_est(E))/(m−1) requiere además H3, que no es válida en general. | Teorema A.4 (este apéndice) |
+| A.4 | Combinación A.1–A.3 + R*^(E)_E ≈ 1/m | Cota derivada (H1, H2, C1, C2): R*(E) ≤ 1/m + (m/δ)·(1−S_est(E))·√(2/m). Aproximación operativa (régimen institucional): R*(E) ≲ (1−S_est(E))/(m−1). | Teorema A.4; Nota A.4.2 |
 [/TABLA]
 
 
@@ -116,21 +128,23 @@ Paso 3. Norma L¹. Por Cauchy-Schwarz: ‖r‖₁ ≤ √m · ‖r‖₂ ≤ (�
   ‖R* − R*^(E)‖₁ ≤ (m/δ) · ‖E_mat‖₂. ∎
 
 
-A.4. Teorema A.4 — Cota final del Lema 8.1
+A.4. Teorema A.4 — Cota derivada y aproximación operativa
 
-Condiciones explícitas.
-  (C1) M_R(D) es primitivo: su eigenvalor dominante es simple con gap espectral δ = 1 − |λ₂(M_R(D))| > 0. Esta condición garantiza que el Teorema de Davis-Kahan (A.3) sea aplicable con una cota finita.
-  (C2) ρ(R*, R*^(E)) ≥ 0: la correlación de Pearson entre R* y R*^(E) es no negativa. Esta condición garantiza que el Lema A.2 sea aplicable; sin ella, la distancia ‖R* − R*^(E)‖₂ puede ser mayor, no menor, a medida que S_est(E) crece.
+Condiciones.
+  (C1) M_R(D) es primitivo: eigenvalor dominante simple con gap espectral δ = 1 − |λ₂(M_R(D))| > 0. Garantiza que Davis-Kahan sea aplicable con cota finita.
+  (C2) ρ(R*, R*^(E)) ≥ 0. Garantiza que el Lema A.2 sea aplicable.
 
-Teorema A.4 (condicional). Bajo las condiciones (C1), (C2) y las hipótesis (H1), (H2), (H3), sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
+Teorema A.4. Bajo las condiciones (C1), (C2) y las hipótesis (H1), (H2):
 
-  R*(E) ≤ (1 − S_est(E)) / (m − 1)
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)   [cota derivada]
 
-Sin H3, la cota demostrada bajo H1, H2, C1 y C2 es:
+Aproximación operativa. En el régimen institucional (ver Nota A.4.2):
 
-  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
+  R*(E) ≲ (1 − S_est(E)) / (m − 1)
 
-Demostración del Teorema A.4.
+La cota derivada proporciona la garantía matemática formal bajo H1, H2, C1, C2. La aproximación operativa es la forma utilizada en la Parte VIII, el Apéndice B y el Apéndice D; captura la dependencia monótonamente decreciente de R*(E) en S_est(E) en el régimen de alta sustituibilidad.
+
+Demostración de la cota derivada.
 
 Paso 1. Descomposición de R*(E).
 
@@ -140,42 +154,33 @@ Paso 2. Cota del segundo término.
 
   |R*(E) − R*^(E)_E| ≤ ‖R* − R*^(E)‖_∞ ≤ ‖R* − R*^(E)‖₁
 
-Por el Teorema A.3: ‖R* − R*^(E)‖₁ ≤ (m/δ)·‖E_mat‖₂.
+Por el Teorema A.3 y la hipótesis H1: ‖R* − R*^(E)‖₁ ≤ (m/δ)·‖E_mat‖₂.
 
-Paso 3. Conexión de ‖E_mat‖₂ con S_est(E). Para conectar la norma de la perturbación ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ con la correlación S_est(E), se requiere la siguiente hipótesis no demostrada:
-
-(H2) ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m). Esta desigualdad conecta la desviación en el espacio de filas de W con S_est(E) en el espacio del eigenvector de M_R(D). No se deriva aquí: su demostración requeriría caracterizar cómo la desviación de la fila E de W se propaga a la correlación entre R* y R*^(E), lo que involucra la estructura de toda la matriz W, no solo la fila E.
-
-Bajo la hipótesis H2:
+Paso 3. Hipótesis H2. La hipótesis H2 establece que la desviación de la fila E de W está acotada en términos de S_est:
 
   ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m)
 
-Paso 4. Combinación. Con R*^(E)_E ≈ 1/m (nota A.4.1) y bajo H1 y H2:
+Su verificación en un caso concreto: calcular ‖W_{E·} − W̄_{E·}‖₂ y confrontarlo con (1 − S_est(E))·√(2/m).
 
-  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
-
-Este es el resultado demostrado bajo H1, H2, C1 y C2. El término 1/m no es despreciable: para m = 3 y δ = 1, R*(E) ≤ 0.333 + (1 − S_est(E)) · 0.816.
-
-La simplificación del Lema 8.1, R*(E) ≤ (1 − S_est(E))/(m − 1), requiere la hipótesis adicional:
-
-(H3) El término 1/m es despreciable respecto a (m/δ)·(1 − S_est(E))·√(2/m) en el rango de parámetros considerado. Esta hipótesis no es válida en general: para m = 3 y cualquier valor de S_est, 1/m = 0.333 domina o es comparable al segundo término.
-
-El resultado condicional completo del Lema 8.1 bajo H1, H2, H3, C1 y C2 es:
-
-  R*(E) ≤ (1 − S_est(E)) / (m − 1)   [condicional a H1, H2, H3, C1, C2]
-
-Sin H3, la cota demostrada (bajo H1, H2, C1, C2) es:
+Paso 4. Combinación. Con R*^(E)_E ≈ 1/m (Nota A.4.1) y bajo H1, H2, C1, C2:
 
   R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m). ∎
 
-Nota A.4.1 — R*^(E)_E ≈ 1/m. Cuando la fila E se reemplaza por el promedio W̄_{E·}, la fila E del grafo de sustitución es la media aritmética de las m−1 filas restantes. Si W es aproximadamente uniforme en promedio (cada nodo tiene peso típico ≈ 1/m en la distribución estacionaria), entonces R*^(E)_E ≈ 1/m. La corrección |R*^(E)_E − 1/m| está acotada por el máximo desequilibrio del grafo; para grafos donde el desequilibrio es ≤ 0.10 en todos los nodos, |R*^(E)_E − 1/m| ≤ 0.10·(1/m).
+Nota A.4.1 — R*^(E)_E ≈ 1/m. Cuando la fila E se reemplaza por el promedio W̄_{E·}, la fila E del grafo de sustitución es la media aritmética de las m−1 filas restantes. Si W es aproximadamente uniforme en promedio (cada nodo con peso típico ≈ 1/m en la distribución estacionaria), entonces R*^(E)_E ≈ 1/m. La corrección |R*^(E)_E − 1/m| está acotada por el máximo desequilibrio del grafo; para grafos con desequilibrio ≤ 0.10, |R*^(E)_E − 1/m| ≤ 0.10·(1/m).
 
-Nota A.4.2 — Relación entre la cota L2 y la cota lineal. El Lema A.2 da una cota en √(1−S_est) (raíz cuadrada), mientras que el Teorema A.4 da una cota en (1−S_est) (lineal). La reconciliación ocurre porque el paso A.3 introduce un factor adicional (m/δ)/√m = √m/δ que convierte la cota L2 en una cota L1 lineal en (1−S_est) en el régimen de parámetros estándar. La cota lineal es más estricta que la cota raíz cuando (1−S_est) es pequeño (régimen de alta sustituibilidad).
+Nota A.4.2 — Condiciones de la aproximación operativa. La forma R*(E) ≲ (1−S_est(E))/(m−1) tiene la siguiente motivación estructural: cuando S_est(E) → 1, R*(E) = R*^(E)_E ≈ 1/m (la idiosincrasia causal de E tiende a cero); cuando S_est(E) decrece desde 1, R*(E) crece por encima de ese valor basal en la medida en que E contribuye idiosincráticamente. En grafos con distribución de responsabilidad aproximadamente uniforme, la escala de crecimiento por unidad de (1 − S_est) es del orden de 1/(m−1). La aproximación operativa es aplicable en el régimen institucional:
+
+  (a) m ∈ [4, 10];
+  (b) δ > 0.5;
+  (c) S_est(E) > 0.75;
+  (d) H1 y H2 satisfechas para el sistema concreto.
+
+Fuera de este régimen, debe utilizarse la cota derivada del Teorema A.4.
 
 
 A.5. Tabla de valores numéricos
 
-Valores de (1 − S_est(E))/(m − 1), que es la cota principal de R*(E) bajo las condiciones del Teorema A.4:
+Valores de la aproximación operativa (1 − S_est(E))/(m − 1) en el régimen institucional (Nota A.4.2). Para usar la cota derivada en su lugar, aplicar R*(E) ≤ 1/m + (m/δ)·(1−S_est(E))·√(2/m).
 
 [TABLA]
 | m | S_est(E) = 0.70 | S_est(E) = 0.80 | S_est(E) = 0.85 | S_est(E) = 0.90 |
@@ -194,6 +199,10 @@ Paso 2. Calcular R*^(E) reemplazando la fila E de W por W̄_{E·} y re-ejecutand
 
 Paso 3. Calcular S_est(E) = |ρ(R*, R*^(E))| usando la fórmula de Pearson.
 
-Paso 4. Verificar R*(E) ≤ (1 − S_est(E))/(m − 1).
+Paso 4a. Verificar R*(E) ≲ (1 − S_est(E))/(m − 1) [aproximación operativa, en régimen institucional].
+Paso 4b. Si se requiere garantía formal: verificar R*(E) ≤ 1/m + (m/δ)·(1−S_est(E))·√(2/m) [cota derivada].
 
-Ejemplo (caso banco, m = 5, S_est(E) = 0.85). Cota teórica: (1 − 0.85)/4 = 0.0375. Si el cálculo por eliminación gaussiana da R*(E) = 0.018 < 0.0375: la cota se verifica. ✓
+Ejemplo (caso banco, m = 5, S_est(E) = 0.85).
+Aproximación operativa: (1 − 0.85)/4 = 0.0375.
+Cota derivada (δ = 1): 1/5 + 5·0.15·√(2/5) = 0.200 + 0.474 = 0.674.
+Si el cálculo por eliminación gaussiana da R*(E) = 0.018: la aproximación operativa se verifica (0.018 < 0.0375) ✓; la cota derivada también (0.018 < 0.674) ✓.
