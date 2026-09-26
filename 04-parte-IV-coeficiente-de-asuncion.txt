@@ -2,106 +2,153 @@ Parte IV
 
 El coeficiente de asunción α
 
+
 Definición 4. Coeficiente de asunción — versión continua
 
-Sea w: T → ℝ₊ la función de peso de la Definición 2 y sea p: T → [0,1] una función de profundidad de integración medible. El coeficiente de asunción del sistema en t es:
+Objeto. α(t) mide la fracción de los colapsos producidos por el sistema hasta t que han sido efectivamente integrados por φ₂ en la historia acumulada I(t), ponderada por su peso temporal y por su profundidad de integración. α(t) cuantifica la asunción efectiva: lo que el sistema asumió como propio en I(t) en relación con todo lo que produjo en RSC(t).
 
-Coeficiente de asunción — versión continua
+α(t) no es un indicador de intención, dolo o consentimiento. El valor de α(t) es el mismo ya sea que la integración ocurriera de forma voluntaria, forzada o impuesta: la fórmula mide únicamente la fracción de RSC(t) que quedó integrada en I(t), independientemente del mecanismo que produjo esa integración.
 
-α(t) = ∫₀ᵗ 1_{int}(τ) · w(τ) · p(τ) dτ / ∫₀ᵗ w(τ) dτ
+Variables y condiciones.
 
-1_{int}(τ) = 1 si c(τ) ∈ I(t) (φ₂ integró el colapso)
+T = [0, t_m]        intervalo temporal (Definición 0)
+t ∈ T               instante actual
+w : T → ℝ₊         función de peso de la Definición 2; ∫₀ᵗ w(τ) dτ > 0
+p : T → [0,1]       función de profundidad de integración; p medible
+1_{int}(τ)          función indicadora: vale 1 si c(τ) fue integrado por φ₂ en I(t), vale 0 si fue rechazado
 
-1_{int}(τ) = 0 si c(τ) ∈ RSC(t)\I(t) (φ₂ rechazó el colapso)
+Fórmula.
 
-p: T → [0,1] medible · p(τ) = 0 para colapsos rechazados · p(τ) > 0 para colapsos integrados · w la misma función de la Definición 2
+α(t) = ∫₀ᵗ 1_{int}(τ) · w(τ) · p(τ) dτ  /  ∫₀ᵗ w(τ) dτ
 
-El denominador ∫₀ᵗ w(τ) dτ > 0 bajo w > 0, lo que garantiza que α(t) esté bien definido. La función p(τ) es el único elemento que requiere calibración por dominio; el núcleo formal solo exige p: T → [0,1] con p medible.
+El denominador ∫₀ᵗ w(τ) dτ > 0 garantiza que α(t) está bien definido.
 
-La función indicadora 1_{int} opera sobre la distinción RSC(t) / I(t) de la Definición 2.1: RSC(t) registra todos los colapsos producidos; I(t) solo los integrados. α(t) mide qué fracción de RSC(t), ponderada por w y p, reside en I(t). Es la proporción de lo producido que el sistema asumió, no la magnitud absoluta de lo asumido.
+Procedimiento de cálculo. Para T continuo:
+
+1. Identificar los instantes donde 1_{int}(τ) = 1 (colapsos integrados por φ₂) a partir de RSC(t) e I(t).
+2. Evaluar p(τ) en cada instante de colapso integrado.
+3. Calcular el numerador: ∫₀ᵗ 1_{int}(τ) · w(τ) · p(τ) dτ.
+4. Calcular el denominador: ∫₀ᵗ w(τ) dτ.
+5. Calcular α(t) = numerador / denominador.
+
+Interpretación de los factores. 1_{int}(τ) selecciona qué colapsos se cuentan; w(τ) pondera su relevancia temporal; p(τ) cuantifica cuán profundamente fue integrado cada colapso. El producto 1_{int}(τ) · w(τ) · p(τ) es cero para colapsos rechazados y positivo para colapsos integrados en proporción a su peso y profundidad.
+
 
 Definición 4.1. Coeficiente de asunción — versión discreta
 
-Sean {t₁, …, tₙ} ⊂ T momentos discretos de colapso y sea w(τ) = Σᵢ δ (τ − tᵢ) la función de peso correspondiente, con δ la delta de Dirac. Para un colapso aᵢ producido en tᵢ:
+Objeto. Cuando los colapsos ocurren en instantes discretos t₁, …, tₙ, α se calcula para cada colapso individual como el producto de tres factores observables.
 
-Coeficiente de asunción — versión discreta
+Variables y condiciones.
 
-α(aᵢ) = p_pres · f(τᵢ) · g(τᵢ)
+{t₁, …, tₙ} ⊂ T   instantes discretos de colapso
+aᵢ = c(tᵢ) ∈ A     colapso producido en tᵢ
+p_pres(aᵢ)          indicador de presencia en I(t): 1 si aᵢ ∈ I(t), 0 si aᵢ ∈ RSC(t)\I(t)
+f(tᵢ) ∈ [0,1]       profundidad de integración del colapso aᵢ (Tabla 4.1)
+g(tᵢ) ∈ [0,1]       alcance de la integración del colapso aᵢ (Tabla 4.1)
 
-p_pres ∈ {0,1}: 1 si aᵢ ∈ I(t), 0 si aᵢ ∈ RSC(t)\I(t)
+Fórmula.
 
-f(τᵢ) ∈ [0,1]: profundidad de integración en τᵢ (ver Tabla 4.1)
+α(aᵢ) = p_pres(aᵢ) · f(tᵢ) · g(tᵢ)
 
-g(τᵢ) ∈ [0,1]: alcance de la integración en τᵢ (ver Tabla 4.1)
+Proposición 4.1. Derivación desde la versión continua.
 
-La versión discreta es el caso particular de la Definición 4 con w(τ) = δ(τ−tᵢ) — demostrado en la Proposición 4.1
+La versión discreta es el caso particular de la Definición 4 con w(τ) = δ(τ−tᵢ).
 
-Proposición 4.1 — Derivación desde la versión continua
+Paso 1. Con w(τ) = δ(τ−tᵢ): por la propiedad de muestreo de la delta de Dirac, ∫₀ᵗ 1_{int}(τ)·δ(τ−tᵢ)·p(τ) dτ = 1_{int}(tᵢ)·p(tᵢ).
 
-Proposición 4.1
+Paso 2. El denominador: ∫₀ᵗ δ(τ−tᵢ) dτ = 1.
 
-Paso 1. Con w(τ) = δ(τ−tᵢ), el numerador es ∫₀ᵗ 1_{int}(τ)·δ(τ−tᵢ) ·p(τ) dτ = 1_{int}(tᵢ)·p(tᵢ) por la propiedad de muestreo de la delta de Dirac.
+Paso 3. Luego α(aᵢ) = 1_{int}(tᵢ)·p(tᵢ) = p_pres(aᵢ)·p(tᵢ). La función de profundidad puntual p(tᵢ) se descompone en f(tᵢ)·g(tᵢ), donde f captura el tipo de integración y g su extensión.
 
-Paso 2. El denominador es ∫₀ᵗ δ(τ−tᵢ) dτ = 1 por la misma propiedad.
+La versión discreta es la continua evaluada con w = δ(τ−tᵢ). ∎
 
-Paso 3. Luego α(aᵢ) = 1_{int}(tᵢ)·p(tᵢ) = p_pres · p(tᵢ). La función de profundidad puntual p(tᵢ) se descompone en el producto f(τᵢ) ·g(τᵢ), donde f captura el tipo de integración y g su extensión —ambos definidos en la Tabla 4.1.
-
-La versión discreta es la continua evaluada con w = δ(τ−tᵢ): no son dos definiciones independientes. ∎
-
-Tabla 4.1 — Funciones f y g: variables observables y niveles de referencia
+Tabla 4.1 — Funciones f y g
 
 [TABLA]
-| Parámetro | Variable observable subyacente | Función continua | Niveles de referencia | n_ref / n_I anclados a E0–E8 |
-| f (profundidad) | n_doc(τ) = número de documentos del expediente que confirman la integración del colapso c(τ). | f(τ) = min(1, n_doc(τ) / n_ref) n_ref = umbral derivado del nivel de evidencia | f ≈ 0.3: n_doc/n_ref ∈ [0.1, 0.4] f ≈ 0.6: n_doc/n_ref ∈ [0.4, 0.8] f ≈ 1.0: n_doc/n_ref ∈ [0.8, 1.0] | E1–E2 (declaración): n_ref = 1–2 E3–E4 (documental básico): n_ref = 3–5 E5–E6 (documental robusto): n_ref = 6–10 E7–E8 (prueba plena): n_ref = 11+ n_ref se fija al inicio del análisis según el estándar de evidencia declarado para el dominio. |
-| g (alcance) | n_dom(τ) = número de dominios de I(t) afectados por la integración de c(τ), con n_I el total de dominios de I(t). | g(τ) = n_dom(τ) / n_I | g ≈ 0.3: n_dom/n_I ∈ [0.0, 0.4] g ≈ 0.6: n_dom/n_I ∈ [0.4, 0.8] g ≈ 1.0: n_dom/n_I ∈ [0.8, 1.0] | n_I = número de dominios identificados en I(t) mediante SDO o protocolo equivalente antes del análisis. No varía entre analistas dado el mismo expediente y el mismo protocolo SDO. |
+| Parámetro | Definición | Fórmula | Anclaje a E0–E8 |
+| f (profundidad) | n_doc(τ) = número de documentos del expediente que confirman la integración de c(τ). | f(τ) = min(1, n_doc(τ) / n_ref); n_ref = umbral derivado del nivel de evidencia declarado. | E1–E2: n_ref = 1–2; E3–E4: n_ref = 3–5; E5–E6: n_ref = 6–10; E7–E8: n_ref ≥ 11. |
+| g (alcance) | n_dom(τ) = número de dominios de I(t) afectados por la integración de c(τ); n_I = total de dominios de I(t). | g(τ) = n_dom(τ) / n_I | n_I se determina mediante el protocolo SDO antes del análisis. |
 [/TABLA]
 
-Las funciones f y g son continuas en sus variables observables subyacentes n_doc y n_dom. Los tres niveles de referencia {0.3, 0.6, 1.0} son cuantiles para el uso operativo cuando los conteos exactos no están disponibles, no valores discretos intrínsecos. El parámetro n_ref en f ya no es un parámetro libre: queda fijado por el nivel de evidencia E0–E8 declarado para el dominio de análisis, según la última columna de la Tabla 4.1. Dos analistas que apliquen el mismo nivel de evidencia sobre el mismo expediente obtendrán el mismo n_ref y, por tanto, valores de f comparables entre sí.
-
-El anclaje de n_ref a la escala E0–E8 resuelve la variabilidad entre analistas que surgía cuando n_ref era un parámetro libre. El nivel de evidencia requerido para el dominio se declara antes del análisis —por protocolo o por acuerdo de las partes— y n_ref se deriva directamente de esa declaración. En casos jurídicos el estándar probatorio del juicio determina el nivel E; en sistemas artificiales el protocolo de evaluación determina el número mínimo de registros. Ambos son externos al analista que aplica el sistema.
+El umbral n_ref queda fijado por el nivel de evidencia E0–E8 declarado para el dominio de análisis antes de calcular α. Dos analistas que apliquen el mismo nivel de evidencia sobre el mismo expediente obtienen el mismo n_ref y valores de f comparables.
 
 El coeficiente de asunción agregado para un conjunto de colapsos A_D ⊆ RSC(t) es:
 
-Coeficiente de asunción agregado
+α_D(t) = (1/|A_D|) · Σ_{aᵢ ∈ A_D ∩ I(t)} α(aᵢ)
 
-α_D(t) = (1/|A_D|) · Σ_ {aᵢ ∈ A_D ∩ I(t)} α(aᵢ)
+Si A_D ∩ I(t) = ∅ entonces α_D(t) = 0.
 
-A_D conjunto de colapsos del dominio D · A_D ∩ I(t) colapsos de A_D integrados · si A_D ∩ I(t) = ∅ entonces α_D(t) = 0
+Procedimiento de cálculo discreto.
 
-Teorema 4. α(t) ∈ [0, 1] por construcción
+1. Identificar el conjunto de colapsos A_D ⊆ RSC(t) del dominio D.
+2. Separar A_D ∩ I(t) (colapsos integrados) de A_D \ I(t) (colapsos rechazados): p_pres = 1 y p_pres = 0, respectivamente.
+3. Para cada aᵢ ∈ A_D ∩ I(t): calcular n_doc(tᵢ), obtener f(tᵢ) = min(1, n_doc/n_ref); calcular n_dom(tᵢ), obtener g(tᵢ) = n_dom/n_I.
+4. Calcular α(aᵢ) = 1 · f(tᵢ) · g(tᵢ) para colapsos integrados.
+5. Calcular α_D(t) = (1/|A_D|) Σ α(aᵢ).
 
-Para toda c: T → E admisible, toda w: T → ℝ₊ medible y acotada con ∫w > 0, y toda p: T → [0,1] medible:
+Ejemplo. Sea un sistema con tres colapsos documentados: A_D = {a₁, a₂, a₃}. El dominio exige estándar probatorio E5–E6, luego n_ref = 8. El análisis identifica n_I = 4 dominios en I(t).
 
-Acotación de α
+Colapso a₁ (t₁ = 1): integrado (p_pres = 1); n_doc = 6 documentos; n_dom = 3 dominios afectados.
+  f(t₁) = min(1, 6/8) = min(1, 0.75) = 0.75
+  g(t₁) = 3/4 = 0.75
+  α(a₁) = 1 · 0.75 · 0.75 = 0.5625
+
+Colapso a₂ (t₂ = 2): rechazado (p_pres = 0).
+  α(a₂) = 0 · f(t₂) · g(t₂) = 0
+
+Colapso a₃ (t₃ = 3): integrado (p_pres = 1); n_doc = 10 documentos; n_dom = 4 dominios afectados.
+  f(t₃) = min(1, 10/8) = min(1, 1.25) = 1
+  g(t₃) = 4/4 = 1
+  α(a₃) = 1 · 1 · 1 = 1
+
+Coeficiente agregado:
+  α_D = (1/3)(α(a₁) + α(a₂) + α(a₃)) = (1/3)(0.5625 + 0 + 1) = 1.5625/3 ≈ 0.521
+
+Verificación de rango: 0 ≤ 0.521 ≤ 1. ✓
+
+Interpretación. De los tres colapsos, a₂ fue rechazado por φ₂ y contribuye con cero. a₁ fue integrado con profundidad y alcance moderados (α = 0.563). a₃ fue integrado con documentación y alcance máximos (α = 1). El agregado α_D ≈ 0.52 indica que el sistema asumió aproximadamente la mitad de lo que produjo, ponderado por profundidad y alcance.
+
+Ejemplo con asunción forzada. Un sistema produce el colapso a₁ bajo presión externa documentada (k* = 1, modo de presión estructural). La integración ocurre porque φ₂ acepta el colapso: eval(a₁, I(t)) > θ. El mecanismo de aceptación —voluntario, forzado o impuesto— no aparece en la fórmula de α. El resultado α(a₁) = 0.5625 es idéntico al ejemplo anterior independientemente de la causa que produjo la integración.
+
+Ejemplo con asunción impuesta. Un sistema es obligado externamente a integrar a₃ como consecuencia jurídica (n_doc = 12, n_dom = 4). p_pres = 1. El valor de α(a₃) = 1 · 1 · 1 = 1 es el mismo que si la integración hubiera sido voluntaria. La distinción entre asunción voluntaria, forzada e impuesta pertenece al análisis del modo k* (Lema 1.1), no al cálculo de α.
+
+
+Teorema 4. α(t) ∈ [0, 1]
+
+Para toda c: T → E admisible, toda w: T → ℝ₊ medible y acotada con ∫₀ᵗ w > 0, y toda p: T → [0,1] medible:
 
 α(t) ∈ [0, 1] para todo t ∈ T
 
-Demostración
+Demostración.
 
-Demostración del Teorema 4
+α(t) ≥ 0. Numerador: 1_{int} ∈ {0,1} ≥ 0, w ∈ ℝ₊ ≥ 0, p ∈ [0,1] ≥ 0. El producto de tres factores no negativos es no negativo. La integral de una función no negativa es no negativa. Denominador: ∫₀ᵗ w dτ > 0 por hipótesis. Razón de no negativo sobre positivo: α(t) ≥ 0. ✓
 
-α(t) ≥ 0. Numerador: 1_{int} ∈ {0,1} ≥ 0, w ∈ ℝ₊ ≥ 0, p ∈ [0,1] ≥ 0. El producto de tres factores no negativos es no negativo; su integral también. Denominador: ∫₀ᵗ w(τ) dτ > 0 por hipótesis. Razón de no negativo sobre positivo: α(t) ≥ 0. ✓
+α(t) ≤ 1. Para todo τ ∈ T: 1_{int}(τ)·p(τ) ≤ 1 (producto de factores en [0,1]). Multiplicando por w(τ) ≥ 0: 1_{int}·w·p ≤ w. Integrando: ∫₀ᵗ 1_{int}·w·p dτ ≤ ∫₀ᵗ w dτ. Dividiendo por el denominador positivo: α(t) ≤ 1. ✓
 
-α(t) ≤ 1. Para todo τ ∈ T: 1_{int}(τ) · p(τ) ≤ 1 (producto de factores en [0,1]). Multiplicando por w(τ) ≥ 0: 1_{int}(τ)·w(τ)·p(τ) ≤ w(τ). Integrando: ∫₀ᵗ 1_{int}·w·p dτ ≤ ∫₀ᵗ w dτ. Dividiendo por el denominador positivo: α(t) ≤ 1. ✓
+Casos extremos. α(t) = 1 ⟺ 1_{int}(τ)·p(τ) = 1 para w-casi todo τ: todos los colapsos integrados con profundidad máxima. α(t) = 0 ⟺ 1_{int}(τ)·p(τ) = 0 para w-casi todo τ: ningún colapso integrado o todos con profundidad cero. ∎
 
-Casos extremos. α(t) = 1 ⟺ 1_{int}(τ)·p(τ) = 1 para w-casi todo τ: todos los colapsos integrados con p = 1. α(t) = 0 ⟺ 1_{int}(τ)·p(τ) = 0 para w-casi todo τ: ningún colapso integrado o todos con p = 0.
+Verificación numérica. Con los datos del ejemplo anterior:
+  Numerador: α(a₁) · (1/3) + α(a₂) · (1/3) + α(a₃) · (1/3) = (0.5625 + 0 + 1) / 3 = 0.521
+  0 ≤ 0.521 ≤ 1.  ✓
 
-α(t) ∈ [0,1] sin restricciones adicionales sobre c, w o p más allá de las ya establecidas. ∎
 
-Corolario 4.1 — Independencia de α respecto al dolo. α(t) está definido exclusivamente en términos de acciones observables posteriores al colapso —lo que φ₂ integró en I(t), medido por 1_{int}, w y p— y no en términos de la intención con que φ₁ produjo el colapso. En consecuencia, el valor de α(t) es invariante bajo cualquier descripción de la intención del sistema en τ: el dolo, la culpa o la ausencia de ambos no alteran 1_{int}(τ), w(τ) ni p(τ).
+Corolario 4.1. Independencia de α respecto a la intención
 
-Esta independencia tiene dos consecuencias operativas. Primera: α es compatible con la definición de S —que captura el estado de la voluntad a través de k*(v_t)— sin contradicción: S informa sobre el determinismo del acto en φ₁; α informa sobre la asunción efectiva en φ₂. Son medidas de objetos distintos. Segunda: α puede crecer por asunción voluntaria, forzada o impuesta; el efecto sobre el déficit Δ = R* − α es idéntico en los tres casos.
+α(t) está definido exclusivamente en términos de las acciones posteriores al colapso —lo que φ₂ integró en I(t), medido por 1_{int}, w y p— y no en términos de la intención con que φ₁ produjo el colapso. El valor de α(t) es invariante bajo cualquier descripción de la intención, el dolo o la culpa del sistema en τ: ninguno de esos factores altera 1_{int}(τ), w(τ) ni p(τ).
 
-La invariancia de α respecto al dolo distingue el sistema de los sistemas de imputación jurídica clásicos, que anclan la responsabilidad en la intención. El sistema no niega que la intención sea relevante para el derecho: simplemente la coloca en un objeto distinto —el modo k* del Lema 1.1— y no en α. La compatibilidad formal entre ambos objetos es consecuencia de su independencia matemática.
+Demostración. Las variables 1_{int}, w y p dependen exclusivamente de: (a) si φ₂ aceptó o rechazó el colapso (1_{int}), (b) el peso temporal asignado al colapso (w), y (c) la profundidad documentada de su integración (p). Ninguna de estas variables hace referencia al estado interno que produjo el colapso en φ₁ ni al mecanismo de la producción (voluntario, forzado o impuesto). Por tanto α(t) es invariante bajo cualquier descripción de la intención. ✓ ∎
+
+Consecuencia operativa. α mide la asunción efectiva; k* (Lema 1.1) captura el modo de producción del colapso. Los dos objetos son matemáticamente independientes. Su combinación —a través del déficit Δ = R* − α de la Parte V— permite desacoplar la responsabilidad causal estructural (R*) de la asunción efectiva (α) sin imponer juicios sobre la intención.
+
 
 [TABLA]
 | Objeto | Notación | Tipo matemático | Parte |
-| Coeficiente de asun. | α(t) ∈ [0,1] | Integral de Lebesgue normalizada | Definición 4 |
-| Función de profund. | p : T → [0,1] | Medible; requiere calibración | Definición 4 |
-| Versión discreta | α(aᵢ) = p_pres·f·g | Caso δ(τ−tᵢ) de la Definición 4 | Definición 4.1; Prop. 4.1 |
-| Profundidad f | f(τ) = min(1,n_doc/n_ref) | Función continua en n_doc ∈ ℕ | Tabla 4.1 |
-| Alcance g | g(τ) = n_dom/n_I | Función continua en n_dom ∈ ℕ | Tabla 4.1 |
-| Asunción agregada | α_D = (1/¦A_D¦)Σα(aᵢ) | Media aritmética sobre A_D∩I(t) | Definición 4.1 |
-| Acotación | Teorema 4 | α ∈ [0,1] sin hipótesis extra | Teorema 4 |
-| Indep. del dolo | Corolario 4.1 | α invariante bajo descripción de φ₁ | Corolario 4.1 |
+| Coeficiente de asun. continuo | α(t) ∈ [0,1] | Integral normalizada | Definición 4 |
+| Función de profundidad | p : T → [0,1] | Medible | Definición 4 |
+| Versión discreta | α(aᵢ) = p_pres·f·g | Caso δ(τ−tᵢ) de Def. 4 | Definición 4.1; Proposición 4.1 |
+| Profundidad f | f(τ) = min(1, n_doc/n_ref) | Continua en n_doc | Tabla 4.1 |
+| Alcance g | g(τ) = n_dom/n_I | Continua en n_dom | Tabla 4.1 |
+| Asunción agregada | α_D = (1/|A_D|) Σα(aᵢ) | Media aritmética | Definición 4.1 |
+| Acotación | Teorema 4 | α(t) ∈ [0,1] | Teorema 4 |
+| Independencia del dolo | Corolario 4.1 | α invariante bajo descripción de φ₁ | Corolario 4.1 |
 [/TABLA]

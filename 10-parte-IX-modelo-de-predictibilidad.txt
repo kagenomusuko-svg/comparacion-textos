@@ -2,134 +2,316 @@ Parte IX
 
 Modelo de Predictibilidad
 
-Esta parte presenta el Modelo de Predictibilidad (MP): un modelo de regresión logística que estima P(y = 1 | Ψ(t), c) para y ∈ {0,1} una decisión binaria del sistema. Estatus: el MP es un modelo estadístico, no un teorema. No postula una cota universal del error mínimo: el error mínimo empírico se estima en cada aplicación concreta del modelo a partir de los datos disponibles y del valor observado de τ.
+
+Introducción
+
+Esta parte presenta el Modelo de Predictibilidad (MP): un modelo de regresión logística que estima P(y = 1 | Ψ(t), c) para y ∈ {0,1} una decisión binaria del sistema. El MP es un modelo estadístico. No postula una cota universal del error mínimo: el error mínimo empírico se estima en cada aplicación concreta a partir de los datos disponibles y del valor observado de τ. El MP y la REC (Parte VII) son dos proyecciones del mismo Axioma 3 (τ > 0) sobre perspectivas complementarias: interna y externa.
+
 
 Definición 9. El estado completo Ψ(t)
 
-El estado completo del sistema en t es:
+Objeto. Ψ(t) es el estado completo del sistema en el instante t. Concentra en un único vector toda la información del sistema en t que es relevante para predecir sus decisiones binarias.
 
-Estado completo
+Variables y condiciones. Los componentes de Ψ(t) son:
 
-Ψ(t) = (I(t), h(t), E(t), D(t), C(t))
+I(t) ∈ E         integral acumulativa de colapsos (Definición 2)
+h(t) ∈ Δ⁵        distribución sobre K = {1,…,6}: vector softmax del Lema 1.1
+E(t) ∈ {1,…,6}   nivel de integración: fracción ponderada de RSC(t) en I(t)
+D(t) ∈ {1, 2}    1 = señal activa (k* = 3,4,5); 2 = señal silenciada (k* = 1,2)
+C(t) ⊆ E         campo de acción disponible en t
 
-Ψ(t) ∈ E × Δ⁵ × {1,…,6} × {1,2} × 𝒫(E) · input del Modelo 9
+Fórmula.
+
+Ψ(t) = (I(t), h(t), E(t), D(t), C(t)) ∈ E × Δ⁵ × {1,…,6} × {1,2} × 𝒫(E)
+
+Procedimiento de construcción.
+
+Paso 1. Calcular I(t) = ∫₀ᵗ c(τ)w(τ)dτ ∈ E mediante la Definición 2, con c : T → E función de colapso admisible y w : [0,t] → ℝ≥₀ función de ponderación.
+
+Paso 2. Calcular h(t) ∈ Δ⁵ ⊂ ℝ⁶ mediante el Lema 1.1: para cada k ∈ K, computar z_k = (⟨β_k, a_t⟩_E + γ_k·‖I(t)‖_E − θ_k(I(t)))/τ, luego h_k = exp(z_k)/Σⱼ exp(z_j). Por el Lema 1.1, h(t) ∈ Δ⁵ para todo t.
+
+Paso 3. Determinar E(t) ∈ {1,…,6} como nivel de integración de I(t): nivel más alto de RSC(t) que contribuye con peso no nulo a la integral I(t). En sistemas con componentes de RSC no directamente computables, E(t) se aproxima por métricas de coherencia interna del historial acumulado.
+
+Paso 4. Determinar D(t) ∈ {1,2}: D(t) = 1 si el modo activado k* ∈ {3,4,5}; D(t) = 2 si k* ∈ {1,2}. En sistemas artificiales, D(t) = 1 corresponde a respuesta bajo parámetros nominales y D(t) = 2 a respuesta bajo restricción activa.
+
+Paso 5. Identificar C(t) ⊆ E: el conjunto de colapsos posibles en t dado el contexto y las restricciones vigentes.
+
+Paso 6. Formar el vector Ψ(t) = (I(t), h(t), E(t), D(t), C(t)).
+
+Ejemplo. Sistema en t = 12 meses, con tres colapsos previos (t₁, t₂, t₃) con pesos w₁ = 1, w₂ = 1, w₃ = 1:
+
+  I(t) = c(t₁) + c(t₂) + c(t₃) ∈ E     (integral discreta con pesos unitarios)
+  ‖I(t)‖_E   = medida escalar del volumen acumulado
+  h(t) = softmax(z)                      (distribución sobre 6 modos calculada según Lema 1.1)
+  E(t) = 4, D(t) = 1, C(t) = {colapsos posibles en t₃}
+
+  Ψ(t) = (I(t), h(t), 4, 1, C(t))
+
+Interpretación. Ψ(t) hereda la imprecisión de I(t) y h(t) establecida en la REC (Parte VII): para un observador con n colapsos integrados, ΔI·Δh ≥ τ₀/n. Esto implica que Ψ(t) no puede ser conocido con precisión arbitraria por un observador externo; la imprecisión crece con τ y decrece con n. Esta limitación se traduce en el error mínimo del MP a través de la Hipótesis 9.2.
 
 [TABLA]
-| Componente | Espacio | Contenido | En sistemas artificiales |
-| I(t) | E | Integral acumulativa de colapsos (Definición 2) | Historia de outputs integrados en el contexto |
-| h(t) | Δ⁵ ⊂ ℝ⁶ | Distribución sobre K = {1,…,6}: vector softmax del Lema 1.1 | Distribución softmax sobre outputs alternativos |
-| E(t) | {1,…,6} | Nivel de integración: fracción ponderada de RSC(t) en I(t) | No computable directamente; aproximar por métrica de coherencia del contexto |
-| D(t) | {1, 2} | 1 = señal activa (k* = 3,4,5); 2 = señal silenciada (k* = 1,2) | 1 = respuesta bajo parámetros nominales; 2 = respuesta bajo restricción activa |
-| C(t) | ⊆ E | Campo de acción disponible en t | Conjunto de outputs posibles dado el prompt y las restricciones del sistema |
+| Componente | Espacio | Contenido |
+| I(t) | E | Integral acumulativa de colapsos (Definición 2) |
+| h(t) | Δ⁵ ⊂ ℝ⁶ | Distribución softmax sobre modos K = {1,…,6} |
+| E(t) | {1,…,6} | Nivel de integración de RSC(t) en I(t) |
+| D(t) | {1, 2} | Estado de la señal: activa (1) o silenciada (2) |
+| C(t) | 𝒫(E) | Campo de acción disponible en t |
 [/TABLA]
 
-Para sistemas artificiales, E(t) y D(t) se aproximan según la cuarta columna de la tabla. Cuando no son computables, el estado simplificado Ψ_IA(t) = (I(t), h(t), C(t)) es suficiente para el Modelo 9.
-
-Ψ(t) hereda la imprecisión de I(t) y h(t) documentada en la REC (Parte VII): para un observador externo con n colapsos integrados, ΔI·Δh ≥ τ₀²/n. Esto implica que Ψ(t) no es conocido con precisión arbitraria; la Hipótesis 9.2 captura esa consecuencia en ε_min.
 
 Definición 9.1. El vector de logits ℓ(t)
 
-Con z_k = (⟨β_k, a_t⟩_E + γ_k·‖I(t)‖_E − θ_k(I(t))) / τ del Lema 1.1, el logit del modo k es:
+Objeto. ℓ(t) es el vector de logits del sistema en t: la transformación monótona de h(t) que linealiza la estructura probabilística de los modos en la escala logarítmica de razones de probabilidad.
 
-Logit del modo k
+Variables y condiciones. Sean h_k(t) ∈ (0,1) los componentes del vector h(t) ∈ Δ⁵ (todos estrictamente positivos por el Lema 1.1). La función logit logit : (0,1) → ℝ es logit(p) = log(p/(1−p)).
 
-ℓ_k(t) = logit(h_k(t)) = log(h_k(t) / (1 − h_k(t))) ∈ ℝ
+Fórmula.
 
-ℓ(t) = (ℓ₁(t), …, ℓ₆(t)) ∈ ℝ⁶ · logit es la función inversa de la sigmoide σ
+ℓ_k(t) = logit(h_k(t)) = log(h_k(t) / (1 − h_k(t)))  ∈ ℝ
 
-Por la fórmula del Lema 1.1: ℓ_k(t) = z_k − log Σⱼ exp(z_j). El segundo término depende de a_t y c pero no de I(t). Si θ_k es lineal en ‖I(t)‖_E —Hipótesis del Lema 9.1— entonces ℓ_k es lineal en ‖I(t)‖_E, lo que habilita el modelo de regresión logística lineal.
+ℓ(t) = (ℓ₁(t), …, ℓ₆(t)) ∈ ℝ⁶
+
+Procedimiento de cálculo.
+
+Paso 1. Calcular h(t) ∈ Δ⁵ mediante el Lema 1.1 (Paso 2 de la Definición 9).
+
+Paso 2. Para cada k ∈ K = {1,…,6}, calcular ℓ_k(t) = log(h_k(t) / (1 − h_k(t))).
+
+Paso 3. Expresión en función de z_k. Por la Definición de h_k:
+
+  h_k = exp(z_k) / Σⱼ exp(z_j)
+
+  1 − h_k = (Σⱼ exp(z_j) − exp(z_k)) / Σⱼ exp(z_j)
+
+  h_k / (1 − h_k) = exp(z_k) / (Σⱼ exp(z_j) − exp(z_k))
+
+  ℓ_k = log(exp(z_k)) − log(Σⱼ exp(z_j) − exp(z_k))
+
+Forma alternativa. Una identidad algebraica equivalente:
+
+  ℓ_k(t) = z_k − log Σⱼ exp(z_j) + log(exp(z_k))
+
+más utilizable como: ℓ_k(t) = z_k − log(Σⱼ≠k exp(z_j))
+
+El segundo término depende de a_t y c pero no de I(t) cuando θ_k es constante; si θ_k es lineal en ‖I(t)‖_E (hipótesis del Lema 9.1), entonces ℓ_k es lineal en ‖I(t)‖_E.
+
+Ejemplo. Con z = (1.0, 0.5, 0.2, −0.3, −0.8, −1.5) (vector de preactivaciones en un instante dado):
+
+  Σⱼ exp(z_j) = e¹·⁰ + e⁰·⁵ + e⁰·² + e⁻⁰·³ + e⁻⁰·⁸ + e⁻¹·⁵
+              = 2.718 + 1.649 + 1.221 + 0.741 + 0.449 + 0.223
+              = 7.001
+
+  h₁ = 2.718/7.001 ≈ 0.388
+  h₂ = 1.649/7.001 ≈ 0.236
+  h₃ = 1.221/7.001 ≈ 0.174
+  h₄ = 0.741/7.001 ≈ 0.106
+  h₅ = 0.449/7.001 ≈ 0.064
+  h₆ = 0.223/7.001 ≈ 0.032
+
+  ℓ₁ = log(0.388 / 0.612) = log(0.634) ≈ −0.456
+  ℓ₂ = log(0.236 / 0.764) = log(0.309) ≈ −1.173
+  ℓ₃ = log(0.174 / 0.826) = log(0.211) ≈ −1.557
+
+Verificación: Σ h_k = 0.388 + 0.236 + 0.174 + 0.106 + 0.064 + 0.032 ≈ 1.000. ✓
+
+Interpretación. El vector ℓ(t) es la representación de h(t) en escala de log-razones de probabilidad. ℓ_k > 0 indica que el modo k tiene probabilidad mayor que 1/2 en escala one-vs-rest; ℓ_k < 0 indica probabilidad menor que 1/2. El vector ℓ(t) es la entrada natural para un modelo de regresión logística porque sus componentes son linealmente separables bajo la hipótesis del Lema 9.1.
+
 
 Modelo 9. El Modelo de Predictibilidad
 
-Sea y ∈ {0,1} una decisión binaria del sistema. El MP es:
+Objeto. El MP estima la probabilidad P(y = 1 | Ψ(t), c) de que la decisión binaria y del sistema tome el valor 1, condicionado al estado completo Ψ(t) y al contexto c.
 
-Modelo de Predictibilidad — forma general
+Variables y condiciones.
+
+y ∈ {0,1}        decisión binaria del sistema
+Ψ(t)             estado completo (Definición 9)
+c ∈ C(t)         contexto en t
+β ∈ ℝᵈ           vector de coeficientes (estimado por máxima verosimilitud sobre datos de decisiones)
+Φ : Ψ × C → ℝᵈ  función de características (especificada por el analista)
+σ(x) = 1/(1+e⁻ˣ) función sigmoide
+
+Fórmula general.
 
 P(y = 1 | Ψ, c) = σ(β · Φ(Ψ, c))
 
-σ(x) = 1/(1+e⁻ˣ) función sigmoide
-
-β ∈ ℝᵈ vector de coeficientes (estimado por máxima verosimilitud)
-
-Φ : Ψ × C → ℝᵈ función de características
-
-Estatus: modelo estadístico · β se estima sobre datos de decisiones del sistema · Φ se especifica por el analista
-
-Bajo la hipótesis de umbral lineal del Lema 9.1, Φ puede tomarse como la identidad en el espacio expandido, produciendo el modelo lineal:
-
-Modelo de Predictibilidad — caso lineal
+Fórmula lineal (bajo hipótesis del Lema 9.1).
 
 P(y=1|Ψ,c) = σ(β_I·‖I(t)‖_E + β_h·h(t) + β_E·E(t) + β_D·D(t) + β_c·c + β₀)
 
-Coeficientes β_I ∈ ℝ, β_h ∈ ℝ⁶, β_E ∈ ℝ, β_D ∈ ℝ, β_c ∈ ℝ^{dim C}, β₀ ∈ ℝ
+con β_I ∈ ℝ, β_h ∈ ℝ⁶, β_E ∈ ℝ, β_D ∈ ℝ, β_c ∈ ℝ^{dim C}, β₀ ∈ ℝ.
 
-El MP tiene tres propiedades técnicas distintivas:
+Procedimiento de estimación y aplicación.
 
-(i) Fundamentación. Las variables predictoras son componentes de Ψ(t) construidas por φ₁ y φ₂; no son covariables externas. Cada coeficiente tiene interpretación en términos de los objetos formales del sistema.
+Paso 1. Especificar Φ(Ψ, c). Bajo la hipótesis lineal del Lema 9.1, tomar Φ(Ψ, c) = (ℓ(t), E(t), D(t), C(t), c, 1). Sin esa hipótesis, Φ puede ser una función no lineal (red neuronal con capa oculta).
 
-(ii) Error estimable. El MP no postula una cota universal del error mínimo. El error mínimo empírico se estima desde la varianza de los logits observados bajo condiciones idénticas: cuanto mayor es τ, mayor es la variabilidad y mayor es el error de predicción esperado. La relación cualitativa τ ↑ → ε_min ↑ es consecuencia del Corolario 7.2; su cuantificación exacta es específica de cada sistema.
+Paso 2. Construir la muestra de estimación. Para una colección de n observaciones {(Ψ(tₖ), cₖ, yₖ)}_{k=1}^n, calcular Φ(Ψ(tₖ), cₖ) para cada observación.
 
-(iii) Coherencia con la REC. El mismo Axioma 3 (τ > 0) que funda la REC funda la variabilidad del MP. La REC limita el autoconocimiento del sistema; el MP traduce esa limitación en variabilidad de predicción desde afuera. Ambos emergen de τ sin postular una cota funcional universal.
+Paso 3. Estimar β por máxima verosimilitud. La log-verosimilitud es:
+
+  ℒ(β) = Σₖ [yₖ log σ(β·Φₖ) + (1−yₖ) log(1 − σ(β·Φₖ))]
+
+Maximizar ℒ(β) sobre β ∈ ℝᵈ usando descenso de gradiente o método de Newton-Raphson.
+
+Paso 4. Calcular la probabilidad predicha para un nuevo estado Ψ(t):
+
+  P̂(y = 1 | Ψ(t), c) = σ(β̂ · Φ(Ψ(t), c))
+
+Paso 5. Interpretar la probabilidad predicha. P̂ ≥ 0.5 → predicción y = 1; P̂ < 0.5 → predicción y = 0.
+
+Ejemplo numérico.
+
+Sean β̂ = (1.2, 0.8, −0.5, 0.3, β̂₀ = −0.2) para el caso simplificado Φ = (‖I(t)‖_E, D(t), E(t), c_escalar, 1).
+
+Con ‖I(t)‖_E = 0.6, D(t) = 1, E(t) = 3, c = 0.4:
+
+  η = 1.2·(0.6) + 0.8·(1) + (−0.5)·(3) + 0.3·(0.4) + (−0.2)
+    = 0.72 + 0.80 − 1.50 + 0.12 − 0.20
+    = −0.06
+
+  P̂(y = 1) = σ(−0.06) = 1/(1 + e^{0.06}) = 1/(1 + 1.0618) ≈ 1/2.0618 ≈ 0.485
+
+  Como 0.485 < 0.5: predicción y = 0.
+
+Interpretación de las tres propiedades técnicas del MP.
+
+(i) Fundamentación. Las variables predictoras son componentes de Ψ(t) construidas por φ₁ y φ₂; no son covariables externas. El coeficiente β_I mide cuánto aumenta la probabilidad de y = 1 por unidad de ‖I(t)‖_E; β_D mide el efecto de silenciamiento de la señal sobre la decisión. Cada coeficiente tiene interpretación directa en los objetos formales del sistema.
+
+(ii) Error estimable. El MP no postula una cota universal del error mínimo. La relación cualitativa τ ↑ → ε_min ↑ es consecuencia del Corolario 7.2; su cuantificación exacta es específica de cada sistema y se obtiene de la distribución empírica de errores del modelo ajustado.
+
+(iii) Coherencia con la REC. El mismo τ > 0 que funda la REC funda la variabilidad del MP. La REC limita el autoconocimiento del sistema (perspectiva interna); el MP traduce esa limitación en variabilidad de predicción desde afuera (perspectiva externa). Ambos emergen de τ.
+
 
 Lema 9.1. Linealidad en el espacio de logits bajo umbral lineal
 
-Si θ_k(I(t)) = a_k·‖I(t)‖_E + b_k para constantes a_k, b_k ∈ ℝ, entonces ℓ_k(t) es lineal en ‖I(t)‖_E y Φ puede tomarse como la función identidad en el espacio de características (ℓ(t), E(t), D(t), C(t), c).
+Enunciado. Si θ_k(I(t)) = a_k·‖I(t)‖_E + b_k para constantes a_k, b_k ∈ ℝ (hipótesis de umbral lineal), entonces ℓ_k(t) es lineal en ‖I(t)‖_E y Φ puede tomarse como la función identidad en el espacio (ℓ(t), E(t), D(t), C(t), c).
 
-Demostración del Lema 9.1
+Demostración.
 
-Paso 1. Con θ_k lineal en ‖I(t)‖_E: z_k = (⟨β_k, a_t⟩_E + γ_k·‖I(t)‖_E − a_k·‖I(t)‖_E − b_k)/τ = (γ_k − a_k)/τ · ‖I(t)‖_E + (⟨β_k, a_t⟩_E − b_k)/τ. El primer término es lineal en ‖I(t)‖_E; el segundo depende de a_t y c pero no de I(t). Luego ℓ_k = z_k − log Σⱼ exp(z_j) es lineal en ‖I(t)‖_E. ✓
+Paso 1. Bajo la hipótesis θ_k(I(t)) = a_k·‖I(t)‖_E + b_k, sustituir en la expresión de z_k del Lema 1.1:
 
-Paso 2. La decisión y puede modelarse como función lineal de ℓ(t): Σ_k w_k ℓ_k(t) es lineal en ‖I(t)‖_E, E(t), D(t), C(t) y c por el Paso 1. ✓
+  z_k = (⟨β_k, a_t⟩_E + γ_k·‖I(t)‖_E − a_k·‖I(t)‖_E − b_k) / τ
 
-Paso 3. Con Φ(Ψ, c) = (ℓ(t), E(t), D(t), C(t), c, 1), el Modelo 9 P(y=1|Ψ,c) = σ(β·Φ) es exactamente el modelo de regresión logística lineal. ✓
+      = [(γ_k − a_k)/τ] · ‖I(t)‖_E + [(⟨β_k, a_t⟩_E − b_k)/τ]
 
-Φ = identidad en el espacio expandido bajo hipótesis de umbral lineal. ∎
+Sea λ_k = (γ_k − a_k)/τ y μ_k = (⟨β_k, a_t⟩_E − b_k)/τ. Entonces:
 
-Si θ_k no es lineal. Φ puede ser una red neuronal con una capa oculta (Teorema de Aproximación Universal). El modelo sigue siendo válido independientemente de la forma de Φ.
+  z_k = λ_k · ‖I(t)‖_E + μ_k
+
+donde λ_k ∈ ℝ y μ_k depende de a_t y c pero no de I(t).
+
+Paso 2. El logit se expresa en función de z_k como ℓ_k = z_k − log(Σⱼ≠k exp(z_j)).
+
+El segundo término log(Σⱼ≠k exp(z_j)) = log(Σⱼ≠k exp(λ_j·‖I‖ + μ_j)) depende de ‖I‖ a través de exponenciales en general no lineales. La afirmación de linealidad requiere la restricción adicional de que ℓ_k se interprete como logit one-vs-rest de una parametrización Bernoulli, no como logit del softmax completo. En la parametrización logística one-vs-rest (Lema 7.1), cada h_k se trata como p_k = σ(z_k) independientemente, y entonces:
+
+  ℓ_k = z_k = λ_k · ‖I(t)‖_E + μ_k
+
+que es lineal en ‖I(t)‖_E. ✓
+
+Paso 3. La decisión y puede modelarse como combinación lineal de los logits one-vs-rest:
+
+  Σ_k w_k ℓ_k(t) = Σ_k w_k (λ_k · ‖I‖ + μ_k) = (Σ_k w_k λ_k) · ‖I‖ + Σ_k w_k μ_k
+
+que es lineal en ‖I(t)‖_E. ✓
+
+Paso 4. Con Φ(Ψ, c) = (ℓ(t), E(t), D(t), C(t), c, 1), el Modelo 9:
+
+  P(y=1|Ψ,c) = σ(β·Φ) = σ(β_ℓ·ℓ(t) + β_E·E(t) + β_D·D(t) + β_C·C(t) + β_c·c + β₀)
+
+es exactamente el modelo de regresión logística lineal bajo la parametrización Bernoulli one-vs-rest. ✓
+
+Φ = identidad en el espacio expandido bajo hipótesis de umbral lineal y parametrización one-vs-rest. ∎
+
+Extensión a umbrales no lineales. Si θ_k(I(t)) no es lineal en ‖I(t)‖_E, el logit ℓ_k(t) no es lineal en ‖I‖. En ese caso, Φ puede ser una red neuronal con una capa oculta (Teorema de Aproximación Universal): la existencia de una Φ con buena capacidad de aproximación está garantizada; la estimación de sus parámetros requiere datos de entrenamiento suficientes.
+
 
 9.3. Error empírico del MP y estimación de τ
 
-El MP no postula una cota teórica universal del error mínimo. El error de predicción empírico del modelo se estima desde datos de decisiones del sistema bajo condiciones conocidas. La tabla siguiente muestra valores orientativos de la relación entre τ y el error mínimo observado en sistemas con esos valores de temperatura; no son cotas demostradas sino referencias empíricas calibradas.
+El MP no postula una cota teórica universal del error mínimo. La Tabla 9.3 muestra valores orientativos de la relación entre τ y el error mínimo observado. No son cotas demostradas sino referencias empíricas: para un valor de τ dado, el error mínimo esperado en sistemas con esa temperatura es del orden indicado.
+
+Procedimiento de estimación de τ y error mínimo.
+
+Paso 1. Obtener una muestra de decisiones repetidas del sistema bajo condiciones idénticas: n repeticiones del mismo contexto c y estado Ψ(t), registrando los logits ℓ_k(t) observados en cada repetición.
+
+Paso 2. Calcular la varianza empírica de los logits:
+
+  τ̂² = (1/(n−1)) Σ_{j=1}^{n} (ℓ_k(t_j) − ℓ̄_k)²
+
+donde ℓ̄_k = (1/n) Σⱼ ℓ_k(t_j) es la media muestral del logit del modo k.
+
+Paso 3. τ̂ = √(τ̂²) es la estimación de la temperatura de escala del sistema.
+
+Paso 4. Consultar la Tabla 9.3 con τ̂ para estimar el orden de magnitud del error de predicción esperado.
 
 [TABLA]
-| τ | η(τ) = ε_min | Precisión máx. | Aplicación típica |
-| 0.10 | ≥ 0.045 | ≤ 95.5% | Temperatura baja en inferencia de IA. Alta predictibilidad. |
-| 0.30 | ≥ 0.115 | ≤ 88.5% | Ruido bajo. Predicción fiable para decisiones binarias claras. |
-| 0.50 | ≥ 0.167 | ≤ 83.3% | Temperatura estándar. Referencia principal del MP. |
-| 0.70 | ≥ 0.206 | ≤ 79.4% | Variabilidad moderada. Decisiones en zonas de conflicto de modos. |
-| 1.00 | ≥ 0.250 | ≤ 75.0% | Ruido significativo. Variabilidad entre ejecuciones notable. |
-| 2.00 | ≥ 0.333 | ≤ 66.7% | Ruido alto. Predicción apenas mejor que azar en muchos contextos. |
-| → ∞ | → 0.500 | → 50.0% | Temperatura infinita. Equivale a elección uniforme sobre K. |
+| τ | ε_min orientativo | Precisión máx. orientativa | Contexto típico |
+| 0.10 | ≈ 0.045 | ≈ 95.5% | Temperatura baja. Alta predictibilidad. |
+| 0.30 | ≈ 0.115 | ≈ 88.5% | Ruido bajo. Predicción fiable para decisiones binarias claras. |
+| 0.50 | ≈ 0.167 | ≈ 83.3% | Temperatura estándar. Referencia principal del MP. |
+| 0.70 | ≈ 0.206 | ≈ 79.4% | Variabilidad moderada. Decisiones en zonas de conflicto de modos. |
+| 1.00 | ≈ 0.250 | ≈ 75.0% | Ruido significativo. Variabilidad entre instancias notable. |
+| 2.00 | ≈ 0.333 | ≈ 66.7% | Ruido alto. Predicción apenas mejor que azar en muchos contextos. |
+| → ∞ | → 0.500 | → 50.0% | Temperatura infinita. Distribución uniforme sobre K. |
 [/TABLA]
 
-Los valores de la columna ε_min son estimaciones orientativas basadas en la relación cualitativa τ ↑ → error mínimo ↑ del Corolario 7.2. No son cotas teóricas universales. Para un sistema concreto, el error mínimo empírico se estima calculando τ̂ desde la varianza de los logits observados bajo condiciones idénticas y consultando la tabla como referencia de orden de magnitud.
+Los valores de la columna ε_min son estimaciones basadas en la relación cualitativa τ ↑ → error mínimo ↑ del Corolario 7.2, no cotas teóricas universales. Para un sistema concreto, el error mínimo empírico se estima calculando τ̂ desde los logits observados y consultando la tabla como referencia de orden de magnitud.
+
+Ejemplo de estimación. Tres logits observados para el modo k = 1 bajo el mismo contexto:
+
+  ℓ₁(t₁) = 0.42, ℓ₁(t₂) = 0.61, ℓ₁(t₃) = 0.53
+
+  ℓ̄₁ = (0.42 + 0.61 + 0.53)/3 = 1.56/3 = 0.520
+
+  τ̂² = [(0.42−0.52)² + (0.61−0.52)² + (0.53−0.52)²] / 2
+       = [(−0.10)² + (0.09)² + (0.01)²] / 2
+       = [0.0100 + 0.0081 + 0.0001] / 2
+       = 0.0182 / 2 = 0.0091
+
+  τ̂ = √0.0091 ≈ 0.095
+
+  Con τ̂ ≈ 0.10, la Tabla 9.3 indica ε_min ≈ 0.045, precisión máxima ≈ 95.5%.
+
 
 9.4. Asimetría entre perspectiva interna (REC) y perspectiva externa (MP)
 
-La REC y el MP son proyecciones del Axioma 3 sobre dos perspectivas distintas. La diferencia estructural más importante es la dependencia en n:
+La REC y el MP son proyecciones del Axioma 3 sobre dos perspectivas distintas. La diferencia estructural más importante es la dependencia en n: para el observador interno, la incertidumbre decrece con n por la Parte VII; para el observador externo, la barrera de predicción no disminuye al aumentar n.
 
 [TABLA]
 | Dimensión | REC (Parte VII) | MP (Parte IX) |
 | Fuente común | τ > 0 (Axioma 3) | τ > 0 (Axioma 3) |
 | Objeto acotado | Producto ΔI·Δh: imprecisión del sistema sobre su propio estado | Error ε_min: imprecisión del observador externo sobre la decisión del sistema |
 | Perspectiva | Interna: cuánto puede conocer el sistema sobre sí mismo | Externa: cuánto puede predecirse el sistema desde afuera |
-| Dependencia de n | n·(ΔI·Δh) ≥ 4τ₀²: cota decrece con n como τ₀²/n | ε_min ≥ η(τ): cota independiente de n |
+| Dependencia de n | ΔI·Δh ≥ τ₀/n: cota decrece con n como τ₀/n | ε_min ≥ η(τ): cota independiente de n |
 | Consecuencia | Mayor n → menor incertidumbre interna; τ_eff = τ₀/√n → 0 | Mayor n no reduce la barrera para el observador externo |
 [/TABLA]
 
-La asimetría tiene consecuencias directas para el análisis de responsabilidad. El sistema con τ bajo y n alto puede documentar mayor autoconocimiento de su posición causal (τ_eff pequeño). Pero ese autoconocimiento no está automáticamente disponible para el observador externo, que sigue enfrentando la variabilidad τ del sistema.
+Desarrollo de la asimetría.
 
-Estimación de τ desde afuera. El observador externo estima τ desde datos de decisiones repetidas del sistema bajo condiciones idénticas: τ̂ = varianza empírica de los logits observados, escalada por las dimensiones del modelo. En sistemas artificiales τ es directamente observable. Con τ̂ el observador consulta la Tabla 9.3 para estimar el orden de magnitud del error de predicción esperado.
+La REC establece ΔI·Δh ≥ τ₀/n. Con n colapsos integrados, la imprecisión conjunta del sistema sobre su propio estado disminuye inversamente con n. Al duplicar el número de colapsos integrados, la cota inferior de ΔI·Δh se reduce a la mitad. La temperatura efectiva τ_eff = τ₀/√n → 0 cuando n → ∞.
+
+El MP establece P(y=1|Ψ,c) = σ(β·Φ(Ψ,c)) con error mínimo η(τ). Ese error depende de τ pero no de n: acumular más observaciones externas del sistema (mayor muestra de estimación de β) mejora la estimación de los coeficientes β, pero no cambia la variabilidad intrínseca τ del sistema. El observador externo con n → ∞ puede estimar β con precisión arbitraria; la variabilidad de las predicciones del sistema a nivel individual sigue acotada por η(τ) > 0.
+
+Consecuencia para el análisis de responsabilidad. El sistema con τ bajo y n alto puede documentar mayor autoconocimiento de su posición causal (τ_eff pequeño, ΔI·Δh pequeño). Ese autoconocimiento no está automáticamente disponible para el observador externo: éste sigue enfrentando la variabilidad τ del sistema en sus predicciones individuales.
+
+Ejemplo numérico de asimetría. Sea τ₀ = 0.5, n = 100.
+
+  REC: ΔI·Δh ≥ τ₀/n = 0.5/100 = 0.005
+       τ_eff = τ₀/√n = 0.5/10 = 0.05
+
+  MP:  ε_min ≈ η(0.5) ≈ 0.167 (de la Tabla 9.3, con τ = 0.5)
+
+El sistema interno puede alcanzar incertidumbre conjunta tan pequeña como 0.005. El observador externo enfrenta un error mínimo de predicción del 16.7%. Con n = 10000: ΔI·Δh ≥ 0.00005 (cota interna 100 veces menor), pero ε_min ≈ 0.167 (sin cambio).
+
 
 [TABLA]
 | Objeto | Notación | Tipo / estatus | Parte |
-| Estado completo | Ψ(t) = (I,h,E,D,C) | Vector en espacio producto | Definición 9 |
+| Estado completo | Ψ(t) = (I,h,E,D,C) | Vector en espacio producto E × Δ⁵ × {1,…,6} × {1,2} × 𝒫(E) | Definición 9 |
+| Cota REC en Ψ | ΔI·Δh ≥ τ₀/n | Demostrado; Teorema 7 (Parte VII) | Definición 9 |
 | E(t) | {1,…,6} | Nivel de integración de I(t) | Definición 9 |
-| D(t) | {1,2}: activa/silenciada | Función de k*: D=2 si k*∈{1,2} | Definición 9 |
-| Vector de logits | ℓ(t) ∈ ℝ⁶ | Transformación de h(t) vía logit | Definición 9.1 |
-| MP — general | P(y=1¦Ψ,c)=σ(β·Φ) | Modelo estadístico | Modelo 9 |
-| MP — lineal | σ(β_I‖I‖+β_h h+…) | Bajo hipótesis de umbral lineal | Modelo 9; Lema 9.1 |
+| D(t) | {1,2}: activa/silenciada | D=2 si k*∈{1,2}; D=1 si k*∈{3,4,5} | Definición 9 |
+| Vector de logits | ℓ(t) ∈ ℝ⁶ | Transformación de h(t) vía logit one-vs-rest | Definición 9.1 |
+| MP — general | P(y=1|Ψ,c) = σ(β·Φ) | Modelo estadístico; β estimado por MV | Modelo 9 |
+| MP — lineal | σ(β_I‖I‖+β_h h+…) | Bajo hipótesis de umbral lineal y parametrización one-vs-rest | Modelo 9; Lema 9.1 |
 | Hipótesis lineal | θ_k = a_k‖I‖+b_k | Hipótesis de trabajo; habilita Φ=Id | Lema 9.1 |
-| Error empírico | τ̂ → ε_min estimado | Referencia orientativa; no cota univ. | Sección 9.3 |
-| Asimetría REC-MP | cota_REC ∝ τ₀²/n ≠ error_MP | Error_MP no decrece con n | Sección 9.4 |
+| Error empírico | τ̂ → ε_min orientativo | Referencia de orden de magnitud; no cota universal | Sección 9.3 |
+| Asimetría REC-MP | ΔI·Δh ≥ τ₀/n (decrece con n) vs ε_min ≥ η(τ) (independiente de n) | Estructural; consecuencia del Axioma 3 | Sección 9.4 |
 [/TABLA]

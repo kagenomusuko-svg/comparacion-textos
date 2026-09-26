@@ -118,7 +118,7 @@ El sistema (R*, S_est, α, Δ, Δ_net) es identificable desde datos observables 
 
 (I-2) Estimabilidad de los pesos. Para toda arista (i, j) ∈ A: w (i, j) es estimable con nivel de certeza ≥ B en la escala E0–E8 de Metrología Causal. Bajo (I-2), el intervalo [R*(min), R*(max)] del Lema 6.1 tiene anchura ≤ 0.10.
 
-(I-3) Observabilidad de S_est. S_est(i) es observable por dos rutas: (a) directamente, si G está disponible: S_est(i) = 1 − D_KL(R* ‖ R*^(i))/log(m) desde el cómputo del eigenvector; (b) indirectamente, si G no está disponible: S_est(i) ≈ g(S_op(i)) por la Proposición 3.3, donde S_op(i) = ‖c‖_C/(‖c‖_C + ‖a_t‖_E) es computable desde la escala E0–E8.
+(I-3) Observabilidad de S_est. S_est(i) = |ρ(R*, R*^(i))| es observable por dos rutas: (a) directamente, si G está disponible: calcular R* y R*^(i) por eliminación gaussiana (Parte VI) y computar |ρ(R*, R*^(i))| = |⟨R*−R̄, R*^(i)−R̄⟩|/(‖R*−R̄‖₂·‖R*^(i)−R̄‖₂) donde R̄ = (1/m)·1; (b) indirectamente, si G no está disponible: S_est(i) ≈ g(S_op(i)) por la Proposición 3.3, donde S_op(i) = ‖c‖_C/(‖c‖_C + ‖a_t‖_E) es computable desde la escala E0–E8. Nota: S_est(i) = |ρ| ∈ [0,1] (no direccional) es distinto de ρ(R*, R*^(i)) ∈ [−1,1] (con signo) y de D_KL(R* ‖ R*^(i)) ∈ [0,∞) (divergencia direccional). Los tres objetos no son intercambiables.
 
 (I-4) Observabilidad de α_vol. α_vol(i) es observable desde el expediente cuando los documentos distinguen entre asunción voluntaria (pagos iniciados, reconocimiento público, modificaciones sistémicas propias) y asunción forzada o impuesta. Nivel de certeza ≥ B requerido.
 
@@ -126,9 +126,9 @@ Bajo las condiciones (I-1)–(I-4):
 
 Proposición D.2 — identificabilidad de Δ_net
 
-R*(i). Identificable por el método de potencias (Lema 6.1) con intervalo [R*(min), R*(max)] de anchura ≤ 0.10 bajo (I-2).
+R*(i). Identificable por eliminación gaussiana de (I−Q_D)r = b_D (Parte VI, Definición 6.2) con intervalo [R*(min), R*(max)] de anchura ≤ 0.10 bajo (I-2).
 
-R*^(i)_i. Identificable aplicando el método de potencias a W^(i) = W con fila i reemplazada por el promedio. Requiere (I-1) e (I-2).
+R*^(i)_i. Identificable aplicando la misma eliminación gaussiana a W^(i) = W con fila i reemplazada por el promedio W̄_{i·}. Requiere (I-1) e (I-2).
 
 R*_net(i) = R*(i) − R*^(i)_i. Identificable como diferencia de dos cantidades identificables. Intervalo de incertidumbre propagado desde los intervalos de R* y R*^(i) por la norma triangular.
 
@@ -140,10 +140,10 @@ Bajo (I-1)–(I-4), Δ_net(i) es identificable con intervalo de incertidumbre [�
 
 [TABLA]
 | Objeto | Condición mínima | Ruta de estimación | Fuente de incertidumbre |
-| R*(i) | (I-1) + (I-2) | Método de potencias sobre Wᵀ | Anchura de los intervalos [a_ij, b_ij] |
-| R*^(i)_i | (I-1) + (I-2) | Método de potencias sobre (W^(i))ᵀ | Misma fuente; correlacionada con R*(i) |
+| R*(i) | (I-1) + (I-2) | Eliminación gaussiana de (I−Q_D)r = b_D (Parte VI) | Anchura de los intervalos [a_ij, b_ij] |
+| R*^(i)_i | (I-1) + (I-2) | Eliminación gaussiana sobre W^(i) con fila i = W̄_{i·} | Misma fuente; correlacionada con R*(i) |
 | R*_net(i) | (I-1) + (I-2) | R*(i) − R*^(i)_i | Suma de incertidumbres de R*(i) y R*^(i)_i |
-| S_est(i) | (I-1) + (I-2) ó (I-3) | Ruta directa desde D_KL ó ruta indirecta desde S_op | Incertidumbre de D_KL ó de ±0.10 en S_op |
+| S_est(i) | (I-1) + (I-2) ó (I-3) | Ruta directa desde |ρ(R*,R*^(i))| ó ruta indirecta desde S_op | Incertidumbre de ρ (propagada desde R* y R*^(i)) ó de ±0.10 en S_op |
 | α_vol(i) | (I-4) | Expediente: documentos de asunción voluntaria | Ambigüedad documental entre tipos de α |
 | Δ_net(i) | (I-1)–(I-4) | R*_net(i) − α_vol(i) | Propagación de incertidumbres de R*_net y α_vol |
 [/TABLA]
@@ -164,7 +164,7 @@ R*(G') eigenvector dominante de (W’) ᵀ normalizado · W' coincide con W en t
 
 𝒞 (G, i, W'_i) devuelve el vector de responsabilidad causal que resultaría que el nodo i operara según W'_i en lugar de W_{i·}. La comparación 𝒞 (G, i, W'_i) con R*(G) cuantifica el impacto causal de ese cambio.
 
-S_est como caso especial. S_est(i) = 1 − D_KL(R*(G) ‖ 𝒞 (G, i, W̄_i)) /log(m) donde W̄_i = (1/(m−1)) Σ_{j≠i} W_{j·} es la fila promedio. El operador 𝒞 con W̄_i como fila alternativa produce el grafo de sustitución de la Definición 3.2. S_est es la divergencia KL normalizada entre R*(G) y 𝒞 (G, i, W̄_i).
+S_est como caso especial. S_est(i) = |ρ(R*(G), 𝒞(G, i, W̄_i))| donde W̄_i = (1/(m−1)) Σ_{j≠i} W_{j·} es la fila promedio (Definición 3.2, Parte III). El operador 𝒞 con W̄_i como fila alternativa produce el grafo de sustitución. S_est es la correlación de Pearson (en valor absoluto) entre R*(G) y 𝒞(G, i, W̄_i). Distinción de objetos (RES-IIC-001): S_est = |ρ| ∈ [0,1] es no direccional; ρ(R*(G), 𝒞(G,i,W̄_i)) ∈ [−1,1] tiene signo; D_KL(R*(G) ‖ 𝒞(G,i,W̄_i)) ∈ [0,∞) es una divergencia direccional. Los tres son objetos distintos que no se intercambian. Las versiones anteriores del sistema usaban 1 − D_KL/log(m) como S_est; la versión actual usa |ρ|.
 
 Teorema D.2. Cota del impacto contrafactual — Davis-Kahan generalizado
 

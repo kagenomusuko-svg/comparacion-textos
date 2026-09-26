@@ -2,65 +2,331 @@ Parte 0
 
 El espacio de base
 
+
 Axioma 0. Espacio de colapsos
 
-Sea E un espacio de Hilbert separable con producto interno ⟨·,·⟩_E y norma ‖·‖_E = √⟨·,·⟩_E. E satisface:
+Objeto. E es el espacio de estados posibles del sistema. Cada elemento c ∈ E representa un estado que el sistema puede determinar mediante un colapso. No se afirma que todo elemento de E sea realizable por un sistema concreto: E contiene todas las posibilidades matemáticamente coherentes dentro del modelo.
 
-(i) ∀ c, d ∈ E, α ∈ ℝ: c + d ∈ E y αc ∈ E.
+Variables y condiciones.
 
-(ii) Toda sucesión de Cauchy en (E, ‖·‖_E) tiene límite en E.
+E         espacio vectorial real sobre ℝ
+⟨·,·⟩_E  producto interno sobre E: forma bilineal simétrica definida positiva
+‖·‖_E    norma inducida por el producto interno: ‖c‖_E = √⟨c,c⟩_E
+D         subconjunto denso y numerable de E
 
-(iii) Existe D ⊂ E denso y numerable.
+Fórmula — propiedades de E.
 
-E es el espacio de estados posibles del modelo. Los elementos c ∈ E son los estados que el sistema puede determinar dentro del modelo; no se afirma que todo c ∈ E sea realizable por un sistema concreto.
+(i)  ∀ c, d ∈ E, α ∈ ℝ:  c + d ∈ E  y  αc ∈ E
 
-Adopción de estructura de Hilbert. Se adopta un espacio de Hilbert separable —y no un espacio de Banach reflexivo equipado con una forma bilineal continua— porque es la estructura suficiente para la computabilidad del sistema sin introducir hipótesis adicionales sobre el espacio. Tres exigencias simultáneas determinan esta elección: (i) producto interno explícito para la forma bilineal ⟨∇v_t, u_k⟩_E de la Definición 1 de la Parte I, no garantizada en Banach general; (ii) completitud para la existencia de la integral de Bochner de la Definición 2; (iii) separabilidad para la existencia de base ortonormal numerable, condición del método de potencias de la Parte VI. Un espacio de Banach reflexivo con forma bilineal continua es alternativa teóricamente posible, pero introduce complejidad sin beneficio para el sistema.
+(ii) Toda sucesión de Cauchy {c_n} ⊂ E satisface:  ∃ c ∈ E  tal que  ‖c_n − c‖_E → 0
 
-v_t y los vectores u_k se definen formalmente en la Parte I. Su aparición en la justificación precedente es anticipatoria: se incluye para motivar la elección de E, no para usarlos.
+(iii) ∃ D ⊂ E denso y numerable: para todo c ∈ E y todo ε > 0 existe d ∈ D con ‖c − d‖_E < ε
 
-Función de embedding. La correspondencia entre los outputs observables de un sistema concreto y los elementos de E no es parte del marco axiomático: es una decisión de modelado que debe justificarse en cada aplicación. Formalmente, se postula la existencia de una función emb: Outputs → E que asocia a cada output un elemento de E. Esta función debe preservar las relaciones de orden relevantes para la asignación de pesos causales en el grafo G —definido en la Parte VI— de modo que outputs causalmente más similares tengan imágenes más cercanas en ‖·‖_E. La validez estructural de los resultados del sistema no depende de la elección concreta de emb, siempre que se mantengan las propiedades del Axioma 0 y la condición de preservación de orden. En sistemas artificiales, emb es la función de embedding del modelo. En sistemas humanos, emb se especifica en el Volumen I de Metrología Causal.
+Procedimiento de verificación. Para comprobar que un espacio concreto satisface el Axioma 0:
 
-La restricción sobre emb no es decorativa: la función eval de la Parte II impone condiciones de compatibilidad sobre c(τ) respecto a I(t). Sin una emb que preserve estructura de relevancia causal, eval no satisface esas condiciones. La restricción es indirecta pero efectiva.
+1. Verificar que E es un espacio vectorial real: la suma de dos elementos pertenece a E y el producto por escalar real pertenece a E.
+2. Definir explícitamente ⟨·,·⟩_E y verificar que es bilineal en cada argumento, simétrico (⟨c,d⟩_E = ⟨d,c⟩_E) y definido positivo (⟨c,c⟩_E > 0 para c ≠ 0, ⟨0,0⟩_E = 0).
+3. Verificar completitud: toda sucesión {c_n} con ‖c_m − c_n‖_E → 0 cuando m,n → ∞ tiene límite en E.
+4. Exhibir D ⊂ E denso y numerable.
+
+Ejemplo. Sea E = ℝ³ con el producto interno estándar ⟨(a₁,a₂,a₃),(b₁,b₂,b₃)⟩_E = a₁b₁ + a₂b₂ + a₃b₃.
+
+Verificación de (i). Sean c = (1, 2, −1) y d = (0, 3, 4), α = −2.
+  c + d = (1+0, 2+3, −1+4) = (1, 5, 3) ∈ ℝ³     ✓
+  αc = (−2·1, −2·2, −2·(−1)) = (−2, −4, 2) ∈ ℝ³  ✓
+
+Verificación de (ii). ℝ³ con la norma euclidiana es completo (toda sucesión de Cauchy de triples reales converge coordenada a coordenada en ℝ, y cada ℝ es completo). ✓
+
+Verificación de (iii). Sea D = ℚ³ = {(q₁,q₂,q₃) : qᵢ ∈ ℚ}. D es numerable porque ℚ es numerable y ℚ³ es producto cartesiano finito de conjuntos numerables.
+
+Para c = (√2, π, e) y ε = 0.01, se toma d = (1.4142, 3.1416, 2.7183) ∈ ℚ³:
+  ‖c − d‖_E = √((√2 − 1.4142)² + (π − 3.1416)² + (e − 2.7183)²)
+             = √((0.00001)² + (0.000007)² + (0.000018)²)
+             ≈ √(10⁻¹⁰ + 5·10⁻¹¹ + 3·10⁻¹⁰) ≈ 2.3·10⁻⁵ < 0.01     ✓
+
+ℝ³ con el producto interno estándar satisface el Axioma 0. ∎
+
+Interpretación. El producto interno ⟨c,d⟩_E mide la similitud direccional entre dos estados: si es positivo los estados apuntan en la misma dirección, si es cero son ortogonales, si es negativo son opuestos. La completitud garantiza que los límites de secuencias de colapsos permanecen en E. La separabilidad garantiza que E admite base ortonormal numerable {e_k}_{k≥1} tal que todo c ∈ E se expresa como c = Σ_k ⟨c,e_k⟩_E e_k.
+
+
+Función de embedding
+
+Objeto. emb es la función que asocia cada output observable del sistema a un elemento de E. emb no es parte del marco axiomático: es una decisión de modelado que debe justificarse en cada aplicación concreta.
+
+Variables y condiciones.
+
+Outputs    conjunto de outputs observables del sistema
+E          espacio del Axioma 0
+emb : Outputs → E   función (cada output tiene una imagen única en E)
+
+Condición de preservación de orden: si los outputs o_i y o_j son causalmente más similares que o_i y o_k, entonces ‖emb(o_i) − emb(o_j)‖_E < ‖emb(o_i) − emb(o_k)‖_E.
+
+Fórmula.
+
+emb : Outputs → E
+o ↦ emb(o) ∈ E
+
+Procedimiento de construcción. Para definir emb en una aplicación concreta:
+
+1. Listar Outputs = {o₁, o₂, …, o_n}.
+2. Determinar las relaciones de similitud causal entre todos los pares (o_i, o_j) y registrarlas como valores sim(o_i,o_j) ∈ [0,1], donde 1 es similitud máxima.
+3. Asignar a cada o_i un vector v_i ∈ E tal que la distancia ‖v_i − v_j‖_E sea inversamente proporcional a sim(o_i,o_j). Un procedimiento sistemático: definir la matriz de disimilitud D_{ij} = 1 − sim(o_i,o_j) y aplicar un método de incrustación multidimensional (MDS clásico) para obtener coordenadas en E que preserven esas distancias.
+4. Definir emb(o_i) = v_i y verificar la condición de preservación de orden para todos los triples (o_i,o_j,o_k) donde sim(o_i,o_j) > sim(o_i,o_k).
+
+Ejemplo. Sea Outputs = {o₁, o₂, o₃} y E = ℝ².
+
+Similitudes causales establecidas externamente:
+  sim(o₁, o₂) = 0.9  (o₁ y o₂ son causalmente similares)
+  sim(o₁, o₃) = 0.1  (o₁ y o₃ son causalmente distintos)
+  sim(o₂, o₃) = 0.2  (o₂ y o₃ son causalmente distintos)
+
+Disimilitudes: D₁₂ = 0.1, D₁₃ = 0.9, D₂₃ = 0.8.
+
+Asignación directa en ℝ²:
+  emb(o₁) = (0, 0)
+  emb(o₂) = (0.1, 0)         (a distancia 0.1 de o₁, en la dirección positiva)
+  emb(o₃) = (0.9·cos θ, 0.9·sin θ) para algún θ que haga D₂₃ ≈ 0.8
+
+Determinación de θ para emb(o₃). Se requiere ‖emb(o₂) − emb(o₃)‖_E ≈ 0.8:
+  ‖(0.1, 0) − (0.9 cos θ, 0.9 sin θ)‖² = (0.1 − 0.9 cos θ)² + (0.9 sin θ)²
+  = 0.01 − 0.18 cos θ + 0.81 cos²θ + 0.81 sin²θ
+  = 0.01 − 0.18 cos θ + 0.81
+  = 0.82 − 0.18 cos θ
+
+Igualando a 0.64 (= 0.8²): 0.82 − 0.18 cos θ = 0.64 → cos θ = (0.82 − 0.64)/0.18 = 1. Luego θ = 0, pero esto colocaría emb(o₃) en (0.9, 0), a distancia 0.8 de emb(o₂) y a distancia 0.9 de emb(o₁). Se verifica:
+
+  emb(o₁) = (0, 0)
+  emb(o₂) = (0.1, 0)
+  emb(o₃) = (0.9, 0)
+
+Verificación de la condición de preservación de orden:
+  ‖emb(o₁) − emb(o₂)‖_E = 0.1
+  ‖emb(o₁) − emb(o₃)‖_E = 0.9
+  ‖emb(o₂) − emb(o₃)‖_E = 0.8
+  Como sim(o₁,o₂) = 0.9 > sim(o₁,o₃) = 0.1: ‖emb(o₁)−emb(o₂)‖_E = 0.1 < 0.9 = ‖emb(o₁)−emb(o₃)‖_E  ✓
+  Como sim(o₁,o₂) = 0.9 > sim(o₂,o₃) = 0.2: ‖emb(o₁)−emb(o₂)‖_E = 0.1 < 0.8 = ‖emb(o₂)−emb(o₃)‖_E  ✓
+
+La asignación preserva el orden de similitud causal. ∎
+
+Interpretación. emb traslada la estructura causal del dominio del sistema al lenguaje geométrico de E. Las integrales y productos internos calculados posteriormente miden relaciones entre outputs en términos de esa estructura: resultados causalmente similares producen vectores cercanos; calcular ⟨emb(o_i), emb(o_j)⟩_E da una medida de afinidad causal directamente computable en E.
+
 
 Definición 0. Función de colapso
 
-Sea T ⊂ ℝ un intervalo compacto; sin pérdida de generalidad T = [0, t_m] con t_m el tiempo de cierre definido en la Parte X. Una función c: T → E es admisible si satisface:
+Objeto. Una función de colapso c : T → E es la trayectoria del sistema en E durante el intervalo de tiempo T. Cada valor c(τ) es el estado al que el sistema colapsa en el instante τ. Las condiciones de admisibilidad garantizan que c es integrable en sentido de Bochner.
 
-(i) c es medible en sentido de Bochner respecto a las σ-álgebras de Borel de T y E.
+Variables y condiciones.
+
+T = [0, t_m]   intervalo compacto; t_m es el tiempo de cierre definido en la Parte X
+E              espacio del Axioma 0
+c : T → E      función vectorial del tiempo
+M > 0          constante de acotación: ‖c(τ)‖_E ≤ M para todo τ ∈ T
+
+Condiciones de admisibilidad:
+
+(i) c es medible en sentido de Bochner respecto a las σ-álgebras de Borel de T y E: existe una sucesión de funciones simples s_n : T → E tal que ‖s_n(τ) − c(τ)‖_E → 0 para casi todo τ ∈ T.
 
 (ii) ∃ M > 0 tal que ‖c(τ)‖_E ≤ M para todo τ ∈ T.
 
-Función de colapso
+Fórmula.
 
-c: T → E, c admisible
+c : T → E,   c admisible
 
-T = [0, t_m] · E espacio del Axioma 0 · t_m definido en la Parte X
+Procedimiento de verificación. Para comprobar que una función concreta c es admisible:
 
-La medibilidad de Bochner y la acotación de c garantizan conjuntamente su integrabilidad en sentido de Bochner. En consecuencia, para toda función w: T → ℝ₊ medible y acotada, la integral ∫₀ᵗ c(τ)w(τ) dτ pertenece a E y es el único elemento de E tal que:
+1. Verificar medibilidad: comprobar que c es medible (continua es suficiente) o construir explícitamente funciones simples s_n que aproximen c puntualmente.
+2. Verificar acotación: hallar M > 0 tal que ‖c(τ)‖_E ≤ M para todo τ ∈ T. Para funciones continuas en T compacto esto es inmediato por el teorema del valor extremo.
+3. Concluir admisibilidad: (i) más (ii) implican c ∈ L¹(T; E), condición que hace existir la integral de Bochner ∫₀ᵗ c(τ) dτ ∈ E para todo t ≤ t_m.
 
-Caracterización de la integral de Bochner
+Ejemplo. Sea E = ℝ², T = [0, 3], c(τ) = (cos(πτ/3), sin(πτ/3)).
 
-⟨ ∫₀ᵗ c(τ)w(τ) dτ, e ⟩_E = ∫₀ᵗ ⟨c(τ)w(τ), e⟩_E dτ ∀ e ∈ E
+Verificación de (i). c es continua en T, luego Borel-medible. ✓
 
-En E Hilbert, por el teorema de representación de Riesz, E* se identifica isométricamente con E; el dual x* ∈ E* se sustituye directamente por e ∈ E mediante ese isomorfismo.
+Verificación de (ii). ‖c(τ)‖_E = √(cos²(πτ/3) + sin²(πτ/3)) = √1 = 1 para todo τ ∈ [0, 3]. Se toma M = 1. ✓
 
-Invarianza bajo permutación e irreversibilidad de I(t). La integral de Bochner es invariante bajo permutaciones del orden de los colapsos cuando los pesos w(τ) son constantes: la secuencia (c(τ₁), c(τ₂), c(τ₃)) y cualquier permutación suya producen el mismo valor de ∫c dτ bajo pesos uniformes. La noción de historia acumulada I(t) no descansa en esta propiedad, sino en dos mecanismos distintos: (a) la función de peso w(τ), que puede asignar mayor masa a colapsos recientes, y (b) la dependencia dinámica de φ₁ y φ₂ de I(t) en cada paso, de modo que c(τ₂) depende del estado I(τ₁⁺). La irreversibilidad de I(t) es una propiedad del sistema dinámico, no de la integral. Esta distinción se formaliza en el Teorema 2.1.
+c es admisible con M = 1. ∎
 
-Para E Hilbert, la integral de Bochner requiere que c sea fuertemente medible —coincidencia a.e. con límite de funciones simples— y ∫‖c(τ)‖_E dτ < ∞. Las condiciones (i) y (ii) de la Definición 0 garantizan ambas. Para E Banach general el argumento es análogo con E* en lugar de E, pero el isomorfismo de Riesz no aplica.
+Valores en instantes específicos:
+  c(0)   = (cos 0, sin 0) = (1, 0)
+  c(0.5) = (cos(π/6), sin(π/6)) = (0.866, 0.5)
+  c(1)   = (cos(π/3), sin(π/3)) = (0.5, 0.866)
+  c(1.5) = (cos(π/2), sin(π/2)) = (0, 1)
+  c(2)   = (cos(2π/3), sin(2π/3)) = (−0.5, 0.866)
+  c(2.5) = (cos(5π/6), sin(5π/6)) = (−0.866, 0.5)
+  c(3)   = (cos π, sin π) = (−1, 0)
+
+Interpretación. c(τ) es el estado determinado por el sistema en el instante τ. Una función admisible puede ser discontinua: solo se requiere medibilidad y acotación, no continuidad. La trayectoria c traza la secuencia completa de determinaciones a lo largo de T; la Definición 0 es la condición mínima para que esa trayectoria produzca una historia I(t) bien definida en la Parte II.
+
+
+Integral de Bochner
+
+Objeto. La integral de Bochner de c con peso w es el vector en E que acumula los colapsos ponderados de c sobre el intervalo [0, t]. Este vector es el insumo directo de la historia acumulada I(t) de la Parte II.
+
+Variables y condiciones.
+
+c : T → E      función de colapso admisible (Definición 0)
+w : T → ℝ₊    función de peso medible y acotada; w(τ) ≥ 0 para todo τ ∈ T
+t ∈ T          instante hasta el cual se acumula
+e ∈ E          vector de prueba arbitrario
+∫₀ᵗ c(τ)w(τ) dτ   integral de Bochner, elemento de E
+
+Fórmula — caracterización de la integral.
+
+⟨ ∫₀ᵗ c(τ)w(τ) dτ,  e ⟩_E  =  ∫₀ᵗ ⟨c(τ)w(τ), e⟩_E dτ   para todo e ∈ E
+
+La integral de Bochner es el único elemento de E que satisface esta identidad para todo e ∈ E (unicidad por el teorema de representación de Riesz: en E de Hilbert, todo funcional lineal continuo es de la forma ⟨·, e⟩_E para un único e ∈ E).
+
+Procedimiento de cálculo. Para E = ℝⁿ:
+
+1. Descomponer c(τ) en coordenadas: c(τ) = (c₁(τ), c₂(τ), …, cₙ(τ)).
+2. Multiplicar cada coordenada por w(τ): el integrando en la coordenada k es c_k(τ)·w(τ).
+3. Calcular cada integral escalar ∫₀ᵗ c_k(τ)·w(τ) dτ con técnicas estándar de cálculo integral (antiderivada, sustitución, integración por partes según corresponda).
+4. Ensamblar el vector resultado:
+   ∫₀ᵗ c(τ)w(τ) dτ  =  (∫₀ᵗ c₁(τ)w(τ) dτ,  ∫₀ᵗ c₂(τ)w(τ) dτ,  …,  ∫₀ᵗ cₙ(τ)w(τ) dτ)
+5. Verificar la identidad caracterizadora con al menos dos vectores de prueba e ortogonales.
+
+Ejemplo 1. Peso uniforme. Sea E = ℝ², T = [0, 3], c(τ) = (cos(πτ/3), sin(πτ/3)), w(τ) = 1, t = 3.
+
+Paso 1. Coordenadas: c₁(τ) = cos(πτ/3), c₂(τ) = sin(πτ/3).
+
+Paso 2. Integrando: c₁(τ)·1 = cos(πτ/3); c₂(τ)·1 = sin(πτ/3).
+
+Paso 3a. Integral de la componente 1:
+  ∫₀³ cos(πτ/3) dτ
+
+  Sea u = πτ/3; entonces du = (π/3) dτ, es decir dτ = (3/π) du.
+  Cuando τ = 0: u = 0. Cuando τ = 3: u = π.
+
+  ∫₀³ cos(πτ/3) dτ = (3/π) ∫₀ᵖ cos u  du
+                   = (3/π) [sin u]₀ᵖ
+                   = (3/π)(sin π − sin 0)
+                   = (3/π)(0 − 0)
+                   = 0
+
+Paso 3b. Integral de la componente 2:
+  ∫₀³ sin(πτ/3) dτ
+
+  Con la misma sustitución u = πτ/3:
+
+  ∫₀³ sin(πτ/3) dτ = (3/π) ∫₀ᵖ sin u  du
+                   = (3/π) [−cos u]₀ᵖ
+                   = (3/π)(−cos π + cos 0)
+                   = (3/π)(−(−1) + 1)
+                   = (3/π)(2)
+                   = 6/π
+                   ≈ 1.909
+
+Paso 4. Vector resultado:
+  ∫₀³ c(τ) dτ = (0, 6/π) ≈ (0, 1.909)
+
+Paso 5. Verificación con e₁ = (1, 0):
+  Lado izquierdo: ⟨(0, 6/π), (1, 0)⟩_E = 0·1 + (6/π)·0 = 0
+  Lado derecho:   ∫₀³ ⟨c(τ), (1, 0)⟩_E dτ = ∫₀³ cos(πτ/3) dτ = 0   ✓
+
+Verificación con e₂ = (0, 1):
+  Lado izquierdo: ⟨(0, 6/π), (0, 1)⟩_E = 0·0 + (6/π)·1 = 6/π
+  Lado derecho:   ∫₀³ ⟨c(τ), (0, 1)⟩_E dτ = ∫₀³ sin(πτ/3) dτ = 6/π   ✓
+
+La identidad caracterizadora se satisface. El resultado es (0, 6/π). ∎
+
+Ejemplo 2. Peso exponencial (mayor peso a colapsos recientes). Mismas c y T; w(τ) = e^{τ/3}, t = 3.
+
+Paso 3a. Integral de la componente 1:
+  ∫₀³ cos(πτ/3) · e^{τ/3} dτ
+
+  Se aplica integración por partes dos veces. Sea I₁ = ∫cos(πτ/3) e^{τ/3} dτ.
+
+  Primera aplicación: u = e^{τ/3}, dv = cos(πτ/3) dτ.
+    du = (1/3) e^{τ/3} dτ, v = (3/π) sin(πτ/3).
+    I₁ = (3/π) e^{τ/3} sin(πτ/3) − (1/π) ∫sin(πτ/3) e^{τ/3} dτ
+
+  Segunda aplicación al nuevo integral I₂ = ∫sin(πτ/3) e^{τ/3} dτ:
+    u = e^{τ/3}, dv = sin(πτ/3) dτ.
+    du = (1/3) e^{τ/3} dτ, v = −(3/π) cos(πτ/3).
+    I₂ = −(3/π) e^{τ/3} cos(πτ/3) + (1/π) ∫cos(πτ/3) e^{τ/3} dτ
+       = −(3/π) e^{τ/3} cos(πτ/3) + (1/π) I₁
+
+  Sustituyendo I₂ en la expresión de I₁:
+    I₁ = (3/π) e^{τ/3} sin(πτ/3) − (1/π)[−(3/π) e^{τ/3} cos(πτ/3) + (1/π) I₁]
+    I₁ = (3/π) e^{τ/3} sin(πτ/3) + (3/π²) e^{τ/3} cos(πτ/3) − (1/π²) I₁
+    I₁ + (1/π²) I₁ = (3/π) e^{τ/3} sin(πτ/3) + (3/π²) e^{τ/3} cos(πτ/3)
+    I₁ (1 + 1/π²) = (3e^{τ/3}/π) [sin(πτ/3) + (1/π) cos(πτ/3)]
+    I₁ = (3e^{τ/3}/π) · [sin(πτ/3) + (1/π) cos(πτ/3)] / (1 + 1/π²)
+       = (3π e^{τ/3}) · [sin(πτ/3) + (1/π) cos(πτ/3)] / (π² + 1)
+       = (3e^{τ/3}/(π²+1)) · [π sin(πτ/3) + cos(πτ/3)]
+
+  Evaluando entre 0 y 3 con π² ≈ 9.870, π²+1 ≈ 10.870:
+
+  En τ = 3: e^{1} · [π sin π + cos π] = e · [0 − 1] = −e ≈ −2.718
+  En τ = 0: e^{0} · [π sin 0 + cos 0] = 1 · [0 + 1] = 1
+
+  ∫₀³ cos(πτ/3) e^{τ/3} dτ = (3/(π²+1)) · (−e − 1) = −3(e+1)/(π²+1) ≈ −3(3.718)/10.870 ≈ −1.027
+
+Paso 3b. Integral de la componente 2:
+  ∫₀³ sin(πτ/3) e^{τ/3} dτ = I₂ evaluado entre 0 y 3
+
+  Usando I₂ = −(3/π) e^{τ/3} cos(πτ/3) + (1/π) I₁:
+
+  En τ = 3: −(3/π) e · cos π + (1/π) · (3e/(π²+1)) · [π·0 + (−1)]
+           = −(3/π) e · (−1) + (1/π) · (−3e/(π²+1))
+           = 3e/π − 3e/(π(π²+1))
+           = (3e/π)[1 − 1/(π²+1)]
+           = (3e/π)(π²/(π²+1))
+           = 3eπ/(π²+1)
+
+  En τ = 0: −(3/π) e⁰ cos 0 + (1/π) · (3·1/(π²+1)) · [π·0 + 1]
+           = −3/π + 3/(π(π²+1))
+           = (3/π)[−1 + 1/(π²+1)]
+           = (3/π)(−π²/(π²+1))
+           = −3π/(π²+1)
+
+  ∫₀³ sin(πτ/3) e^{τ/3} dτ = 3eπ/(π²+1) − (−3π/(π²+1)) = 3π(e+1)/(π²+1) ≈ 3·3.1416·3.718/10.870 ≈ 3.222
+
+Paso 4. Vector resultado con peso exponencial:
+  ∫₀³ c(τ) e^{τ/3} dτ = (−3(e+1)/(π²+1),  3π(e+1)/(π²+1))
+                       ≈ (−1.027, 3.222)
+
+Paso 5. Verificación con e₂ = (0,1):
+  Lado izquierdo: ⟨(−1.027, 3.222), (0,1)⟩_E = 3.222
+  Lado derecho:   ∫₀³ sin(πτ/3) e^{τ/3} dτ ≈ 3.222   ✓
+
+Comparación entre los dos resultados:
+  Peso uniforme:     (0, 1.909)
+  Peso exponencial:  (−1.027, 3.222)
+
+El peso exponencial magnifica la influencia de los colapsos tardíos (τ ≈ 3), que tienen componente cos(πτ/3) < 0, lo que produce una primera coordenada negativa. Con peso uniforme, las contribuciones positivas y negativas se cancelan exactamente. ∎
+
+Interpretación. La integral de Bochner acumula el efecto de todos los colapsos ponderados por su relevancia temporal. El resultado es un único vector en E que resume la historia del sistema hasta t: su dirección indica la tendencia dominante de los colapsos, y su norma indica la magnitud acumulada. La función de peso w(τ) determina qué colapsos influyen más: w(τ) constante da igual peso a toda la historia; w(τ) creciente en τ pondera más los colapsos recientes.
+
+
+Invarianza bajo permutación e irreversibilidad de I(t)
+
+La integral ∫₀ᵗ c(τ)w(τ) dτ con w(τ) = 1 es invariante bajo reordenamiento de los instantes de integración: no importa en qué orden se sumen las contribuciones, el resultado es el mismo. Esta es una propiedad de la integral de Lebesgue como operador lineal, no una propiedad del sistema.
+
+La irreversibilidad de la historia acumulada I(t) —definida en la Parte II— descansa en dos mecanismos distintos:
+
+(a) La función de peso w(τ) puede romper la simetría temporal asignando mayor masa a colapsos recientes; por ejemplo w(τ) = e^{λ(τ−t)} con λ > 0 da peso decreciente al pasado.
+
+(b) La dependencia dinámica: φ₁ y φ₂ (Partes I y II) dependen de I(t) en cada instante. El colapso c(τ₂) depende del estado I(τ₁⁺): el sistema en τ₂ tiene acceso a la historia hasta τ₁, y esa dependencia hace que reordenar los colapsos produzca trayectorias distintas. Esta dependencia se formaliza en el Teorema 2.1.
+
+La irreversibilidad de I(t) es una propiedad del sistema dinámico, no de la integral.
+
 
 [TABLA]
 | Objeto | Notación | Tipo matemático | Parte |
 | Espacio de base | E | Espacio de Hilbert separable | Axioma 0 |
 | Producto interno | ⟨·,·⟩_E | Forma bilineal simétrica def. positiva | Axioma 0 |
 | Norma inducida | ‖·‖_E | Norma completa | Axioma 0 |
-| Función de embedding | emb : Out → E | Inmersión (decisión de modelado) | Axioma 0, nota |
+| Función de embedding | emb : Outputs → E | Función (decisión de modelado) | Axioma 0 |
 | Intervalo temporal | T = [0, t_m] | Compacto de ℝ | Definición 0 |
 | Función de colapso | c : T → E | Función admisible en sentido de Bochner | Definición 0 |
+| Función de peso | w : T → ℝ₊ | Función medible acotada | Integral de Bochner |
+| Integral de Bochner | ∫₀ᵗ c(τ)w(τ) dτ | Vector en E | Integral de Bochner |
 [/TABLA]
 
 Correspondencia con el sistema ontológico de la colección.
 
-En el sistema ontológico que esta axiomatización formaliza, E corresponde al Caos: el espacio de posibilidad absoluta anterior a toda determinación, donde ningún estado ha sido seleccionado y todos son igualmente posibles. La estructura de Hilbert captura esto con precisión: E es completo —ninguna posibilidad está ausente—, separable —las posibilidades son computables— y sin elemento privilegiado antes de que opere φ₁.
+En el sistema ontológico que esta axiomatización formaliza, E corresponde al Caos: el espacio de posibilidad absoluta anterior a toda determinación, donde ningún estado ha sido seleccionado y todos son igualmente posibles. La estructura de Hilbert captura esto con precisión: E es completo —ninguna posibilidad está ausente—, separable —las posibilidades son enumerables— y sin elemento privilegiado antes de que opere φ₁.
 
 El colapso c(τ) es la selección de un elemento de E en el instante τ: la determinación de una posibilidad. Antes del colapso, el sistema vive en E sin posición definida; después, tiene una. La función c: T → E traza esa secuencia de determinaciones a lo largo del tiempo. La integral I(t) las acumula. La Parte X formaliza el cierre de ese proceso cuando T se agota.
 

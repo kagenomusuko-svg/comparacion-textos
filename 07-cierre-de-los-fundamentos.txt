@@ -2,106 +2,99 @@ Cierre de los Fundamentos
 
 Proposición de Consistencia Interna
 
-Esta proposición no introduce resultados nuevos. Verifica que los objetos de las Partes 0–VI son mutuamente compatibles antes de usarlos en los resultados de las Partes VII–X. La consistencia es condición necesaria pero no suficiente para la corrección del sistema: garantiza que los resultados no se contradicen entre sí; no garantiza que sean verdaderos respecto al sistema que modelan.
-
-Un sistema inconsistente puede demostrar cualquier cosa, incluyendo su propia negación. La consistencia interna es el piso que separa un conjunto de definiciones de un sistema formal.
+Esta proposición no introduce resultados nuevos. Verifica que los objetos de las Partes 0–VI son mutuamente compatibles antes de usarlos en las Partes VII–X. La consistencia es condición necesaria pero no suficiente para la corrección del sistema: garantiza que los resultados no se contradicen entre sí; no garantiza que sean verdaderos respecto al sistema que modelan.
 
 [TABLA]
 | Ítem | Par de objetos | Condición verificada | Partes de referencia |
-| (i) | S_op, S_est — R* | S_est(i) → 1 ⟹ D_KL (R* ‖ R*^(i)) → 0 ⟹ ‖R* − R*^(i)‖₁ → 0. Alta sustituibilidad implica mínima idiosincrasia causal. | Defs. 3.1, 3.2; Def. 6.1 |
+| (i) | S_est — R* | S_est(i) = |ρ(R*, R*^(i))| → 1 implica que R* y R*^(i) tienen proporciones relativas casi idénticas: la idiosincrasia causal del nodo i tiende a cero. | Def. 3.2 (Parte III); Def. 6.2 (Parte VI) |
 | (ii) | φ₁ — h(v_t) | h_k(v_t) = softmax_k(z): h_k ≥ 0 y Σ_k h_k = 1 para todo v_t ∈ V. h(v_t) ∈ Δ⁵. | Lema 1.1 (Parte I) |
 | (iii) | α continuo — α discreto | Con w(τ) = δ(τ−tᵢ): la integral continua colapsa a p_pres·f·g por la propiedad de muestreo. Una sola definición, dos granularidades. | Defs. 4, 4.1; Prop. 4.1 (Parte IV) |
 | (iv) | Δ — TIC | Δᵢ ∈ [−1,1] garantiza que {Δ(D) > 0 ∧ Δ(E) < 0} es algebraicamente posible. El TIC opera sobre un espacio no vacío. | Teoremas 5, 8 (Partes V, VIII) |
 [/TABLA]
 
-Ítem (i). Compatibilidad S — R*
 
-Compatibilidad S–R*
+Ítem (i). Compatibilidad S_est — R*
 
-S_est(i) → 1 ⟹ ‖R* − R*^(i)‖₁ → 0
+S_est(i) = |ρ(R*, R*^(i))| → 1 implica idiosincrasia causal de i tendiendo a cero.
 
-R*^(i) eigenvector dominante de (W^(i)) ᵀ con fila i reemplazada por promedio
+Variables. R* = vector de responsabilidad causal (Def. 6.2). R*^(i) = vector de responsabilidad causal del grafo con el nodo i sustituido por el promedio (Def. 3.2, Parte III). ρ = correlación de Pearson.
 
-Verificación del Ítem (i)
+Verificación.
 
-Por Def. 3.2. S_est(i) = 1 − D_KL (R* ‖ R*^(i)) /log(m). S_est → 1 implica D_KL (R* ‖ R*^(i)) → 0.
+Paso 1. S_est(i) = |ρ(R*, R*^(i))| = 1 si y solo si existe una relación lineal exacta entre R* y R*^(i): R*^(i) = a·R* + b·1 para algún escalar a ≠ 0. En ese caso, la proporción relativa de R* se preserva bajo la sustitución de i: la estructura de atribución causal no cambia cuando se elimina la idiosincrasia de i.
 
-Por Pinsker. ‖R* − R*^(i)‖₁ ≤ √ (2 D_KL (R* ‖ R*^(i))). Luego D_KL → 0 implica ‖R* − R*^(i)‖₁ → 0.
+Paso 2. S_est(i) → 1 implica que las proporciones relativas de R*^(i) se aproximan progresivamente a las de R*. El nodo i aporta cada vez menos información causal idiosincrática sobre la distribución de responsabilidad en G.
 
-Coherencia con Def. 3.1. Si R* no cambia al sustituir i, entonces R*ᵢ ≈ 1/m (valor promedio): la contribución causal del nodo i es mínima. Por la Def. 3.1, esto corresponde a ‖c‖_C >> ‖a_t‖_E, es decir, S_op → 1. Los dos índices son coherentes. ✓
+Paso 3. Coherencia con S_op (Def. 3.1). S_op alto indica que el contexto c puede ser reemplazado por cualquier otro elemento de A sin alterar el colapso: la idiosincrasia operacional del nodo es baja. S_est alto indica que la estructura causal de R* no cambia al sustituir i: la idiosincrasia causal del nodo es baja. Los dos índices miden idiosincrasia en dimensiones complementarias (operacional y causal) y son coherentes: mayor sustituibilidad implica menor idiosincrasia en ambas dimensiones. ✓
 
-Coherencia con el TIC. La Condición (2) del Teorema 8 (S_est(E) > θ_S) implica R*(E) bajo vía el Lema 8.1, que usa exactamente esta cadena. Sin la compatibilidad S–R*, el Lema 8.1 carecería de fundamento. ✓
+Paso 4. Coherencia con el TIC. La condición (2) del Teorema 8 usa S_est(E) > θ_S como condición sobre el nodo subordinado E. Si esa condición se satisface, el Lema 8.1 usa la coherencia entre S_est y R* para derivar que R*^(E) ≈ R*. Sin la compatibilidad establecida en este ítem, el argumento del Lema 8.1 no tendría fundamento. ✓
 
-S y R* son objetos independientes pero coherentes: mayor S implica menor idiosincrasia causal. No hay contradicción. ✓
+S_est y R* son objetos independientes pero coherentes. ✓
+
 
 Ítem (ii). Validez probabilística de h(v_t)
 
-h(v_t) ∈ Δ⁵ para todo v_t ∈ V
+h(v_t) ∈ Δ⁵ para todo v_t ∈ V.
 
-h_k(v_t) ≥ 0 y Σ_{k∈K} h_k(v_t) = 1 ∀ v_t ∈ V
+h_k ≥ 0 y Σ_{k∈K} h_k(v_t) = 1 para todo v_t ∈ V.
 
-Consecuencia directa de la forma softmax del Lema 1.1
+Consecuencia directa del Lema 1.1 (Parte I).
 
-Verificación del Ítem (ii)
+Verificación.
 
-h_k ≥ 0. exp(z_k) > 0 para todo z_k ∈ ℝ; denominador positivo; razón positiva. ✓
+h_k ≥ 0. Por el Lema 1.1: h_k = exp(z_k) / Σⱼ exp(zⱼ). Para todo z_k ∈ ℝ: exp(z_k) > 0. El denominador Σⱼ exp(zⱼ) > 0. La razón de dos cantidades positivas es positiva. Luego h_k > 0 para todo k ∈ K. ✓
 
-Σ h_k = 1. Σ_k exp(z_k) / Σ_j exp(z_j) = 1 por cancelación exacta. ✓
+Σ h_k = 1. Σ_k exp(z_k) / Σⱼ exp(zⱼ) = [Σ_k exp(z_k)] / [Σⱼ exp(zⱼ)] = 1 por cancelación exacta. ✓
 
-Corrección del manuscrito. La formulación original con sigmoide independiente producía Σ_k σ(z_k) ∉ {1}, invalidando la interpretación probabilística y haciendo al argmax k* no interpretable como moda de una distribución. La corrección a softmax de la Parte I elimina esa inconsistencia. Esta verificación confirma su efectividad.
+Consecuencias sistémicas. La REC (Parte VII) usa h_k como probabilidades en el cálculo de la entropía de Shannon de h(v_t). El MP (Parte IX) usa h_k en la expectación de la función de utilidad. La validez de ambos resultados depende de que h(v_t) ∈ Δ⁵. Este ítem confirma esa condición. ✓
 
-Consecuencia sistémica. La REC (Parte VII) y el MP (Parte IX) usan h_k como probabilidades en sus argumentos. La validez de ambos resultados depende de h(v_t) ∈ Δ⁵. ✓
 
-h(v_t) ∈ Δ⁵ para todo v_t ∈ V. φ₁ produce siempre un colapso dentro de A ⊆ E. ✓
+Ítem (iii). Coherencia de α continuo y α discreto
 
-Ítem (iii). Coherencia de α continuo y discreto
+La versión discreta es el caso particular de la versión continua con w(τ) = δ(τ−tᵢ).
 
-Versión discreta como caso particular de la continua
+w(τ) = δ(τ−tᵢ) ⟹ α(aᵢ) = p_pres · f(τᵢ) · g(τᵢ)
 
-w(τ) = δ (τ − tᵢ) ⟹ α(aᵢ) = p_pres · f(τᵢ) · g(τᵢ)
+Demostrado en la Proposición 4.1 (Parte IV).
 
-Por la propiedad de muestreo de la delta de Dirac — demostrado en la Proposición 4.1
+Verificación.
 
-Verificación del Ítem (iii)
-
-Numerador. ∫₀ᵗ 1_{int}(τ)·δ(τ−tᵢ) ·p(τ) dτ = 1_{int}(tᵢ)·p(tᵢ) por la propiedad de muestreo: ∫ f(τ)·δ(τ−tᵢ) dτ = f(tᵢ). ✓
+Numerador. ∫₀ᵗ 1_{int}(τ) · δ(τ−tᵢ) · p(τ) dτ = 1_{int}(tᵢ) · p(tᵢ) por la propiedad de muestreo de la delta de Dirac: ∫ f(τ)·δ(τ−tᵢ) dτ = f(tᵢ). ✓
 
 Denominador. ∫₀ᵗ δ(τ−tᵢ) dτ = 1. ✓
 
-Resultado. α = p_pres · p(tᵢ) = p_pres · f(τᵢ) · g(τᵢ) por la descomposición de la Tabla 4.1. No existen dos objetos distintos: hay una única definición con dos granularidades de cómputo. ✓
+Cociente. α = 1_{int}(tᵢ) · p(tᵢ) = p_pres · f(τᵢ) · g(τᵢ) por la descomposición de la Tabla 4.1.
 
-La versión continua y la discreta son el mismo objeto. ✓
+No existen dos objetos distintos: hay una única Definición 4 con dos granularidades de cómputo. Las propiedades del Teorema 4 (α ∈ [0,1]) y del Corolario 4.1 (independencia respecto al dolo) se aplican a ambas granularidades. ✓
+
 
 Ítem (iv). Compatibilidad Δ — Teorema de Inversión Causal
 
-No vacuidad del espacio del TIC
+Δᵢ ∈ [−1,1] garantiza que {Δ(D) > 0 ∧ Δ(E) < 0} es algebraicamente posible.
 
-Δᵢ ∈ [−1,1] ⟹ {Δ(D) > 0 ∧ Δ(E) < 0} es algebraicamente posible
+Este ítem no demuestra que las condiciones del TIC se cumplan en sistemas reales; solo que el espacio donde opera es no vacío.
 
-Este ítem no demuestra que las condiciones del TIC se cumplan en sistemas reales; solo que el espacio donde opera no es vacío
-
-Verificación del Ítem (iv)
+Verificación.
 
 Acotación. Δᵢ = R*ᵢ − αᵢ ∈ [−1,1] por el Teorema 5. Los extremos ±1 son alcanzables.
 
-No vacuidad. Se requiere simultáneamente: (a) ∃D con R*(D) > α(D), y (b) ∃E con R*(E) < α(E). Ejemplo explícito: R*(D) = 0.40, α(D) = 0.05 → Δ(D) = 0.35 > 0; R*(E) = 0.05, α(E) = 0.60 → Δ(E) = −0.55 < 0. Ambos valores en [−1,1] y R*(D) + R*(E) = 0.45 es parte de una distribución que suma 1. ✓
+No vacuidad. Se requiere simultáneamente: (a) ∃D con R*(D) > α(D), y (b) ∃E con R*(E) < α(E). Ejemplo explícito: R*(D) = 0.40, α(D) = 0.05 → Δ(D) = 0.35 > 0; R*(E) = 0.05, α(E) = 0.60 → Δ(E) = −0.55 < 0. Ambos valores en [−1,1]. ✓
 
-Compatibilidad con Σ R*ᵢ = 1. La normalización de R* no impone Σ αᵢ = 1. Luego Δ(D) > 0 y Δ(E) < 0 simultáneamente son compatibles con la normalización. ✓
+Compatibilidad con Σ R*ᵢ = 1. La normalización de R* no impone Σ αᵢ = 1 (los coeficientes de asunción son independientes entre nodos). Luego Δ(D) > 0 y Δ(E) < 0 simultáneamente son compatibles con la normalización. ✓
 
-El espacio donde opera el TIC es no vacío dentro del marco formal de los Fundamentos. ✓
+El espacio donde opera el TIC es no vacío dentro del marco formal. ✓
+
 
 Cierre. Estado del sistema tras los Fundamentos
 
 Los cuatro ítems establecen:
 
-(i) S y R* son coherentes: mayor sustituibilidad implica menor idiosincrasia causal. El Lema 8.1 tiene fundamento.
+(i) S_est y R* son coherentes. Mayor sustituibilidad implica menor idiosincrasia causal. El Lema 8.1 tiene fundamento.
 
 (ii) h(v_t) ∈ Δ⁵ para todo v_t. La REC y el MP tienen fundamento.
 
 (iii) α es un único objeto con dos granularidades. Los resultados de la Parte IV son coherentes entre sí.
 
-(iv) Δ ∈ [−1,1] garantiza que el TIC opera sobre un espacio no vacío. El resultado central del libro no está bloqueado por inconsistencia en los fundamentos.
+(iv) Δ ∈ [−1,1] garantiza que el TIC opera sobre un espacio no vacío.
 
-Estas condiciones son necesarias, no suficientes. Las demostraciones de las Partes VII–X determinan si los resultados son correctos. Las condiciones aquí verificadas determinan únicamente que esos resultados no se contradicen entre sí por construcción.
-
-Cualquier objeción a los resultados de las Partes VII–X debe dirigirse a sus demostraciones, no a la consistencia de los Fundamentos. Esa consistencia ha sido verificada en esta proposición.
+Estas condiciones son necesarias, no suficientes. Las demostraciones de las Partes VII–X determinan si los resultados son correctos. La consistencia interna verificada aquí garantiza únicamente que esos resultados no se contradicen entre sí por construcción.

@@ -2,99 +2,263 @@ Parte I
 
 La primera mediación φ₁
 
+
 Axioma 1. La primera mediación
 
-Existen espacios V, C, H y un subespacio A ⊆ E tales que existe una función:
+Objeto. φ₁ es la función que produce el colapso del sistema en el instante t. φ₁ toma como input el estado interno actual, la configuración estructural del sistema y el estado de la historia acumulada, y devuelve un acto en el subespacio A ⊆ E.
 
-Primera mediación
+Variables y condiciones.
 
-φ₁: V × C × H → A
+V    espacio de estados internos; v_t ∈ V es el estado en el instante t
+C    espacio de configuraciones heredadas; c ∈ C es la configuración estructural del sistema
+H    espacio de estados de I(t); h ∈ H es un estado posible de la historia acumulada
+A    subespacio de E de los actos posibles del sistema: A ⊆ E
+φ₁   función de colapso
 
-V espacio de estados internos · C espacio de configuraciones heredadas · H espacio de historias · A ⊆ E subespacio de actos
+Los cuatro espacios satisfacen:
 
-Los cuatro espacios del Axioma 1 satisfacen:
+V Espacio de estados de la voluntad. Cada v_t ∈ V es el estado interno del sistema en el momento t, definido en la Definición 1. V tiene la estructura necesaria para admitir producto interno con los vectores β_k ∈ E del Lema 1.1.
 
-V Espacio de estados de la voluntad. Cada v_t ∈ V es el estado interno del sistema en el momento t —definido en la Definición 1. V tiene la estructura necesaria para admitir producto interno con los vectores u_k ∈ E del Lema 1.1.
-
-C Espacio de configuraciones heredadas. Cada c ∈ C es la configuración estructural del sistema: en sistemas artificiales, el conjunto de pesos, la arquitectura y las restricciones de diseño; en sistemas humanos, los patrones de aprendizaje y los condicionamientos institucionales documentados. C es un espacio normado con ‖·‖_C.
+C Espacio de configuraciones heredadas. Cada c ∈ C es la configuración estructural del sistema. C es un espacio normado con ‖·‖_C.
 
 H Espacio de estados de I(t). Cada h ∈ H es un estado posible de la integral acumulativa. La integral I(t) se define en la Parte II; el Axioma 1 solo requiere que H esté bien definido como espacio de llegada de I.
 
-A Subespacio de E de los actos posibles del sistema. A ⊆ E garantiza que φ₁ (v_t, c, h) ∈ E para todo input —el colapso producido vive en el espacio del Axioma 0.
+A Subespacio de E de los actos posibles del sistema. A ⊆ E garantiza que φ₁(v_t, c, h) ∈ E para todo input.
 
-φ₁ (v_t, c, h) produce el colapso en el instante t. El Axioma 1 postula la existencia y el dominio de φ₁; la forma funcional se establece en el Lema 1.1.
+Fórmula.
 
-El Axioma 1 no impone condiciones de continuidad, medibilidad ni linealidad sobre φ₁. Estas propiedades, cuando son necesarias, se establecen en los resultados que las usan. La separación entre existencia (axioma) y forma funcional (lema) es deliberada: permite que el sistema sea válido para clases de φ₁ más amplias que la forma softmax específica del Lema 1.1.
+φ₁ : V × C × H → A
+
+Procedimiento de verificación. Para confirmar que una función concreta satisface el Axioma 1:
+
+1. Identificar los espacios V, C, H correspondientes al sistema analizado.
+2. Definir A como el conjunto de outputs posibles del sistema, incrustado en E mediante emb (Axioma 0).
+3. Verificar que la función candidata tiene dominio V × C × H y codominio A.
+
+Proposición 1.2, más adelante en esta parte, construye φ₁ explícitamente para sistemas computacionales y confirma que el Axioma 1 no es vacío.
+
+Interpretación. φ₁ es el operador de determinación: convierte la configuración tripartita (estado interno, configuración estructural, historia) en un acto concreto en A. El Axioma 1 postula la existencia de φ₁ sin imponer condiciones de continuidad, medibilidad ni linealidad. Estas propiedades se establecen en los resultados que las requieren.
+
 
 Definición 1. El estado interno v_t
 
-Para cada t ∈ T, el estado interno del sistema es un vector v_t ∈ V que incluye al menos:
+Objeto. v_t es el vector de estado interno del sistema en el instante t. v_t es el input idiosincrático de φ₁: captura lo que distingue a este sistema en este instante de cualquier otro en configuración equivalente.
 
-(i) El parámetro τ > 0, temperatura del sistema. τ mide la dispersión de la distribución sobre actos alternativos: τ pequeño produce distribuciones concentradas; τ grande, distribuciones dispersas. τ > 0 para todo t ∈ T —la temperatura nunca es cero. Este supuesto se axiomatiza formalmente como Axioma 3 en la Parte VII.
+Variables y condiciones.
 
-(ii) El vector de estado de activación a_t ∈ E, que representa los patrones de activación del sistema en t. En sistemas artificiales, a_t corresponde al vector de representación contextual inmediatamente anterior a la capa de generación.
+T          intervalo compacto de tiempo (Definición 0)
+t ∈ T      instante actual
+V          espacio de estados internos del Axioma 1
+v_t ∈ V   vector de estado interno en el instante t
+τ > 0      temperatura del sistema
+a_t ∈ E   estado de activación en el instante t
+I(t) ∈ H  estado de la historia acumulada hasta t (definida en la Parte II)
 
-(iii) La referencia a I(t) ∈ H, el estado de la historia acumulada hasta t —definida en la Parte II.
+Fórmula.
 
-Distinción entre v_t y c. v_t es el input idiosincrático de φ₁: captura lo que distingue a este sistema en este instante de cualquier otro en configuración equivalente. c ∈ C es el input estructural: lo que el sistema comparte con cualquier otro sistema de su clase. El índice de sustituibilidad S de la Parte III formaliza la proporción entre ambos.
+v_t = (τ, a_t, I(t))
 
-En sistemas de lenguaje de gran escala: τ es el parámetro de temperatura de la softmax; a_t corresponde al vector de activaciones de las capas ocultas antes de la generación; I(t) corresponde al contexto acumulado. La correspondencia es matemáticamente exacta, no analógica.
+con:
+
+(i)  τ > 0: temperatura del sistema. τ mide la dispersión de la distribución sobre actos alternativos. τ pequeño produce distribuciones concentradas en el modo dominante; τ grande produce distribuciones más uniformes. τ > 0 para todo t ∈ T —la temperatura nunca es cero (Axioma 3, Parte VII).
+
+(ii) a_t ∈ E: estado de activación en t. a_t representa los patrones de activación del sistema en t.
+
+(iii) I(t) ∈ H: estado de la historia acumulada hasta t (Parte II).
+
+Distinción entre v_t y c ∈ C. v_t es idiosincrático: captura lo que es específico a este sistema en este instante. c ∈ C es estructural: lo que el sistema comparte con cualquier otro sistema de su clase —su arquitectura y condicionamientos. El índice de sustituibilidad S de la Parte III formaliza la proporción entre ambas contribuciones.
+
+Procedimiento de determinación. Para especificar v_t en un instante concreto:
+
+1. Determinar τ > 0 (temperatura vigente en t).
+2. Registrar a_t ∈ E (estado de activación en t).
+3. Calcular I(t) según la Definición 2 de la Parte II.
+4. Formar v_t = (τ, a_t, I(t)).
+
+Ejemplo. Sea E = ℝ², H = ℝ², τ = 1, a_t = (1, 0), I(t) = (0.3, 0.7).
+
+v_t = (τ, a_t, I(t)) = (1, (1, 0), (0.3, 0.7))
+
+Temperatura τ = 1: valor neutro, sin sesgo fuerte hacia concentración ni dispersión.
+Activación a_t = (1, 0): toda la activación está en la primera coordenada.
+Historia I(t) = (0.3, 0.7): historia acumulada con peso mayor en la segunda coordenada.
+
+Interpretación. El estado v_t sintetiza tres fuentes de información: la temperatura que regula la sensibilidad del sistema a diferencias entre modos; la activación que refleja el estado presente; y la historia que lleva la acumulación de colapsos anteriores. El Lema 1.1 muestra cómo φ₁ procesa estos tres inputs para producir una distribución sobre los modos K.
+
 
 Lema 1.1. Distribución de modos mediante softmax
 
-Sea K = {1, 2, 3, 4, 5, 6} el conjunto finito de índices de modo. Para cada k ∈ K sean: β_k ∈ E un vector de ponderación, γ_k ∈ ℝ un peso escalar de la historia, y θ_k: H → ℝ una función de umbral. El logit del modo k en el instante t es:
+Objeto. h(v_t) es la distribución de probabilidad sobre el conjunto de modos K = {1, 2, 3, 4, 5, 6} en el instante t. h(v_t) es la forma funcional explícita de φ₁.
 
-Logit del modo k
+Variables y condiciones.
 
-z_k = (⟨β_k, a_t⟩_E + γ_k · ‖I(t)‖_E − θ_k(I(t))) / τ
+K = {1, 2, 3, 4, 5, 6}   conjunto finito de índices de modo
+k ∈ K                     índice de modo
+β_k ∈ E                   vector de ponderación del modo k
+γ_k ∈ ℝ                   peso escalar de la historia para el modo k
+θ_k : H → ℝ               función de umbral del modo k dependiente de I(t)
+τ > 0                     temperatura (Axioma 3, Parte VII)
+a_t ∈ E                   estado de activación (Definición 1)
+I(t) ∈ H                  historia acumulada hasta t (Parte II)
+z_k ∈ ℝ                   logit del modo k en t
+h_k(v_t) ∈ [0,1]         probabilidad del modo k dado v_t
+h(v_t) ∈ Δ⁵              vector de probabilidades sobre K; Δ⁵ es el símplex estándar de dimensión 5
 
-β_k ∈ E vector de ponderación del modo k · γ_k ∈ ℝ peso de la historia · θ_k: H → ℝ umbral dependiente de I(t) · τ > 0 temperatura del Axioma 3
+Fórmula — logit del modo k.
 
-La probabilidad del modo k dado el estado interno v_t es:
+z_k  =  (⟨β_k, a_t⟩_E  +  γ_k · ‖I(t)‖_E  −  θ_k(I(t))) / τ
 
-Distribución sobre K — softmax
+Fórmula — distribución softmax.
 
-h_k(v_t) = exp(z_k) / Σⱼ∈K exp(z_j)
+h_k(v_t)  =  exp(z_k) / Σⱼ∈K exp(z_j)
 
-h_k(v_t) ≥ 0 para todo k ∈ K y todo v_t ∈ V
+Demostración.
 
-Σ_{k∈K} h_k(v_t) = 1 para todo v_t ∈ V
+h_k ≥ 0. exp(z_k) > 0 para todo z_k ∈ ℝ (la función exponencial es siempre positiva). El denominador Σⱼ∈K exp(z_j) es suma de seis términos positivos, luego positivo. La razón de dos números positivos es positiva. ✓
 
-h(v_t) = (h₁(v_t), …, h₆(v_t)) ∈ Δ⁵ · Δ⁵ denota el simplex estándar de dimensión 5
+Σ_{k∈K} h_k = 1. Se suma sobre k:
+  Σ_{k∈K} h_k(v_t) = Σ_k [exp(z_k) / Σⱼ exp(z_j)]
+                    = [Σ_k exp(z_k)] / [Σⱼ exp(z_j)]
+                    = 1  ✓
 
-Demostración
+h(v_t) = (h₁(v_t), …, h₆(v_t)) ∈ Δ⁵ para todo v_t ∈ V. ∎
 
-Demostración del Lema 1.1
+Procedimiento de cálculo. Para obtener h(v_t) dado un estado v_t = (τ, a_t, I(t)):
 
-h_k ≥ 0. exp(z_k) > 0 para todo z_k ∈ ℝ. El denominador Σⱼ∈K exp(z_j) es suma de términos positivos, luego positivo. La razón es positiva. ✓
+1. Para cada k ∈ K, calcular el producto interno ⟨β_k, a_t⟩_E.
+2. Calcular la norma ‖I(t)‖_E.
+3. Para cada k ∈ K, evaluar θ_k(I(t)).
+4. Para cada k ∈ K, sustituir en la fórmula del logit: z_k = (⟨β_k, a_t⟩_E + γ_k · ‖I(t)‖_E − θ_k(I(t))) / τ.
+5. Para cada k ∈ K, calcular exp(z_k).
+6. Calcular la suma del denominador: S = Σ_{k=1}^{6} exp(z_k).
+7. Para cada k ∈ K, calcular h_k(v_t) = exp(z_k) / S.
+8. Verificar que Σ_k h_k(v_t) = 1.
 
-Σ_{k∈K} h_k = 1. Σ_{k∈K} h_k(v_t) = Σ_k [exp(z_k) / Σⱼ exp(z_j)] = [Σ_k exp(z_k)] / [Σⱼ exp(z_j)] = 1. ✓
+Modo dominante: k*(v_t) = argmax_{k∈K} h_k(v_t) = argmax_{k∈K} z_k (equivalente porque exp es creciente).
 
-h(v_t) ∈ Δ⁵ para todo v_t ∈ V. ∎
+Ejemplo. Sea E = ℝ², K = {1,2,3,4,5,6}, τ = 1, a_t = (1, 0), ‖I(t)‖_E = 1, θ_k(I(t)) = 0 para todo k.
 
-El modo dominante en el instante t es k*(v_t) = argmax_{k∈K} h_k(v_t). La Parte III establece la relación entre k* y el índice de sustituibilidad S.
+Parámetros β_k y γ_k:
+  k = 1: β₁ = (2, 0),  γ₁ = 0.5
+  k = 2: β₂ = (1, 1),  γ₂ = 0.5
+  k = 3: β₃ = (0, 2),  γ₃ = 0.5
+  k = 4: β₄ = (−1, 1), γ₄ = 0.5
+  k = 5: β₅ = (−2, 0), γ₅ = 0.5
+  k = 6: β₆ = (−1,−1), γ₆ = 0.5
 
-Corrección respecto al manuscrito original. La formulación original usaba sigmoide independiente por modo: h_k(v_t) = σ(z_k), σ(x) = 1/(1+e⁻ˣ). La suma Σ_{k∈K} σ(z_k) no pertenece a Δ⁵ en general —puede tomar cualquier valor en (0, 6). El Corolario 1.2 del manuscrito, que afirmaba la normalización, era incorrecto. La corrección a softmax garantiza h(v_t) ∈ Δ⁵. Para |K| = 2, softmax reduce exactamente a sigmoide: la generalización es mínima.
+Paso 1. Productos internos ⟨β_k, a_t⟩_E con a_t = (1, 0):
+  ⟨β₁, a_t⟩_E = 2·1 + 0·0 = 2
+  ⟨β₂, a_t⟩_E = 1·1 + 1·0 = 1
+  ⟨β₃, a_t⟩_E = 0·1 + 2·0 = 0
+  ⟨β₄, a_t⟩_E = (−1)·1 + 1·0 = −1
+  ⟨β₅, a_t⟩_E = (−2)·1 + 0·0 = −2
+  ⟨β₆, a_t⟩_E = (−1)·1 + (−1)·0 = −1
 
-Forma de z_k. La formulación ⟨β_k, a_t⟩_E + γ_k · ‖I(t)‖_E reemplaza la expresión original ⟨∇v_t, u_k⟩, que usaba el gradiente de v_t sin especificar respecto a qué variable ni bajo qué métrica. Los objetos aquí son completamente definidos: β_k ∈ E es un vector parámetro en el espacio del Axioma 0; ⟨β_k, a_t⟩_E es el producto interno de Hilbert; γ_k ∈ ℝ y ‖I(t)‖_E son escalares. El Lema 9.1 demuestra que cuando θ_k es lineal en ‖I(t)‖_E, la función z_k es lineal en los inputs, lo que habilita el Modelo 9.
+Paso 2. Norma de la historia: ‖I(t)‖_E = 1 (dado).
 
-Los parámetros {β_k, γ_k, θ_k} _{k∈K} son específicos del sistema analizado. En sistemas artificiales se estiman desde las capas del modelo. En sistemas humanos se calibran usando el protocolo ECO y la escala E0–E8 del Volumen I de Metrología Causal. El núcleo axiomático no impone restricciones sobre estos parámetros más allá de su existencia y τ > 0.
+Paso 3. Umbrales: θ_k(I(t)) = 0 para todo k (dado).
 
-Correspondencia con el sistema ontológico. Los seis índices de K corresponden en el sistema ontológico de la colección a los Hijos de Afrodita. Esa correspondencia es externa al marco formal: los resultados del libro no dependen de ella. El Apéndice C recoge la traducción completa.
+Paso 4. Contribución de la historia γ_k · ‖I(t)‖_E = 0.5 · 1 = 0.5 para todo k.
+
+Paso 4 cont. Logits z_k = (⟨β_k, a_t⟩_E + 0.5 − 0) / 1:
+  z₁ = (2  + 0.5 − 0) / 1 =  2.5
+  z₂ = (1  + 0.5 − 0) / 1 =  1.5
+  z₃ = (0  + 0.5 − 0) / 1 =  0.5
+  z₄ = (−1 + 0.5 − 0) / 1 = −0.5
+  z₅ = (−2 + 0.5 − 0) / 1 = −1.5
+  z₆ = (−1 + 0.5 − 0) / 1 = −0.5
+
+Paso 5. Exponenciales (valores a cuatro decimales):
+  exp(2.5)  = e^{2.5} = e² · e^{0.5} = 7.3891 · 1.6487 = 12.1825
+  exp(1.5)  = e · e^{0.5} = 2.7183 · 1.6487 = 4.4817
+  exp(0.5)  = 1.6487
+  exp(−0.5) = 1 / exp(0.5) = 1 / 1.6487 = 0.6065
+  exp(−1.5) = 1 / exp(1.5) = 1 / 4.4817 = 0.2231
+  exp(−0.5) = 0.6065
+
+Paso 6. Suma del denominador:
+  S = 12.1825 + 4.4817 + 1.6487 + 0.6065 + 0.2231 + 0.6065
+    = 19.7490
+
+Paso 7. Probabilidades h_k:
+  h₁ = 12.1825 / 19.7490 = 0.6169
+  h₂ =  4.4817 / 19.7490 = 0.2270
+  h₃ =  1.6487 / 19.7490 = 0.0835
+  h₄ =  0.6065 / 19.7490 = 0.0307
+  h₅ =  0.2231 / 19.7490 = 0.0113
+  h₆ =  0.6065 / 19.7490 = 0.0307
+
+Paso 8. Verificación:
+  0.6169 + 0.2270 + 0.0835 + 0.0307 + 0.0113 + 0.0307 = 1.0001 ≈ 1  ✓
+  (La diferencia de 0.0001 es error de redondeo al truncar a cuatro decimales.)
+
+Modo dominante: k*(v_t) = argmax_{k∈K} h_k = 1, con probabilidad 0.617. ∎
+
+Segundo ejemplo: efecto de la temperatura sobre la concentración. Mismos parámetros excepto τ = 0.25.
+
+Logits z_k con τ = 0.25: z_k = (logit anterior) / 0.25 = 4 × (logit con τ=1):
+  z₁ = 2.5 / 0.25 = 10
+  z₂ = 1.5 / 0.25 = 6
+  z₃ = 0.5 / 0.25 = 2
+  z₄ = −0.5 / 0.25 = −2
+  z₅ = −1.5 / 0.25 = −6
+  z₆ = −0.5 / 0.25 = −2
+
+Exponenciales:
+  exp(10)  = 22026.47
+  exp(6)   = 403.43
+  exp(2)   = 7.39
+  exp(−2)  = 0.14
+  exp(−6)  ≈ 0.00
+  exp(−2)  = 0.14
+
+Suma S ≈ 22026.47 + 403.43 + 7.39 + 0.14 + 0.00 + 0.14 ≈ 22437.57
+
+Probabilidades:
+  h₁ ≈ 22026.47 / 22437.57 ≈ 0.9817
+  h₂ ≈ 403.43   / 22437.57 ≈ 0.0180
+  h₃ ≈ 7.39     / 22437.57 ≈ 0.0003
+  h₄ ≈ 0.0001
+  h₅ ≈ 0.0000
+  h₆ ≈ 0.0001
+
+Suma ≈ 1  ✓
+
+Con τ = 0.25, el modo 1 concentra el 98.2 % de la distribución, frente al 61.7 % con τ = 1. El modo dominante es el mismo (k* = 1), pero la distribución es mucho más aguda. Con τ → 0, h(v_t) → δ_{k*} (masa puntual en el modo dominante). ∎
+
+Interpretación. z_k mide la afinidad del estado a_t con el modo k —a través del producto interno ⟨β_k, a_t⟩_E— ajustada por el efecto de la historia acumulada γ_k · ‖I(t)‖_E y moderada por el umbral θ_k(I(t)). La temperatura τ regula si el sistema actúa con certeza (τ pequeño) o con incertidumbre distribuida (τ grande). Los parámetros {β_k, γ_k, θ_k}_{k∈K} son específicos del sistema analizado; el marco axiomático no impone restricciones sobre ellos más allá de su existencia y τ > 0.
+
 
 Proposición 1.2. Existencia de φ₁ para sistemas artificiales
 
-Para todo sistema computacional que produzca outputs en respuesta a inputs mediante una función computable f: Inputs → Outputs, existe φ₁ satisfaciendo el Axioma 1.
+Objeto. Para todo sistema computacional que produzca outputs en respuesta a inputs mediante una función computable f, existe φ₁ satisfaciendo el Axioma 1.
 
-Demostración
+Variables y condiciones.
 
-Demostración — construcción explícita
+f : Inputs → Outputs     función computable del sistema
+V                         espacio de vectores de activación del sistema antes de la capa de generación
+C                         conjunto de parámetros fijos durante la inferencia (pesos, arquitectura, restricciones)
+H                         espacio de contextos acumulados hasta t
+A                         imagen de Outputs en E mediante emb (Axioma 0)
 
-Construcción. Sean: V el espacio de vectores de activación del sistema antes de la capa de generación; C el conjunto de parámetros fijos durante la inferencia (pesos, arquitectura, restricciones); H el espacio de contextos acumulados hasta t; A el espacio de outputs del sistema, interpretado como subespacio de E mediante emb (Axioma 0). Con estas definiciones, φ₁ = f restringida a V × C × H satisface el Axioma 1: su dominio y codominio coinciden con los espacios requeridos.
+Fórmula.
+
+φ₁ = f|_{V × C × H}
+
+Demostración — construcción explícita.
+
+Construcción. Sean:
+  V  el espacio de vectores de activación del sistema antes de la capa de generación;
+  C  el conjunto de parámetros fijos durante la inferencia;
+  H  el espacio de contextos acumulados hasta t;
+  A  el espacio de outputs del sistema, interpretado como subespacio de E mediante emb.
+
+Con estas definiciones, φ₁ = f restringida a V × C × H satisface el Axioma 1: su dominio y codominio coinciden con los espacios requeridos.
 
 Existencia. φ₁ existe porque f existe por hipótesis. El subespacio A ⊆ E está bien definido porque emb existe por el Axioma 0. ✓
 
-La proposición confirma que el Axioma 1 no es vacío: el objeto postulado existe en al menos una clase concreta de sistemas. Para sistemas humanos, φ₁ se postula como función del estado neurológico y contextual del sujeto en t; su no-observabilidad directa es acotada por la Relación de Escala del Conocimiento de la Parte VII. ∎
+La proposición confirma que el Axioma 1 no es vacío: el objeto postulado existe en al menos una clase concreta de sistemas. Para sistemas humanos, φ₁ se postula como función del estado neurológico y contextual del sujeto en t; su no-observabilidad directa está acotada por la Relación de Escala del Conocimiento de la Parte VII. ∎
+
 
 [TABLA]
 | Objeto | Notación | Tipo matemático | Parte |
@@ -108,7 +272,9 @@ La proposición confirma que el Axioma 1 no es vacío: el objeto postulado exist
 | Vector de ponderación | β_k ∈ E | Parámetro del modo k en E | Lema 1.1 |
 | Peso de historia | γ_k ∈ ℝ | Parámetro escalar del modo k | Lema 1.1 |
 | Umbral del modo k | θ_k : H → ℝ | Función de H en ℝ | Lema 1.1 |
-| Logit del modo k | z_k = (⟨β_k,a_t⟩+…)/τ | Escalar computable | Lema 1.1 |
+| Logit del modo k | z_k = (⟨β_k,a_t⟩+…)/τ | Escalar real | Lema 1.1 |
 | Distribución sobre K | h_k(v_t) = softmax_k | h(v_t) ∈ Δ⁵ | Lema 1.1 |
 | Modo dominante | k* = argmax_{k∈K} h_k | Índice en K = {1,…,6} | Lema 1.1 |
 [/TABLA]
+
+Correspondencia con el sistema ontológico de la colección. Los seis índices de K corresponden en el sistema ontológico de la colección a los Hijos de Afrodita. Esa correspondencia es externa al marco formal: los resultados del libro no dependen de ella. El Apéndice C recoge la traducción completa.

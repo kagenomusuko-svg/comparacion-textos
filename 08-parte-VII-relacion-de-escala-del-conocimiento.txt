@@ -2,45 +2,81 @@ Parte VII
 
 Relación de Escala del Conocimiento
 
-Esta parte establece una cota informacional —no un principio de incertidumbre en el sentido de Heisenberg— sobre la precisión simultánea con que un sistema con τ > 0 puede estimar I(t) y h(t) a partir de n colapsos integrados. La distinción respecto a Heisenberg se establece explícitamente en la sección 7.4.
+Esta parte establece una cota informacional sobre la precisión simultánea con que un sistema con τ > 0 puede estimar I(t) y h(t) a partir de n colapsos integrados. La distinción respecto al Principio de Heisenberg se establece en la sección 7.4.
+
 
 Axioma 3. Temperatura positiva
 
-Axioma 3
+Objeto. τ > 0 es el parámetro de temperatura del estado interno v_t (Definición 1). El axioma excluye el caso determinista τ = 0, que produce una distribución h(v_t) degenerada en un único modo.
+
+Formulación.
 
 τ > 0
 
-τ parámetro de temperatura del estado interno v_t (Definición 1) · verificable empíricamente en todo sistema con variabilidad de respuesta
+El Axioma 3 no impone que τ sea constante en T: solo que τ > 0 en todo t ∈ T. En sistemas artificiales, τ es el parámetro de temperatura de la softmax, directamente observable. En sistemas humanos, τ se estima como la variabilidad empírica de la respuesta ante configuraciones idénticas.
 
-τ > 0 excluye el caso determinista τ = 0 —distribución h(v_t) degenerada en un único modo. En sistemas artificiales, τ es el parámetro de temperatura de la softmax: directamente observable. En sistemas humanos, τ se estima como la variabilidad empírica de la respuesta ante configuraciones idénticas.
-
-El Axioma 3 no impone que τ sea constante en T: solo que τ > 0 en todo t. τ puede variar entre llamadas en sistemas artificiales si el diseñador lo permite; puede variar con el estado contextual en sistemas humanos. Lo que el axioma excluye es τ = 0 en cualquier instante.
 
 Lema 7.1. Información de Fisher para el modo k
 
-Sea h_k(θ) = softmax_k(z(θ)) con θ = ‖I(t)‖_E el parámetro de historia escalar. Modelando la observación del modo k como variable Bernoulli X ~ Ber(h_k(θ)), la información de Fisher sobre θ contenida en una observación es:
+Objeto. Bajo el modelo de parametrización logística Bernoulli one-vs-rest, la información de Fisher de la historia ‖I(t)‖_E sobre el modo k es una función de h_k y τ.
 
-Información de Fisher — modo k
+Variables y condiciones.
 
-𝒥(θ) = (1/τ²) · h_k(θ) · (1 − h_k(θ))
+θ = ‖I(t)‖_E      parámetro escalar de historia
+h_k(θ)           probabilidad del modo k bajo parametrización logística: h_k(θ) = σ((θ−θ_k)/τ)
+σ(u) = 1/(1+e^{−u})  función logística
+X ~ Ber(h_k(θ))   observación del modo k como variable de Bernoulli
 
-Máxima cuando h_k = 1/2 · mínima cuando h_k → 0 o h_k → 1 · 𝒥_n(θ) = n · 𝒥(θ) para n observaciones independientes
+Nota de alcance. La demostración usa la derivada dh_k/dθ = h_k(1−h_k)/τ, que corresponde a la parametrización logística one-vs-rest. Este resultado no es la derivada general de un componente softmax respecto de un parámetro escalar arbitrario cuando los logits dependen de θ en forma no especificada. El Lema 7.1 es válido bajo la parametrización logística Bernoulli explícitamente declarada.
 
-Demostración
+Fórmula.
 
-Demostración del Lema 7.1
+𝒥(θ) = h_k(θ)·(1 − h_k(θ)) / τ²
 
-Log-verosimilitud. ℓ (θ; x) = x·log h_k(θ) + (1−x) ·log(1−h_k(θ)). Con h_k(θ) = σ((θ−θ_k) /τ): ∂ℓ/∂θ = (1/τ) · [x − h_k(θ)].
+Para n observaciones independientes: 𝒥_n(θ) = n · 𝒥(θ).
 
-Fisher. 𝒥(θ) = E[(∂ℓ/∂θ) ²] = (1/τ²) ·E[(x−h_k) ²] = (1/τ²) ·Var(X) = (1/τ²) ·h_k(1−h_k), pues Var(Ber(p)) = p(1−p). ✓
+Comportamiento. 𝒥(θ) es máximo cuando h_k = 1/2 (valor 1/(4τ²)) y tiende a cero cuando h_k → 0 o h_k → 1.
 
-𝒥(θ) = h_k(1−h_k) /τ². Aditividad para n observaciones independientes: 𝒥_n = n·𝒥. ∎
+Procedimiento de cálculo.
+
+1. Calcular la log-verosimilitud: ℓ(θ; x) = x·log h_k(θ) + (1−x)·log(1−h_k(θ)).
+2. Calcular ∂ℓ/∂θ. Con h_k(θ) = σ((θ−θ_k)/τ): dh_k/dθ = h_k(1−h_k)/τ.
+   ∂ℓ/∂θ = (x/h_k)·(h_k(1−h_k)/τ) − ((1−x)/(1−h_k))·(h_k(1−h_k)/τ)
+          = (h_k(1−h_k)/τ)·[x/h_k − (1−x)/(1−h_k)]
+          = (1/τ)·[x·(1−h_k) − (1−x)·h_k]/(h_k(1−h_k)) · h_k(1−h_k)/...
+
+   Forma compacta: ∂ℓ/∂θ = (1/τ)·(x − h_k(θ)).
+3. Calcular la información de Fisher: 𝒥(θ) = E[(∂ℓ/∂θ)²] = (1/τ²)·E[(x−h_k)²] = (1/τ²)·Var(X) = h_k(1−h_k)/τ², dado que Var(Ber(p)) = p(1−p).
+
+Demostración.
+
+Paso 1. Log-verosimilitud: ℓ(θ; x) = x·log h_k(θ) + (1−x)·log(1−h_k(θ)).
+
+Paso 2. Derivada: con h_k(θ) = σ((θ−θ_k)/τ), se tiene dh_k/dθ = h_k(1−h_k)/τ.
+Por la regla de la cadena: ∂ℓ/∂θ = (1/τ)·(x − h_k(θ)).
+
+Paso 3. Información de Fisher:
+𝒥(θ) = E[(∂ℓ/∂θ)²] = (1/τ²)·E[(x−h_k)²] = (1/τ²)·Var(Ber(h_k)) = h_k(1−h_k)/τ².
+
+Paso 4. Aditividad: para n observaciones i.i.d.: 𝒥_n(θ) = n·𝒥(θ) por la propiedad de aditividad de la información de Fisher bajo independencia. ∎
+
+Ejemplo numérico. Sea τ = 0.5, h_k = 0.6.
+  h_k(1−h_k) = 0.6·0.4 = 0.24
+  𝒥(θ) = 0.24/0.25 = 0.96
+  Para n = 20 observaciones: 𝒥_20(θ) = 20·0.96 = 19.2
+
 
 Lema 7.2. Cotas de Cramér-Rao para n colapsos
 
-Sean Î y ĥ estimadores insesgados de I(t) y h_k(t) respectivamente, basados en n colapsos integrados:
+Objeto. La desigualdad de Cramér-Rao acota las varianzas de cualquier estimador insesgado de θ = ‖I(t)‖_E y de h_k(t).
 
-Cotas de Cramér-Rao
+Variables y condiciones.
+
+Î estimador insesgado de I(t) (equivalentemente, de θ = ‖I(t)‖_E)
+ĥ estimador insesgado de h_k(t)
+n número de colapsos integrados
+
+Fórmulas.
 
 Var(Î) ≥ τ² / [n · h_k(1−h_k)]
 
@@ -48,112 +84,143 @@ Var(ĥ) ≥ h_k(1−h_k) / n
 
 Var(Î) · Var(ĥ) ≥ τ² / n²
 
-El factor h_k(1−h_k) se cancela en el producto · la cota del producto es invariante respecto al valor de h_k
+El factor h_k(1−h_k) se cancela en el producto: la cota del producto es invariante respecto al valor de h_k.
 
-Demostración
+Procedimiento de derivación.
 
-Demostración del Lema 7.2
+1. Aplicar Cramér-Rao para θ: Var(Î) ≥ 1/𝒥_n = τ²/[n·h_k(1−h_k)].
+2. Cambio de parámetro θ → h_k: calcular la información de Fisher 𝒥_h para h_k como parámetro.
+   Con dh_k/dθ = h_k(1−h_k)/τ: 𝒥_h = 𝒥_n · (dθ/dh_k)² = n·h_k(1−h_k)/τ² · [τ/(h_k(1−h_k))]² = n/[h_k(1−h_k)].
+   Luego Var(ĥ) ≥ 1/𝒥_h = h_k(1−h_k)/n.
+3. Multiplicar las dos cotas:
+   Var(Î)·Var(ĥ) ≥ [τ²/(n·h_k(1−h_k))] · [h_k(1−h_k)/n] = τ²/n².
 
-Var(Î). Por Cramér-Rao: Var(Î) ≥ 1/𝒥_n = τ²/[n·h_k(1−h_k)]. ✓
+Demostración.
 
-Var(ĥ). Cambio de parámetro θ → h_k: 𝒥_h = 𝒥_n·(dh_k/dθ) ^ {−2}. Con dh_k/dθ = h_k(1−h_k) /τ: 𝒥_h = n·h_k(1−h_k) /τ²·τ²/[h_k(1−h_k)]² = n/[h_k(1−h_k)]. Luego Var(ĥ) ≥ h_k(1−h_k) /n. ✓
+Paso 1. Por Cramér-Rao: Var(Î) ≥ 1/𝒥_n = τ²/[n·h_k(1−h_k)]. ✓
 
-Producto. Var(Î)·Var(ĥ) ≥ [τ²/(n·h_k(1−h_k))]·[h_k(1−h_k) /n] = τ²/n². El factor h_k(1−h_k) se cancela. ✓
+Paso 2. Cambio de parámetro: 𝒥_h = 𝒥_n·(dh_k/dθ)² = [n·h_k(1−h_k)/τ²]·[h_k(1−h_k)/τ]²/...
 
-Cota del producto invariante respecto a h_k: Var(Î)·Var(ĥ) ≥ τ²/n². ∎
+Corrección del paso 2: la información de Fisher bajo reparametrización satisface 𝒥_h = 𝒥_θ·(dθ/dh_k)². Con dθ/dh_k = τ/[h_k(1−h_k)]:
+
+𝒥_h = [n·h_k(1−h_k)/τ²] · [τ/(h_k(1−h_k))]² = n·h_k(1−h_k)/τ² · τ²/[h_k(1−h_k)]² = n/[h_k(1−h_k)].
+
+Luego Var(ĥ) ≥ h_k(1−h_k)/n. ✓
+
+Paso 3. Producto:
+Var(Î)·Var(ĥ) ≥ τ²/[n·h_k(1−h_k)] · h_k(1−h_k)/n = τ²/n².
+El factor h_k(1−h_k) se cancela. ✓ ∎
+
+Ejemplo numérico. Con τ = 0.5, h_k = 0.6, n = 20:
+  Var(Î) ≥ 0.25/(20·0.24) = 0.25/4.8 ≈ 0.0521
+  Var(ĥ) ≥ 0.24/20 = 0.012
+  Var(Î)·Var(ĥ) ≥ 0.25/400 = 6.25·10⁻⁴
+  Verificación directa: 0.0521·0.012 = 6.25·10⁻⁴ ✓
+  Cota del producto: τ²/n² = 0.25/400 = 6.25·10⁻⁴ ✓
+
 
 Teorema 7. Relación de Escala del Conocimiento (REC)
 
-Para todo Î, ĥ insesgados basados en n colapsos integrados y para τ₀ > 0 (Axioma 3):
+Objeto. Bajo el modelo logístico Bernoulli one-vs-rest del Lema 7.1, la cota del producto ΔI·Δh escala inversamente con n.
 
-Relación de Escala del Conocimiento
+Variables y condiciones.
 
-n · (ΔI · Δh) ≥ 4τ₀²
+Î, ĥ   estimadores insesgados basados en n colapsos integrados
+ΔI = √Var(Î)   desviación estándar de Î
+Δh = √Var(ĥ)   desviación estándar de ĥ
+τ₀ > 0         cota inferior de τ (garantizada por el Axioma 3)
 
-ΔI = √Var(Î) · Δh = √Var(ĥ)
+Resultado demostrado.
 
-La cota es positiva para todo n finito y τ₀ > 0 · decrece como 4τ₀²/n con n creciente
+ΔI · Δh ≥ τ₀ / n
 
-Demostración
+Equivalentemente: n · (ΔI · Δh) ≥ τ₀.
 
-Demostración del Teorema 7
+Estatus de la forma con factor 4. La forma alternativa n·(ΔI·Δh) ≥ 4τ₀² no se sigue del Lema 7.2. Las dependencias de τ₀ son distintas: lineal (τ₀) frente a cuadrática (4τ₀²). Coinciden únicamente en τ₀ = 1/4. La forma con factor 4 se conserva como conjetura formal abierta que requiere una derivación adicional no disponible en la cadena publicada.
 
-Paso 1. Del Lema 7.2: Var(Î)·Var(ĥ) ≥ τ₀²/n². Tomando raíz cuadrada: ΔI·Δh ≥ τ₀/n.
+Procedimiento de derivación.
 
-Paso 2 — Factor 4. La cota Var(Î) ≥ τ₀²/[n·h_k(1−h_k)] es maximizada cuando h_k(1−h_k) es mínimo, pero la cota del producto en el Lema 7.2 usa el peor caso para Var(Î) simultáneamente: Var(Î) · Var(ĥ) con Var(Î)_max = 4τ₀²/n (evaluado en h_k = 1/2, que maximiza h_k(1−h_k) = 1/4 en el denominador) y Var(ĥ)_max = 1/(4n) produce: (4τ₀²/n)·(1/4n) = τ₀²/n². Tomando raíces y multiplicando por n: n·(ΔI·Δh) ≥ n·(τ₀/n) = τ₀. La forma canónica n·(ΔI·Δh) ≥ 4τ₀² corresponde a la cota n·(ΔI·Δh) _max = n·(2τ₀/n) ·2 = 4τ₀ cuando τ₀ = 1, equivalente a usar la cota combinada de ambas varianzas con sus peores casos independientes.
+1. Del Lema 7.2: Var(Î)·Var(ĥ) ≥ τ²/n².
+2. Tomar raíz cuadrada en ambos miembros:
+   √(Var(Î)·Var(ĥ)) ≥ τ/n
+   ΔI·Δh ≥ τ/n
+3. Sustituir la cota inferior τ₀ ≤ τ (Axioma 3):
+   ΔI·Δh ≥ τ₀/n. ✓
 
-Paso 3. τ₀ > 0 por el Axioma 3. La cota es positiva y no trivial para todo n finito. ∎
+Demostración.
 
-n·(ΔI·Δh) ≥ 4τ₀². ∎
+Paso 1. Por el Lema 7.2: Var(Î)·Var(ĥ) ≥ τ²/n².
+Paso 2. √(Var(Î))·√(Var(ĥ)) ≥ τ/n (raíz cuadrada preserva la desigualdad para valores no negativos).
+Paso 3. τ₀ ≤ τ implica τ₀/n ≤ τ/n. Luego ΔI·Δh ≥ τ₀/n.
+Paso 4. τ₀ > 0 por el Axioma 3. La cota es positiva para todo n finito. ∎
 
-La cota n·(ΔI·Δh) ≥ 4τ₀² es la versión de escala del resultado del Lema 7.2. El factor 4 proviene de tomar los peores casos separados de Var(Î) y Var(ĥ). La forma equivalente ΔI·Δh ≥ τ₀/n (sin el factor 4) se obtiene directamente del Paso 1 y es la más conveniente para estimación. Ambas formas son correctas; la canónica con factor 4 es más conservadora.
+ΔI · Δh ≥ τ₀/n. ✓
 
-Corolario 7.1. Temperatura efectiva τ_eff
+Ejemplo numérico. Sea τ₀ = 0.5, n = 10.
+  Cota demostrada: ΔI·Δh ≥ 0.5/10 = 0.05.
 
-Temperatura efectiva
+  Si n = 100: ΔI·Δh ≥ 0.5/100 = 0.005.
+
+  Comportamiento de escala: duplicar n reduce la cota a la mitad. La cota decrece linealmente con 1/n.
+
+Interpretación. Para todo n finito y τ₀ > 0: ΔI·Δh > 0. La precisión perfecta simultánea sobre I(t) y h(t) es inalcanzable con un número finito de colapsos. En el límite n → ∞ la cota se anula: la barrera desaparece asintóticamente. No hay barrera absoluta; hay una barrera que decrece con la acumulación de colapsos.
+
+
+Corolario 7.1. Temperatura efectiva τ_eff y forma escalar de la REC
+
+Se define la temperatura efectiva:
 
 τ_eff(n) = τ₀ / √n
 
-τ_eff → 0 cuando n → ∞ · τ_eff = τ₀ cuando n = 1
+τ_eff(n) → 0 cuando n → ∞; τ_eff(1) = τ₀.
 
-En términos de τ_eff, la REC adopta su forma local:
+En términos de τ_eff, la cota demostrada adopta la forma:
 
-REC — forma local
+ΔI · Δh ≥ τ_eff² / τ₀ = τ₀/n
 
-ΔI · Δh ≥ 4τ_eff² = 4τ₀²/n
+Derivación.
 
-τ_eff(n) decrece como n^ {−1/2}: la escala de la cota sigue la misma ley que la desviación estándar de la media muestral en el TCL. Acumular n colapsos en I(t) es estadísticamente equivalente a promediar n observaciones independientes del estado del sistema —en ambos casos la incertidumbre decrece como n^ {−1/2}.
+τ_eff² / τ₀ = (τ₀/√n)² / τ₀ = τ₀²/n / τ₀ = τ₀/n ✓
 
-Consecuencia. Para todo n finito y τ₀ > 0: ΔI·Δh > 0. La precisión perfecta simultánea sobre I(t) y h(t) es inalcanzable con un número finito de colapsos. En el límite n → ∞: τ_eff → 0 y la cota se anula —la barrera desaparece asintóticamente. No hay barrera absoluta; hay una barrera que cede con la experiencia.
+τ_eff(n) decrece como n^{−1/2}: la escala de la temperatura efectiva sigue la misma ley que la desviación estándar de la media muestral en el Teorema Central del Límite. Acumular n colapsos en I(t) es estadísticamente equivalente a promediar n observaciones independientes del estado del sistema: en ambos casos la incertidumbre decrece como n^{−1/2}.
+
+Ejemplo numérico. Con τ₀ = 1.0, n = 25: τ_eff = 1.0/5 = 0.2. Cota: ΔI·Δh ≥ 1.0/25 = 0.04.
+
 
 Corolario 7.2. Predictibilidad del sistema desde el exterior
 
-La REC establece que el sistema no puede conocer simultáneamente I(t) y h(t) con precisión arbitraria. Desde la perspectiva de un observador externo, esto se traduce en que la predictibilidad de la decisión y ∈ {0,1} del sistema tiene un límite que depende de τ. El argumento es cualitativo, no una demostración cerrada:
+El siguiente argumento es cualitativo e interpretativo; no es un teorema demostrado de la REC.
 
-Para τ > 0 existe una fracción del espacio de estados donde ningún modo domina claramente —max_k h_k(v_t) < 1/2. En esa región la decisión y no es predecible desde los datos disponibles, independientemente del modelo utilizado. La medida de esa región crece con τ. En consecuencia, el error mínimo empírico de predicción ε_min crece con τ y tiende a 0 cuando τ → 0.
+Para τ > 0, la suavidad de h(v_t) sobre V implica que existen regiones del espacio de estados donde ningún modo domina claramente. En esas regiones la decisión del sistema no es predecible con alta certeza desde los datos disponibles. A mayor τ, mayor el peso que la distribución h(v_t) pone sobre modos secundarios, y mayor la dificultad de predicción.
 
-La forma funcional η(τ) = ½·τ/(1+τ), propuesta en versiones anteriores como 'hipótesis de trabajo', era una interpolación que satisfacía las condiciones de frontera correctas, pero no emergía de los axiomas del sistema. Se elimina del cuerpo formal por dos razones: (1) el argumento que la sustenta es heurístico, no deductivo, y su inclusión en un sistema axiomático la sobrevalora; (2) el Modelo de Predictibilidad de la Parte IX no la necesita para funcionar como modelo de regresión logística. El error mínimo empírico de predicción se estima en cada aplicación concreta del MP, no desde una cota universal. La relación cualitativa —mayor τ implica mayor error mínimo— permanece como consecuencia interpretativa de la REC, sin pretensión de exactitud funcional.
+Esta relación cualitativa —mayor τ implica mayor dificultad de predicción— es una consecuencia interpretativa de la REC, dependiente del modelo estadístico y de las condiciones de la aplicación concreta. El error mínimo empírico de predicción se estima en cada aplicación mediante el Modelo de Predictibilidad (Parte IX), no desde una cota universal.
 
-[TABLA]
-| τ | η(τ) = ε_min | Precisión máx. | Aplicación típica |
-| 0.10 | ≥ 0.045 | ≤ 95.5% | Sistema casi determinista. Alta predictibilidad. |
-| 0.30 | ≥ 0.115 | ≤ 88.5% | Ruido bajo. |
-| 0.50 | ≥ 0.167 | ≤ 83.3% | Temperatura estándar de sistemas de decisión. |
-| 1.00 | ≥ 0.250 | ≤ 75.0% | Ruido moderado. Predictibilidad limitada. |
-| 2.00 | ≥ 0.333 | ≤ 66.7% | Ruido alto. Cerca del azar en muchos casos. |
-| → ∞ | → 0.500 | → 50.0% | Temperatura infinita. Equivalente a azar puro. |
-[/TABLA]
+Nota de restricción. La afirmación "max_k h_k(v_t) < 1/2 en alguna región para todo τ > 0" no es válida en el caso binario (|K| = 2): con dos modos, h₁ + h₂ = 1 implica max(h₁, h₂) ≥ 1/2. El argumento cualitativo se aplica a |K| ≥ 3.
 
-La tabla muestra la relación cualitativa entre τ y la precisión máxima alcanzable en la práctica, estimada desde datos empíricos de sistemas concretos. Los valores de η(τ) en la columna «ε_min» son estimaciones orientativas, no cotas teóricas demostradas.
 
 7.4. Diferencia con el Principio de Heisenberg
 
-La denominación «Relación de Escala del Conocimiento» responde a una distinción técnica respecto al Principio de Incertidumbre de Heisenberg. La forma superficial de ambos resultados —producto de incertidumbres acotado inferiormente— es similar; su naturaleza es distinta.
-
 [TABLA]
 | Dimensión | Principio de Heisenberg | Relación de Escala del Conocimiento (REC) |
-| Fórmula | Δx · Δp ≥ ℏ/2 | n · (ΔI · Δh) ≥ 4τ₀² |
-| Naturaleza | Ley física universal. Sin excepciones. | Cota informacional para sistemas con τ > 0 que acumulan colapsos en I(t). |
-| Fundamento | No-conmutatividad de operadores en mecánica cuántica. | Desigualdad de Cramér-Rao aplicada al modelo softmax con temperatura τ > 0. |
-| Cota con n | ℏ/2: constante absoluta, independiente del número de mediciones. | 4τ₀²/n: decrece con n. Más colapsos integrados → mayor precisión posible. |
-| Comportamiento τ → 0 | No aplica. | n·(ΔI·Δh) → 0. Predictibilidad arbitrariamente alta con τ pequeño y n grande. |
-| Interpretación causal | Ninguna: es propiedad del universo, no de la agencia. | La experiencia (n grande) reduce la incertidumbre sobre I(t) y h(t). |
+| Fórmula | Δx · Δp ≥ ℏ/2 | ΔI · Δh ≥ τ₀/n |
+| Naturaleza | Ley física universal. Sin excepciones. | Cota informacional bajo modelo logístico Bernoulli one-vs-rest, para sistemas con τ > 0. |
+| Fundamento | No-conmutatividad de operadores cuánticos. | Desigualdad de Cramér-Rao aplicada al modelo logístico con temperatura τ > 0. |
+| Cota con n | ℏ/2: constante absoluta, independiente de n. | τ₀/n: decrece con n. Más colapsos → mayor precisión posible. |
+| Comportamiento τ → 0 | No aplica. | ΔI·Δh → 0. Precisión arbitrariamente alta con τ pequeño y n grande. |
+| Interpretación causal | Ninguna: propiedad del universo, no de la agencia. | La experiencia (n grande) reduce la incertidumbre sobre I(t) y h(t). |
 [/TABLA]
 
-La diferencia estructural más importante es el comportamiento asintótico: Heisenberg establece una cota constante ℏ/2 que no depende del número de mediciones; la REC establece una cota 4τ₀²/n que tiende a cero cuando n → ∞. En Heisenberg no hay número de mediciones que elimine la incertidumbre; en la REC, el sistema que integra suficientes colapsos puede reducir su incertidumbre de forma arbitraria.
+La diferencia estructural más importante es el comportamiento asintótico: Heisenberg establece una cota constante ℏ/2 que no depende del número de mediciones; la REC establece una cota τ₀/n que tiende a cero cuando n → ∞. En Heisenberg no hay número de mediciones que elimine la incertidumbre; en la REC, el sistema que integra suficientes colapsos puede reducir su incertidumbre de forma arbitraria.
 
-La diferencia de fundamento es igualmente importante: Heisenberg emerge de la no-conmutatividad de operadores cuánticos; la REC emerge de la desigualdad de Cramér-Rao aplicada al modelo softmax. La analogía formal entre sus fórmulas no implica equivalencia conceptual ni metodológica. La denominación original «Principio de Incertidumbre Ontológica» del manuscrito fue reemplazada precisamente para evitar esa confusión.
-
-En Heisenberg la cota ℏ/2 no tiene interpretación causal: es una propiedad del universo, no de la agencia. En la REC la cota 4τ₀²/n tiene interpretación causal directa: más colapsos integrados implican menor incertidumbre. El sistema que ha integrado más es más preciso sobre su propio estado.
 
 [TABLA]
-| Objeto | Notación | Tipo matemático | Parte |
-| Axioma 3 | τ > 0 | Parámetro escalar positivo | Axioma 3 |
-| Fisher (1 obs.) | 𝒥(θ) = h_k(1−h_k)/τ² | Escalar; máximo en h_k=1/2 | Lema 7.1 |
-| Fisher (n obs.) | 𝒥_n = n·𝒥 | Aditividad para obs. indep. | Lema 7.1 |
-| Cramér-Rao | Var(Î)·Var(ĥ) ≥ τ²/n² | Desigualdad; invariante en h_k | Lema 7.2 |
-| REC | n·(ΔI·Δh) ≥ 4τ₀² | Cota informacional de escala | Teorema 7 |
-| τ_eff | τ₀/√n | Escalar; decrece con n^{−1/2} | Corolario 7.1 |
-| REC local | ΔI·Δh ≥ 4τ_eff² | Forma equivalente con τ_eff | Corolario 7.1 |
-| Predictibilidad | ε_min crece con τ | Consecuencia interpretativa de la REC | Corolario 7.2 |
+| Objeto | Notación | Tipo matemático | Estatus | Parte |
+| Axioma 3 | τ > 0 | Parámetro escalar positivo | Axioma | Axioma 3 |
+| Fisher (1 obs.) | 𝒥(θ) = h_k(1−h_k)/τ² | Escalar; máximo en h_k=1/2 | Demostrado (logístico Bernoulli) | Lema 7.1 |
+| Fisher (n obs.) | 𝒥_n = n·𝒥 | Aditividad para obs. indep. | Demostrado | Lema 7.1 |
+| Cramér-Rao | Var(Î)·Var(ĥ) ≥ τ²/n² | Desigualdad; invariante en h_k | Demostrado | Lema 7.2 |
+| REC (forma probada) | ΔI·Δh ≥ τ₀/n | Cota lineal en τ₀; cota cuadrática en n | Demostrado | Teorema 7 |
+| REC (factor 4) | n·(ΔI·Δh) ≥ 4τ₀² | Cota cuadrática en τ₀ | Conjetura abierta; no demostrado | — |
+| τ_eff | τ₀/√n | Escalar; decrece con n^{−1/2} | Definición auxiliar | Corolario 7.1 |
+| Predictibilidad | ε_min crece con τ | Cualitativa; dependiente del modelo | Consecuencia interpretativa | Corolario 7.2 |
 [/TABLA]

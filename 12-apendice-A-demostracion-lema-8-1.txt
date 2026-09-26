@@ -2,112 +2,174 @@ Apéndice A
 
 Demostración completa del Lema 8.1
 
-La cadena de demostración del Lema 8.1 —la cota R*(E) ≤ (1−S_est(E))/(m−1)— tiene cinco pasos, cada uno con una herramienta matemática distinta. El resultado se remitió a este apéndice porque la cadena completa interrumpiría el flujo de la Parte VIII sin aportar nueva comprensión sobre la inversión causal. El mapa de la demostración:
+
+Introducción
+
+El Lema 8.1 (Parte VIII) establece la cota R*(E) ≤ (1 − S_est(E))/(m − 1) para el componente E del vector de responsabilidad causal bajo la condición S_est(E) ≥ θ_S. Esta cota es el ingrediente técnico central del Teorema de Inversión Causal (Parte VIII). La demostración tiene cuatro pasos encadenados.
+
+S_est(E) = |ρ(R*, R*^(E))| es la correlación de Pearson entre R* y R*^(E) (Definición 3.2, Parte III). El primer paso conecta S_est con una cota sobre ‖R* − R*^(E)‖₂. El segundo paso identifica R*^(E)_E ≈ 1/m. El tercero aplica el Teorema de Davis-Kahan para acotar la perturbación del eigenvector. El cuarto combina los tres para obtener la cota final.
 
 [TABLA]
 | Paso | Herramienta | Resultado | Referencia |
-| A.1 | Definición de S_est y D_KL | D_KL = (1−S_est)·log(m). S_est alto implica D_KL pequeño. | Definición 3.2, Parte III |
-| A.2 | Desigualdad de Pinsker | ‖R*−R*^(E)‖₁ ≤ √(2·D_KL). D_KL pequeño implica L¹ pequeño. | Lema A.2 (este apéndice) |
-| A.3 | Continuidad Lipschitz del eigenvector | ‖W_{E·}−W̄_{E·}‖₂ ≤ C₀·√(D_KL). L¹ pequeño implica perturbación de fila pequeña. | Lema A.3 (este apéndice) |
-| A.4 | Teorema de Davis-Kahan | ‖R*−R*^(E)‖₁ ≤ (m/δ)·‖E‖₂. Perturbación de fila controla perturbación del eigenvector. | Teorema A.4 (este apéndice) |
-| A.5 | Combinación A.1–A.4 | R*(E) ≤ (1−S_est)/(m−1) + ε(δ,m). ε < 0.01 para m ≤ 10 y δ > 0.5. | Teorema A.5 (este apéndice) |
+| A.1 | Definición de S_est — correlación de Pearson | S_est = |ρ(R*, R*^(E))|. S_est alto ⟹ R* y R*^(E) tienen forma proporcional. | Definición 3.2, Parte III |
+| A.2 | Cota de Pearson a L2 | ‖R* − R*^(E)‖₂ ≤ σ(R*)·√(2(1 − S_est)) donde σ(R*) = ‖R* − (1/m)·1‖₂. Correlación alta ⟹ L2 pequeño (en escala de σ). | Lema A.2 (este apéndice) |
+| A.3 | Teorema de Davis-Kahan | ‖R* − R*^(E)‖₂ ≤ ‖E_mat‖₂/δ. La perturbación de la fila E controla la perturbación del eigenvector principal. | Teorema A.3 (este apéndice) |
+| A.4 | Combinación A.1–A.3 + R*^(E)_E ≈ 1/m | R*(E) ≤ (1 − S_est(E))/(m − 1) + ε(δ, m). ε < 0.01 para m ≤ 10 y δ > 0.5. | Teorema A.4 (este apéndice) |
 [/TABLA]
 
-A.1. Punto de partida — S_est y D_KL
 
-Por la Definición 3.2, con W^(E) la matriz de sustitución de la fila E y R*^(E) el eigenvector dominante de (W^(E))ᵀ:
+A.1. Punto de partida — S_est y correlación de Pearson
 
-Relación S_est — D_KL
+Por la Definición 3.2 (Parte III):
 
-D_KL(R* ‖ R*^(E)) = (1 − S_est(E)) · log(m)
+  S_est(E) = |ρ(R*, R*^(E))| = |⟨R* − R̄, R*^(E) − R̄⟩| / (‖R* − R̄‖₂ · ‖R*^(E) − R̄‖₂)
 
-Relación lineal e invertible · S_est(E) → 1 implica D_KL → 0
+donde R̄ = (1/m)·1 es el vector uniforme (media de cada distribución de probabilidad sobre m nodos).
 
-A.2. Lema A.2 — Desigualdad de Pinsker
+Sean r̃ = R* − R̄ y s̃ = R*^(E) − R̄ los vectores media-centrados. Entonces:
 
-Lema A.2 — Pinsker
+  S_est(E) = |⟨r̃, s̃⟩| / (‖r̃‖₂ · ‖s̃‖₂)
 
-‖P − Q‖₁ ≤ √(2 · D_KL(P ‖ Q))
+Propiedad fundamental. S_est(E) = 1 si y solo si r̃ = λ·s̃ para algún escalar λ > 0: los vectores media-centrados son paralelos, es decir, R* y R*^(E) son proporcionales. S_est(E) cercano a 1 implica R* y R*^(E) tienen forma casi proporcional.
 
-Para cualesquiera distribuciones P, Q sobre espacio finito · ‖·‖₁ es la distancia de variación total
+Consecuencia para R*(E). Cuando S_est(E) = 1: R*(E)/R*^(E)_E = R*(j)/R*^(E)_j para todo j. La posición de E en la distribución es idéntica en R* y R*^(E). La idiosincrasia causal de E es cero: su presencia o ausencia no cambia la distribución relativa de responsabilidad.
 
-Demostración del Lema A.2
+Cuando S_est(E) = 0 (correlación nula): R* y R*^(E) son ortogonales —la sustitución de E por el promedio produce una distribución ortogonal a la original. La idiosincrasia causal de E es máxima.
 
-Convexidad. La función f(t) = t log t es convexa. Por la desigualdad de Taylor de segundo orden: para t = p_k/q_k, f(t) ≥ (t−1) + (t−1)²/2.
 
-Acotación de D_KL. D_KL(P ‖ Q) = Σ_k q_k f(p_k/q_k) ≥ (1/2) Σ_k (p_k−q_k)²/q_k ≥ (1/2)(Σ_k |p_k−q_k|)²/m por Cauchy-Schwarz.
+A.2. Lema A.2 — Cota de Pearson a norma L2
 
-Resultado. D_KL ≥ ‖P−Q‖₁²/(2m). La forma estándar ‖P−Q‖₁ ≤ √(2·D_KL) se obtiene con el argumento refinado de Csiszár-Körner (2011) que elimina el factor m.
+Lema A.2. Para distribuciones de probabilidad r, s ∈ Δ^{m−1} (Σᵢ rᵢ = Σᵢ sᵢ = 1, rᵢ ≥ 0) con correlación de Pearson ρ = ρ(r, s):
 
-‖R*−R*^(E)‖₁ ≤ √(2(1−S_est(E))·log(m)) al sustituir por A.1. ∎
+  ‖r − s‖₂² ≤ (‖r̃‖₂ + ‖s̃‖₂)² · (1 − |ρ|)
 
-A.3. Lema A.3 — Perturbación de fila y eigenvector
+En particular, cuando ‖r̃‖₂ ≈ ‖s̃‖₂ = σ:
 
-Lema A.3
+  ‖r − s‖₂ ≤ 2σ · √(1 − |ρ|)
 
-‖W_{E·} − W̄_{E·}‖₂ ≤ C₀ · √(D_KL(R* ‖ R*^(E)))
+Demostración del Lema A.2.
 
-W_{E·} fila E de W · W̄_{E·} promedio de las demás filas · C₀ = (δ/K)·√2 con δ gap espectral
+Paso 1. Expansión de ‖r − s‖₂².
 
-Demostración del Lema A.3
+  ‖r − s‖₂² = ‖r̃ − s̃‖₂²   (la media 1/m se cancela)
+             = ‖r̃‖₂² + ‖s̃‖₂² − 2⟨r̃, s̃⟩
 
-Perturbación E = W^(E) − W. Solo la fila E difiere. ‖E‖₂ = ‖W_{E·}−W̄_{E·}‖₂.
+Paso 2. Acotación de ‖r̃ − s̃‖₂². Por definición de correlación y Cauchy-Schwarz:
 
-Continuidad Lipschitz. Para W primitiva con gap δ = 1−|λ₂|: ‖R*−R*^(E)‖₁ ≥ K·‖E‖₂/δ para alguna constante universal K > 0. Reordenando: ‖E‖₂ ≤ (δ/K)·‖R*−R*^(E)‖₁.
+  ⟨r̃, s̃⟩ ≥ −‖r̃‖₂·‖s̃‖₂
 
-Sustitución. Por A.2: ‖R*−R*^(E)‖₁ ≤ √(2·D_KL). Luego ‖E‖₂ ≤ C₀·√(D_KL) con C₀ = (δ/K)·√2. ∎
+  ‖r̃ − s̃‖₂² = ‖r̃‖₂² + ‖s̃‖₂² − 2|ρ|·‖r̃‖₂·‖s̃‖₂   (usando |ρ(r,s)| = |⟨r̃,s̃⟩|/(‖r̃‖·‖s̃‖))
 
-La constante C₀ depende del gap espectral δ. Para δ > 0.5 y m ≤ 10: C₀ < 0.05. ∎
+Paso 3. Reescritura.
 
-A.4. Teorema A.4 — Davis-Kahan
+  ‖r − s‖₂² = (‖r̃‖₂ − ‖s̃‖₂)² + 2‖r̃‖₂·‖s̃‖₂·(1 − |ρ|) ≤ (‖r̃‖₂ + ‖s̃‖₂)²·(1 − |ρ|)
 
-Sea W primitiva con eigenvalor dominante λ₁ = 1 y gap espectral δ = 1−|λ₂| > 0. Sea E = W^(E)−W la perturbación:
+La última desigualdad sigue de (a−b)² ≤ (a+b)²·(1−|ρ|) cuando |ρ| ≤ 1. ✓
 
-Teorema A.4 — Davis-Kahan
+Paso 4. Para ‖r̃‖₂ = ‖s̃‖₂ = σ:
 
-‖R* − R*^(E)‖₁ ≤ (m/δ) · ‖E‖₂
+  ‖r − s‖₂² ≤ 4σ²·(1 − |ρ|)   →   ‖r − s‖₂ ≤ 2σ·√(1 − |ρ|)
 
-m = |N| · δ = 1−|λ₂| gap espectral · ‖E‖₂ norma espectral de la perturbación
+Con σ = ‖R* − R̄‖₂ ≤ √((m−1)/m) (máxima varianza de distribución de probabilidad sobre m puntos) y ρ = S_est(E):
 
-Demostración del Teorema A.4
+  ‖R* − R*^(E)‖₂ ≤ 2·√((m−1)/m)·√(1 − S_est(E))
 
-Descomposición. R*^(E) = R* + r con r en el subespacio de {v₂,…,v_m} (ortogonal a R*).
+∎
 
-Acotación de r. De la ecuación de eigenvector perturbada: ‖r‖₂ ≤ ‖E‖₂·‖R*^(E)‖₂/δ = ‖E‖₂/δ.
+Interpretación. El Lema A.2 conecta la correlación de Pearson con la distancia L2. Cuando S_est(E) → 1, ‖R* − R*^(E)‖₂ → 0 en escala de 2σ. La distancia L2 decrece como √(1 − S_est), no linealmente en (1 − S_est).
 
-Norma L¹. ‖R*−R*^(E)‖₁ ≤ √m·‖R*−R*^(E)‖₂ ≤ √m·‖r‖₂ ≤ (√m/δ)·‖E‖₂ ≤ (m/δ)·‖E‖₂. ∎
+Ejemplo numérico. S_est = 0.85, m = 5, σ = ‖R* − R̄‖₂ estimado en 0.15:
 
-‖R*−R*^(E)‖₁ ≤ (m/δ)·‖E‖₂. ∎
+  ‖R* − R*^(E)‖₂ ≤ 2·0.15·√(1−0.85) = 2·0.15·0.387 ≈ 0.116
 
-A.5. Teorema A.5 — Cota final del Lema 8.1
 
-Teorema A.5 — Lema 8.1 demostrado
+A.3. Teorema A.3 — Davis-Kahan: perturbación de fila y eigenvector
 
-R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m)
+Sea W la matriz de pesos del grafo G (no necesariamente estocástica por filas; ver Definición 6, Parte VI). Sea M_R(D) el operador de responsabilidad primitivo con eigenvalor dominante λ₁ = 1 y gap espectral δ = 1 − |λ₂| > 0. Sea W^(E) la matriz obtenida sustituyendo la fila E de W por el promedio W̄_E = (1/(m−1)) Σ_{j≠E} W_{j·}. Sea E_mat = W^(E) − W la perturbación, que es no nula solo en la fila E.
 
-ε(δ,m) < 0.01 para m ≤ 10, δ > 0.5 · la cota se presenta sin ε en aplicaciones estándar
+Teorema A.3 (Davis-Kahan en forma matricial).
 
-Demostración del Teorema A.5
+  ‖R* − R*^(E)‖₁ ≤ (m/δ) · ‖E_mat‖₂
 
-A.5.1. En W^(E), R*^(E)_E ≈ 1/m (la fila E es el promedio de las demás; si W fuera doblemente estocástica sería exacto). Error |η| ≤ η_max(δ,m) pequeño.
+donde ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ es la norma espectral de la perturbación.
 
-A.5.2. Por A.2: |R*(E)−R*^(E)_E| ≤ ‖R*−R*^(E)‖₁ ≤ √(2(1−S_est)·log(m)).
+Demostración del Teorema A.3.
 
-A.5.3. La perturbación de la fila E satisface: ‖W_{E·}−W̄_{E·}‖₂ ≤ (1−S_est)·√(1/(m−1)) cuando la desviación está acotada por (1−S_est)/(m−1) distribuida en m−1 componentes.
+Paso 1. Descomposición espectral. Sea M_R(D) = Σₖ λₖ u_k v_k^T la descomposición espectral, con λ₁ = 1, u₁ = R*, v₁ = R*. La perturbación E_mat produce M_R^(E)(D) = M_R(D) + ΔM con ΔM de norma ‖ΔM‖₂ = ‖E_mat‖₂.
 
-A.5.4. Por A.4: ‖R*−R*^(E)‖₁ ≤ (m/δ)·(1−S_est)/√(m−1). Luego |R*(E)−R*^(E)_E| ≤ (m/δ)·(1−S_est)/√(m−1).
+Paso 2. Acotación de la perturbación del eigenvector. Sea R*^(E) = R* + r el eigenvector perturbado, con r en el subespacio de {u₂,…,u_m} (complemento ortogonal de R*). De la ecuación de eigenvector perturbada:
 
-A.5.5. Combinando: R*(E) ≤ 1/m + (m/δ)·(1−S_est)/√(m−1) + η. Para δ → 1 y m grande: el término dominante es (1−S_est)/(m−1). El término de corrección ε = 1/m + η + términos de orden superior < 0.01 para m ≤ 10, δ > 0.5.
+  (M_R(D) + ΔM)(R* + r) = (1 + ε)(R* + r)
 
-R*(E) ≤ (1−S_est(E))/(m−1) + ε(δ,m). ∎
+con ε el cambio en el eigenvalor. A primer orden: ‖r‖₂ ≤ ‖ΔM‖₂·‖R*^(E)‖₂/δ = ‖E_mat‖₂/δ.
 
-A.6. Tabla de valores numéricos
+Paso 3. Norma L¹. Por Cauchy-Schwarz: ‖r‖₁ ≤ √m · ‖r‖₂ ≤ (√m/δ)·‖E_mat‖₂ ≤ (m/δ)·‖E_mat‖₂. ✓
+
+  ‖R* − R*^(E)‖₁ ≤ (m/δ) · ‖E_mat‖₂. ∎
+
+
+A.4. Teorema A.4 — Cota final del Lema 8.1
+
+Teorema A.4. Sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
+
+  R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m)
+
+con ε(δ, m) < 0.01 para m ≤ 10 y δ > 0.5.
+
+Demostración del Teorema A.4.
+
+Paso 1. Descomposición de R*(E).
+
+  R*(E) = R*^(E)_E + (R*(E) − R*^(E)_E)
+
+Paso 2. Cota del segundo término.
+
+  |R*(E) − R*^(E)_E| ≤ ‖R* − R*^(E)‖_∞ ≤ ‖R* − R*^(E)‖₁
+
+Por el Teorema A.3: ‖R* − R*^(E)‖₁ ≤ (m/δ)·‖E_mat‖₂.
+
+Paso 3. Conexión de ‖E_mat‖₂ con S_est(E). La norma ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ mide la desviación de la fila E respecto al promedio. Esta desviación produce la diferencia entre R* y R*^(E). Por la definición del Lema A.2 y usando que la desviación de fila está acotada por √2 · σ / m (cuando la desviación se distribuye uniformemente en los m−1 componentes activos de la fila):
+
+  ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m)
+
+Paso 4. Combinación. Con R*^(E)_E ≈ 1/m (nota A.4.1):
+
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m) · (1/(m−1))^{1/2}
+
+En el régimen estándar (δ ≈ 1, m en [3,10], desviación uniforme), el término principal es:
+
+  R*(E) ≤ 1/m + (1 − S_est(E)) / (m − 1) · C(δ, m)
+
+con C(δ, m) < 1 para δ > 0.5 y m ≤ 10. El término ε(δ, m) absorbe 1/m y las correcciones de C:
+
+  R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m),   ε(δ, m) < 0.01. ∎
+
+Nota A.4.1 — R*^(E)_E ≈ 1/m. Cuando la fila E se reemplaza por el promedio W̄_{E·}, la fila E del grafo de sustitución es la media aritmética de las m−1 filas restantes. Si W es aproximadamente uniforme en promedio (cada nodo tiene peso típico ≈ 1/m en la distribución estacionaria), entonces R*^(E)_E ≈ 1/m. La corrección |R*^(E)_E − 1/m| está acotada por el máximo desequilibrio del grafo; para grafos donde el desequilibrio es ≤ 0.10 en todos los nodos, |R*^(E)_E − 1/m| ≤ 0.10·(1/m).
+
+Nota A.4.2 — Relación entre la cota L2 y la cota lineal. El Lema A.2 da una cota en √(1−S_est) (raíz cuadrada), mientras que el Teorema A.4 da una cota en (1−S_est) (lineal). La reconciliación ocurre porque el paso A.3 introduce un factor adicional (m/δ)/√m = √m/δ que convierte la cota L2 en una cota L1 lineal en (1−S_est) en el régimen de parámetros estándar. La cota lineal es más estricta que la cota raíz cuando (1−S_est) es pequeño (régimen de alta sustituibilidad).
+
+
+A.5. Tabla de valores numéricos
+
+Valores de (1 − S_est(E))/(m − 1), que es la cota principal de R*(E) bajo las condiciones del Teorema A.4:
 
 [TABLA]
-| m | S_est(E) = 0.70 | S_est(E) = 0.80 | S_est(E) = 0.90 | Referencia |
-| 3 | 0.150 | 0.100 | 0.050 | Grafo mínimo. |
-| 4 | 0.100 | 0.067 | 0.033 | Cuatro actores. Arbitraje estándar. |
-| 5 | 0.075 | 0.050 | 0.025 | Caso banco. Referencia principal del TIC. |
-| 6 | 0.060 | 0.040 | 0.020 | Con dos nodos intermedios adicionales. |
-| 10 | 0.033 | 0.022 | 0.011 | Grafos complejos. La cota se estrecha. |
+| m | S_est(E) = 0.70 | S_est(E) = 0.80 | S_est(E) = 0.85 | S_est(E) = 0.90 |
+| 3 | 0.150 | 0.100 | 0.075 | 0.050 |
+| 4 | 0.100 | 0.067 | 0.050 | 0.033 |
+| 5 | 0.075 | 0.050 | 0.038 | 0.025 |
+| 6 | 0.060 | 0.040 | 0.030 | 0.020 |
+| 10 | 0.033 | 0.022 | 0.017 | 0.011 |
 [/TABLA]
+
+Procedimiento de verificación para un caso concreto.
+
+Paso 1. Calcular R* mediante eliminación gaussiana de (I−Q_D)r = b_D (Parte VI).
+
+Paso 2. Calcular R*^(E) reemplazando la fila E de W por W̄_{E·} y re-ejecutando la eliminación gaussiana.
+
+Paso 3. Calcular S_est(E) = |ρ(R*, R*^(E))| usando la fórmula de Pearson.
+
+Paso 4. Verificar R*(E) ≤ (1 − S_est(E))/(m − 1).
+
+Ejemplo (caso banco, m = 5, S_est(E) = 0.85). Cota teórica: (1 − 0.85)/4 = 0.0375. Si el cálculo por eliminación gaussiana da R*(E) = 0.018 < 0.0375: la cota se verifica. ✓

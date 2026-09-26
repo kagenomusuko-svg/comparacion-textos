@@ -2,136 +2,486 @@ Parte VI
 
 El vector de responsabilidad causal R*
 
+
 Definición 6. El grafo causal G
 
-Sea G = (N, A, w) un grafo dirigido donde:
+Objeto. G = (N, A, w) es un grafo dirigido ponderado que representa las determinaciones causales locales entre los nodos del sistema.
 
-N Conjunto finito de nodos N = {1, 2, …, n, n+1}. Los nodos {1, …, n} son los actores causalmente relevantes del sistema. El nodo n+1 es el nodo final (sumidero): representa el resultado cuya responsabilidad se distribuye. No tiene aristas salientes.
+Variables y condiciones.
 
-A Conjunto de aristas dirigidas A ⊆ N × N. La arista (i, j) ∈ A indica que i ejerce influencia causal sobre j. Para todo j: (n+1, j) ∉ A.
+N = {1, 2, …, n, D}       conjunto finito de nodos; {1,…,n} son los nodos causales activos; D es el resultado respecto del cual se distribuye la responsabilidad
+A ⊆ N × N                 conjunto de aristas dirigidas; (i, j) ∈ A indica que i ejerce determinación causal local sobre j
+w : A → ℝ₊                función de peso; w(i→j) ≥ 0 cuantifica cuánto determinó localmente el nodo i el comportamiento del nodo j
+D                         nodo resultado (sumidero); no tiene aristas salientes; no se incluye en los subíndices causales activos
 
-w Función de peso w: A → [0,1] tal que Σⱼ w (i, j) = 1 para todo i ∈ {1,…,n}. Los pesos representan la magnitud relativa de la influencia de i sobre sus sucesores. La fila n+1 de la matriz W es el vector cero.
+La matriz de pesos W ∈ ℝ^{(n+1)×(n+1)} es no negativa: W_{ij} = w(i→j) para (i,j) ∈ A y W_{ij} = 0 en caso contrario.
 
-La matriz de pesos W ∈ ℝ^{(n+1) ×(n+1)} es no negativa, estocástica por filas en las filas {1,…,n}, con la fila n+1 nula.
+W no es, por definición, la matriz de responsabilidad ni tiene que ser estocástica por filas. Las propiedades espectrales de la distribución de responsabilidad pertenecen al operador de responsabilidad construido sobre W, no a W misma.
 
-Construcción de G desde la evidencia. En aplicaciones, los pesos w (i, j) son estimaciones sustentadas en evidencia documental y se expresan como intervalos [a_{ij}, b_{ij}] según la escala E0–E8 de Metrología Causal Vol. I. Para el cálculo de R* se usan los midpoints m_{ij} = (a_{ij}+b_{ij}) /2 como estimación puntual; los extremos producen R*(min) y R*(max) (Lema 6.1).
+Construcción de G desde la evidencia. En aplicaciones, los pesos w(i→j) son estimaciones sustentadas en evidencia documental expresadas como intervalos [a_{ij}, b_{ij}] según la escala E0–E8 (Apéndice B). Para el cálculo puntual de R* se usan los midpoints m_{ij} = (a_{ij}+b_{ij})/2; los extremos producen R*(min) y R*(max) (Lema 6.2). El dominio de D no pertenece a la misma submatriz a la que se exige convergencia causal.
 
-La condición Σⱼ w (i, j) = 1 garantiza que los pesos son proporciones, no magnitudes absolutas. No impone que i influya sobre un único sucesor: la distribución puede estar repartida. Si la evidencia sustenta una sola arista (i, j), entonces w (i, j) = 1 y w (i, j') = 0 para j' ≠ j.
 
-Definición 6.1. El vector de responsabilidad causal R*
+Definición 6.1. Los objetos derivados Q_D, b_D y r_D
 
-Sea W la matriz de pesos de G. El vector de responsabilidad causal R* es el eigenvector dominante de Wᵀ normalizado en Δⁿ:
+Objeto. A partir de G se construyen tres objetos que capturan la estructura de causalidad respecto de D: la submatriz de determinaciones causales entre nodos activos Q_D, el vector de determinaciones directas sobre D b_D, y el vector de atribución total r_D.
 
-Vector de responsabilidad causal R*
+Variables y condiciones.
 
-Wᵀ R* = λ₁ R*, Σᵢ R*ᵢ = 1, R*ᵢ > 0 ∀ i
+A_D = {i ∈ N\{D} : existe un camino i→…→D en G}   conjunto de ancestros causales de D
+n_D = |A_D|                                         número de nodos causales activos respecto de D
+Q_D ∈ ℝ^{n_D × n_D}                                submatriz de W restringida a aristas entre nodos de A_D; Q_{D,ij} = w(i→j) para i,j ∈ A_D
+b_D ∈ ℝ^{n_D}                                       vector de determinaciones directas sobre D; b_{D,i} = w(i→D) para i ∈ A_D
+ρ(Q_D)                                              radio espectral de Q_D; condición de convergencia: ρ(Q_D) < 1
 
-λ₁ > 0 eigenvalor dominante de Wᵀ · R* ∈ Δⁿ simplex estándar de dimensión n · existencia y unicidad garantizadas por el Teorema 6
+Fórmulas.
 
-R*ᵢ es la fracción de la influencia causal del resultado n+1 que transita por el nodo i, considerando todas las trayectorias causales posibles en G. R*ᵢ alto indica que el resultado depende significativamente de la presencia idiosincrática del nodo i en su posición.
+Q_{D,ij} = w(i→j)    para i, j ∈ A_D
+b_{D,i}  = w(i→D)    para i ∈ A_D
 
-Elección de Wᵀ sobre W. El eigenvector de W recoge la influencia que i ejerce sobre sus sucesores. El eigenvector de Wᵀ recoge la influencia acumulada que los predecesores ejercen sobre i y, por transitividad, la participación de i en la producción del resultado final. Para la distribución de responsabilidad causal —cuánto del resultado pasa por i— el eigenvector de Wᵀ es el objeto correcto. La elección es análoga a la de PageRank: una página es importante si páginas importantes apuntan hacia ella.
+El vector de atribución total r_D satisface la ecuación:
 
-Alcance de R*. R* es la distribución de influencia causal estructural, no la distribución de culpabilidad jurídica ni de responsabilidad moral. La calificación jurídica o ética es una operación posterior que usa R* como input técnico. El sistema no impone esa calificación.
+r_{D,i} = b_{D,i} + Σ_{j ∈ A_D} Q_{D,ij} · r_{D,j}    para cada i ∈ A_D
 
-Teorema 6. Existencia y unicidad de R* — Perron-Frobenius
+En forma vectorial:
 
-Si G satisface las condiciones de la tabla siguiente, entonces:
+r_D = b_D + Q_D r_D
 
-(i) Existe λ₁ > 0 único con |λ| < λ₁ para todo otro eigenvalor λ de Wᵀ.
+Lectura causal. r_{D,i} es la atribución causal acumulada del nodo i respecto de D: suma la determinación directa de i sobre D (b_{D,i}) más la determinación de i sobre cada nodo j multiplicada por la atribución ya acumulada de j (Q_{D,ij}·r_{D,j}).
 
-(ii) Existe R* con R*ᵢ > 0 para todo i y Wᵀ R* = λ₁ R*.
+Procedimiento de construcción.
 
-(iii) R* es único en Δⁿ (salvo normalización, el espacio propio de λ₁ tiene dimensión 1).
+1. Identificar A_D en G: seguir desde D todas las aristas en sentido inverso hasta alcanzar los nodos sin predecesores. Registrar todos los nodos que tienen al menos un camino hacia D.
+2. Extraer Q_D: para cada par (i,j) ∈ A_D × A_D, escribir Q_{D,ij} = w(i→j). Todos los demás elementos son cero.
+3. Extraer b_D: para cada i ∈ A_D, escribir b_{D,i} = w(i→D). Si no hay arista directa i→D, entonces b_{D,i} = 0.
 
-(iv) Para W estocástica por filas: λ₁ = 1 y R* ∈ Δⁿ es la distribución estacionaria de la cadena de Markov inducida.
 
-[TABLA]
-| Condición | Definición técnica | Verificación en G / Procedimiento si falla |
-| No negatividad | w(i,j) ≥ 0 para toda arista (i,j) ∈ A. | Garantizada por Definición 6: w : A → [0,1]. |
-| Irreducibilidad | ∀ i,j ∈ N ∃ camino dirigido i → j en G. | G fuertemente conexo. Si falla: W(ε) = (1−ε)W + ε·J/n con ε ∈ (0,1) pequeño. |
-| Aperiodicidad | mcd de las longitudes de todos los ciclos de G es 1. | Garantizada si ∃ nodo con lazo (ciclo de longitud 1) o ciclos de longitudes coprimas. Si falla: misma perturbación W(ε). |
-| Estocástica por filas | Σⱼ w(i,j) = 1 para todo i ≠ n+1. | Garantizada por Definición 6. Implica λ₁ = 1 directamente. |
-| Consecuencia | λ₁ = 1, simple; ¦λₖ¦ < 1 para k ≥ 2. | R* ∈ Δⁿ⁻¹ único: todas las componentes R*ᵢ > 0, Σᵢ R*ᵢ = 1. |
-[/TABLA]
+Definición 6.2. El vector de responsabilidad causal R*(D)
 
-Demostración
+Objeto. R*(D) es la distribución normalizada de atribución causal total sobre los nodos de A_D respecto del resultado D.
 
-Demostración del Teorema 6
+Variables y condiciones.
 
-Paso 1. Wᵀ es no negativa (w (i, j) ≥ 0). Si G es irreducible y aperiódico, Wᵀ es primitiva (irreducible + aperiódica). El Teorema de Perron-Frobenius para matrices no negativas primitivas garantiza las propiedades (i)–(iii).
+r_D ∈ ℝ^{n_D}    vector de atribución total (Definición 6.1); r_{D,i} > 0 para todo i ∈ A_D bajo las condiciones del Teorema 6
+Z_D = 1ᵀ r_D      suma total de atribuciones; Z_D > 0 bajo las condiciones del Teorema 6
 
-Paso 2 — λ₁ = 1. W es estocástica por filas: W·1 = 1, luego 1 es eigenvalor de W con eigenvector 1. Por simetría espectral, λ₁ = 1 es eigenvalor de Wᵀ. La primitiva garantiza que es el único de módulo 1.
+Fórmula.
 
-Paso 3 — Unicidad. El espacio propio de λ₁ = 1 en Wᵀ tiene dimensión 1 (Perron-Frobenius). Imponiendo Σᵢ R*ᵢ = 1, R* queda completamente determinado.
+R*_i(D) = r_{D,i} / Z_D    para cada i ∈ A_D
 
-Paso 4 — Positividad. Para matrices primitivas, el eigenvector dominante tiene todas las componentes estrictamente positivas. Luego R*ᵢ > 0 para todo i ∈ N, lo que garantiza Δᵢ = R*ᵢ − αᵢ ∈ [−1,1] (Teorema 5).
+Condición de existencia. La ecuación vectorial r_D = b_D + Q_D r_D tiene solución única si y solo si ρ(Q_D) < 1. En ese caso:
 
-Las cuatro propiedades se siguen del Teorema de Perron-Frobenius para matrices no negativas primitivas. ∎
+r_D = (I − Q_D)⁻¹ b_D
 
-Perturbación cuando G no es primitivo. Si G no satisface irreducibilidad o aperiodicidad: sustituir W por W(ε) = (1−ε) W + (ε/n) ·J, donde J es la matriz de unos y ε ∈ (0,1) pequeño. W(ε) es primitiva para todo ε > 0. El Teorema 6 aplica a W(ε) y R*(ε) → R* cuando ε → 0. En práctica, ε = 0.01 produce resultados estables para n ≤ 20.
+R*(D) mide la proporción estable de convergencia causal del nodo i respecto de D. Si R*(D) = (0.58, 0.27, 0.15)ᵀ, la atribución causal estable converge a: nodo 1 = 58%; nodo 2 = 27%; nodo 3 = 15%.
 
-La perturbación ε tiene interpretación estructural: representa la posibilidad de que cualquier nodo influya mínimamente sobre cualquier otro del grafo. En sistemas organizacionales complejos esta posibilidad es realista; ε = 0.01 equivale a asignar un 1% de influencia difusa uniforme sobre todos los nodos.
+Genealogía de R*. La cadena de construcción desde la primera mediación hasta R* es:
 
-Lema 6.1. Método de potencias y rangos de evidencia
+φ₁(t) ──→ W ──→ Q_D, b_D ──→ r_D ──→ R*(D)
 
-El método de potencias calcula R* iterativamente bajo las condiciones del Teorema 6:
+donde W recoge las determinaciones causales locales de φ₁, Q_D y b_D extraen la estructura causal respecto de D, r_D acumula la atribución por todos los caminos posibles, y R*(D) normaliza esa atribución a una distribución de probabilidad.
 
-Algoritmo — método de potencias para R*
 
-Entrada: W ∈ ℝⁿˣⁿ estocástica por filas · ε_conv > 0 tolerancia
+Procedimiento de cálculo de R*
 
-Inicio: R*(0) = (1/n, …, 1/n) distribución uniforme
+Los siguientes pasos permiten calcular R*(D) manualmente a partir de G.
 
-Paso k+1: v ← Wᵀ · R*(k)
+1. Construir Q_D y b_D (Definición 6.1).
 
-R*(k+1) ← v / ‖v‖₁
+2. Construir la matriz ampliada [(I − Q_D) | b_D]:
+   Escribir la matriz (I − Q_D): restar Q_D de la matriz identidad. La posición (i,i) vale 1; la posición (i,j) con j ≠ i vale −Q_{D,ij}. Adjuntar b_D como columna adicional.
 
-Parar si: ‖R*(k+1) − R*(k)‖₁ < ε_conv
+3. Reducir la matriz ampliada por eliminación gaussiana con pivoteo parcial:
 
-ε_conv = 10⁻⁶ estándar · 10⁻⁸ alta precisión
+   Para cada columna de pivote k = 1, …, n_D:
+   a. Seleccionar la fila con el mayor valor absoluto en la columna k entre las filas k, k+1, …, n_D. Intercambiar esa fila con la fila k si no es ya la fila k.
+   b. Dividir la fila k por el elemento pivote para hacer que el pivote sea 1.
+   c. Eliminar la columna k en todas las demás filas: para cada fila l ≠ k, restar el elemento (l,k) multiplicado por la fila k.
 
-Salida: R* = R*(k+1)
+4. Leer la solución r_D de la última columna de la matriz reducida: r_{D,i} es el elemento (i, n_D+1) de la matriz ya en forma identidad.
 
-Complejidad por iteración: O(n²) · Iteraciones típicas: 20–50 para n ≤ 20 con ε_conv = 10⁻⁶
+5. Calcular Z_D = r_{D,1} + r_{D,2} + … + r_{D,n_D}.
 
-Demostración de convergencia
+6. Calcular R*_i(D) = r_{D,i} / Z_D para cada i. Verificar que Σᵢ R*_i(D) = 1.
 
-Demostración del Lema 6.1
 
-Paso 1. Descomposición: R*(0) = c₁·R* + Σ_{k≥2} cₖ·vₖ en la base de eigenvectores de Wᵀ, con |λₖ| < 1 para k ≥ 2.
+Ejemplo numérico completo
 
-Paso 2. (Wᵀ)^m · R*(0) = c₁·R* + Σ_{k≥2} cₖ·λₖᵐ·vₖ. Como |λₖ| < 1, el segundo término → 0 cuando m → ∞.
+Sistema. G tiene tres nodos causales activos {1, 2, 3} y el resultado D.
 
-Paso 3. Tras normalización en cada iteración, R*(k) → R* con velocidad geométrica de razón |λ₂|, donde λ₂ es el segundo eigenvalor en módulo. La brecha espectral δ = 1 − |λ₂| determina la velocidad de convergencia.
+Aristas y pesos:
+  w(1→2) = 1/2    w(1→D) = 1/4
+  w(2→3) = 1/2    w(2→D) = 3/4
+  w(3→D) = 1
 
-Convergencia para todo R*(0) con componentes positivas bajo las condiciones del Teorema 6. ∎
+A_D = {1, 2, 3}.
 
-Rangos de evidencia y estimación por intervalos
+Paso 1 — Construir Q_D y b_D.
 
-Cuando los pesos están expresados como intervalos [a_{ij}, b_{ij}], el procedimiento estándar produce tres estimaciones de R*:
+Q_D: aristas entre nodos activos.
+  Q_{D,12} = w(1→2) = 1/2;  todos los demás elementos de Q_D son cero.
+  Q_{D,23} = w(2→3) = 1/2;  todos los demás elementos de Q_D son cero.
 
-R*(mid) Ejecutar el algoritmo con m_{ij} = (a_{ij}+b_{ij}) /2. Estimación puntual de R*.
+  Q_D = | 0   1/2   0  |
+        | 0    0   1/2  |
+        | 0    0    0   |
 
-R*(min) Ejecutar con a_{ij} para cada arista. Cota inferior del intervalo de R*.
+b_D: aristas directas a D.
+  b_{D,1} = w(1→D) = 1/4
+  b_{D,2} = w(2→D) = 3/4
+  b_{D,3} = w(3→D) = 1
 
-R*(max) Ejecutar con b_{ij} para cada arista. Cota superior del intervalo de R*.
+  b_D = (1/4, 3/4, 1)ᵀ
 
-El nivel de certeza de la estimación se declara según la anchura max_i (R*(max)_i − R*(min)_i): anchura ≤ 0.05 → declaración A; anchura ≤ 0.10 → declaración B; anchura > 0.10 → declaración C, según la escala del Vol. I de Metrología Causal.
+Paso 2 — Construir (I − Q_D).
 
-El intervalo [R*(min), R*(max)] refleja la incertidumbre empírica del analista sobre los pesos del grafo, no la incertidumbre ontológica del sistema. El vector R* del sistema real es único y determinado (Teorema 6). La REC de la Parte VII cuantifica la incertidumbre del sistema sobre su propio estado I(t); los intervalos de R* cuantifican la incertidumbre del analista sobre los pesos del grafo G. Son dos fuentes de incertidumbre conceptualmente distintas.
+I − Q_D = I − Q_D:
+  Posición (1,1): 1 − 0   =  1
+  Posición (1,2): 0 − 1/2 = −1/2
+  Posición (1,3): 0 − 0   =  0
+  Posición (2,1): 0 − 0   =  0
+  Posición (2,2): 1 − 0   =  1
+  Posición (2,3): 0 − 1/2 = −1/2
+  Posición (3,1): 0 − 0   =  0
+  Posición (3,2): 0 − 0   =  0
+  Posición (3,3): 1 − 0   =  1
+
+  I − Q_D = |  1   −1/2    0  |
+            |  0    1    −1/2  |
+            |  0    0     1   |
+
+Paso 3 — Matriz ampliada [(I − Q_D) | b_D].
+
+  |  1   −1/2    0   |  1/4  |
+  |  0    1    −1/2  |  3/4  |
+  |  0    0     1   |   1   |
+
+La matriz ya está en forma escalonada (triangular superior). El pivote de cada fila es el primer elemento no nulo, que aquí es 1 en cada fila diagonal.
+
+Eliminación: la primera y segunda fila contienen términos fuera de la diagonal. Se aplica sustitución regresiva (caso DAG: sin necesidad de eliminación hacia adelante porque no hay entradas bajo la diagonal).
+
+Fila 3 (pivote = posición (3,3)):
+El pivote ya vale 1. No hay fila por debajo. La entrada (3,3) ya no tiene valores que eliminar en filas superiores en este paso; proceder a las filas superiores al final.
+
+Fila 2 (pivote = posición (2,2)):
+El pivote ya vale 1. Eliminar la entrada (1,2) en la fila 1:
+  Factor = −1/2 (elemento (1,2) de la fila 1)
+  Fila 1 ← Fila 1 − (−1/2) · Fila 2 = Fila 1 + 1/2 · Fila 2
+
+  Columna 1: 1 + 1/2·0 = 1
+  Columna 2: −1/2 + 1/2·1 = 0
+  Columna 3: 0 + 1/2·(−1/2) = −1/4
+  RHS: 1/4 + 1/2·3/4 = 1/4 + 3/8 = 5/8
+
+  Matriz tras eliminar columna 2 en fila 1:
+  |  1    0   −1/4  |  5/8  |
+  |  0    1   −1/2  |  3/4  |
+  |  0    0    1   |   1   |
+
+Fila 1 (pivote = posición (1,1)):
+El pivote ya vale 1. Eliminar la entrada (1,3) en la fila 1 usando la fila 3:
+  Factor = −1/4 (elemento (1,3) de la fila 1)
+  Fila 1 ← Fila 1 − (−1/4) · Fila 3 = Fila 1 + 1/4 · Fila 3
+
+  Columna 1: 1 + 1/4·0 = 1
+  Columna 2: 0 + 1/4·0 = 0
+  Columna 3: −1/4 + 1/4·1 = 0
+  RHS: 5/8 + 1/4·1 = 5/8 + 2/8 = 7/8
+
+Eliminar la entrada (2,3) en la fila 2 usando la fila 3:
+  Factor = −1/2 (elemento (2,3) de la fila 2)
+  Fila 2 ← Fila 2 + 1/2 · Fila 3
+
+  Columna 1: 0
+  Columna 2: 1
+  Columna 3: −1/2 + 1/2·1 = 0
+  RHS: 3/4 + 1/2·1 = 3/4 + 2/4 = 5/4
+
+  Matriz reducida final:
+  |  1    0    0   |  7/8  |
+  |  0    1    0   |  5/4  |
+  |  0    0    1   |   1   |
+
+Paso 4 — Leer r_D.
+
+  r_{D,1} = 7/8
+  r_{D,2} = 5/4
+  r_{D,3} = 1
+
+Verificación directa. Sustituir en r_D = b_D + Q_D r_D:
+  Componente 1: b_{D,1} + Q_{D,12}·r_{D,2} + Q_{D,13}·r_{D,3}
+              = 1/4 + 1/2·5/4 + 0·1
+              = 1/4 + 5/8
+              = 2/8 + 5/8 = 7/8 ✓
+
+  Componente 2: b_{D,2} + Q_{D,23}·r_{D,3}
+              = 3/4 + 1/2·1
+              = 3/4 + 2/4 = 5/4 ✓
+
+  Componente 3: b_{D,3} = 1 ✓
+
+Paso 5 — Calcular Z_D.
+
+  Z_D = r_{D,1} + r_{D,2} + r_{D,3}
+      = 7/8 + 5/4 + 1
+      = 7/8 + 10/8 + 8/8
+      = 25/8
+
+Paso 6 — Calcular R*.
+
+  R*₁(D) = r_{D,1} / Z_D = (7/8) / (25/8) = 7/25 = 0.280
+  R*₂(D) = r_{D,2} / Z_D = (10/8) / (25/8) = 10/25 = 0.400
+  R*₃(D) = r_{D,3} / Z_D = (8/8) / (25/8) = 8/25 = 0.320
+
+Verificación de normalización:
+  R*₁ + R*₂ + R*₃ = 7/25 + 10/25 + 8/25 = 25/25 = 1 ✓
+
+Verificación de positividad: R*₁ = 0.280 > 0, R*₂ = 0.400 > 0, R*₃ = 0.320 > 0 ✓
+
+Interpretación. La atribución causal estable converge a: nodo 1 = 28%, nodo 2 = 40%, nodo 3 = 32%. El nodo 2 acumula la mayor proporción porque recibe determinación del nodo 1 (a través de la arista 1→2) y ejerce determinación directa sobre D con el mayor peso de arista directa (3/4). El nodo 1 acumula la menor proporción a pesar de ser el ancestro más remoto, pues su influencia sobre D llega atenuada por los productos de pesos a lo largo de las rutas.
+
+
+Lema 6.1. Series de Neumann: descomposición de r_D por caminos
+
+Cuando ρ(Q_D) < 1, la solución r_D admite la representación como serie convergente:
+
+r_D = (I + Q_D + Q_D² + Q_D³ + …) b_D = Σ_{k=0}^∞ Q_D^k b_D
+
+Demostración. La ecuación (I − Q_D) r_D = b_D se resuelve multiplicando ambos miembros por (I + Q_D + Q_D² + …), serie que converge en norma cuando ρ(Q_D) < 1:
+  (I − Q_D)·Σ_{k=0}^∞ Q_D^k = I − lim_{m→∞} Q_D^{m+1} = I
+  luego r_D = Σ_{k=0}^∞ Q_D^k b_D ∎
+
+Lectura causal de la serie.
+
+Término k = 0 (b_D): contribución directa de cada nodo al resultado D, sin intermediarios.
+Término k = 1 (Q_D b_D): contribución de cada nodo a D a través de un intermediario.
+Término k = 2 (Q_D² b_D): contribución a través de dos intermediarios.
+Término k = m (Q_D^m b_D): contribución a través de m intermediarios.
+
+Cada componente de Q_D^m b_D se obtiene multiplicando los pesos de cada camino de longitud m y sumando sobre todos los caminos de esa longitud. Las contribuciones de todas las longitudes se agregan antes de normalizar.
+
+Ejemplo: descomposición por caminos del Ejemplo anterior.
+
+Q_D es nilpotente: Q_D³ = 0 (grafo acíclico con 3 nodos).
+
+Calcular Q_D²:
+  Q_D² = Q_D · Q_D
+  Fila 1: [0·0+1/2·0+0·0, 0·1/2+1/2·0+0·0, 0·0+1/2·1/2+0·0] = [0, 0, 1/4]
+  Fila 2: [0, 0, 0]
+  Fila 3: [0, 0, 0]
+
+  Q_D² = | 0   0   1/4 |
+         | 0   0    0  |
+         | 0   0    0  |
+
+Calcular Q_D³:
+  Q_D³ = Q_D² · Q_D:
+  Fila 1: [0·0+0·0+1/4·0, 0·1/2+0·0+1/4·0, 0·0+0·1/2+1/4·0] = [0, 0, 0]
+  Q_D³ = 0 (matriz nula) ✓
+
+Calcular los términos de la serie:
+
+Término k = 0 (contribución directa):
+  Q_D⁰ b_D = b_D = (1/4, 3/4, 1)
+
+Término k = 1 (rutas de longitud 1):
+  Q_D b_D:
+  Componente 1: 0·1/4 + 1/2·3/4 + 0·1 = 3/8
+  Componente 2: 0·1/4 + 0·3/4 + 1/2·1 = 1/2
+  Componente 3: 0
+  Q_D b_D = (3/8, 1/2, 0)
+
+  Lectura: r_{D,1} recibe 3/8 por la ruta 1→2→D (producto w(1→2)·w(2→D) = 1/2·3/4 = 3/8).
+           r_{D,2} recibe 1/2 por la ruta 2→3→D (producto w(2→3)·w(3→D) = 1/2·1 = 1/2).
+
+Término k = 2 (rutas de longitud 2):
+  Q_D² b_D:
+  Componente 1: 0·1/4 + 0·3/4 + 1/4·1 = 1/4
+  Componentes 2, 3: 0
+  Q_D² b_D = (1/4, 0, 0)
+
+  Lectura: r_{D,1} recibe 1/4 por la ruta 1→2→3→D (producto w(1→2)·w(2→3)·w(3→D) = 1/2·1/2·1 = 1/4).
+
+Suma de la serie:
+  r_{D,1} = 1/4 + 3/8 + 1/4 = 2/8 + 3/8 + 2/8 = 7/8 ✓
+  r_{D,2} = 3/4 + 1/2 + 0   = 6/8 + 4/8 = 10/8 = 5/4 ✓
+  r_{D,3} = 1 + 0 + 0        = 1 ✓
+
+
+Teorema 6. El operador de responsabilidad M_R(D): existencia, unicidad y positividad de R*
+
+Sea G un grafo con Q_D ≥ 0, b_D ≥ 0, ρ(Q_D) < 1, y todo nodo de A_D con al menos un camino positivo hacia D. Entonces:
+
+(i) r_D = (I − Q_D)⁻¹ b_D existe, es único, y tiene todas las componentes estrictamente positivas.
+
+(ii) Z_D = 1ᵀ r_D > 0.
+
+(iii) R*(D) = r_D / Z_D es el único vector en el simplex Δ^{n_D} con componentes positivas que satisface M_R(D) R*(D) = R*(D), donde M_R(D) es el operador de responsabilidad definido por:
+
+  η_D = 1 / Z_D
+  M_R(D) = Q_D + η_D · b_D · 1ᵀ
+
+(iv) λ₁ = 1 es el eigenvalor dominante de M_R(D). Perron-Frobenius se aplica a M_R(D), no a W.
+
+Demostración.
+
+Paso 1 — Existencia y unicidad de r_D. Con ρ(Q_D) < 1, (I − Q_D) es invertible (Teorema de Neumann). La serie Σ Q_D^k converge. Luego r_D = (I − Q_D)⁻¹ b_D existe y es único.
+
+Paso 2 — Positividad de r_D. Si todo nodo i ∈ A_D tiene un camino positivo hacia D, entonces para cada i existe m ≥ 0 tal que (Q_D^m b_D)_i > 0. Como todos los términos de la serie son no negativos, r_{D,i} ≥ (Q_D^m b_D)_i > 0.
+
+Paso 3 — El operador M_R(D) y su eigenvector. Sea η_D = 1/Z_D > 0. Se define:
+
+  M_R(D) = Q_D + η_D b_D 1ᵀ
+
+Verificar que M_R(D) R*(D) = R*(D):
+  M_R(D) R* = Q_D R* + η_D b_D (1ᵀ R*)
+             = Q_D R* + η_D b_D · 1         (pues Σᵢ R*_i = 1)
+             = Q_D (r_D/Z_D) + (1/Z_D) b_D
+             = (Q_D r_D + b_D) / Z_D
+             = r_D / Z_D                    (pues r_D = b_D + Q_D r_D)
+             = R* ✓
+
+Paso 4 — Perron-Frobenius en M_R(D). M_R(D) ≥ 0 (suma de dos matrices no negativas). Bajo las condiciones del enunciado, M_R(D) es irreducible y aperiódica. El Teorema de Perron-Frobenius garantiza que el eigenvalor dominante es λ₁ = 1, simple, con eigenvector positivo único en el simplex. Ese eigenvector es R*(D). ∎
+
+Verificación sobre el ejemplo numérico.
+
+η_D = 1/Z_D = 8/25
+
+b_D · 1ᵀ = (1/4, 3/4, 1)ᵀ · (1, 1, 1) = | 1/4  1/4  1/4 |
+                                            | 3/4  3/4  3/4 |
+                                            |  1    1    1  |
+
+η_D · b_D · 1ᵀ = (8/25) · | 1/4  1/4  1/4 | = | 2/25   2/25   2/25  |
+                            | 3/4  3/4  3/4 |   | 6/25   6/25   6/25  |
+                            |  1    1    1  |   | 8/25   8/25   8/25  |
+
+M_R(D) = Q_D + η_D · b_D · 1ᵀ
+
+  = |  0    1/2    0  | + | 2/25   2/25   2/25 |
+    |  0     0    1/2 |   | 6/25   6/25   6/25 |
+    |  0     0     0  |   | 8/25   8/25   8/25 |
+
+  = |  2/25    14.5/25   2/25  |
+    |  6/25    6/25      18.5/25 |
+    |  8/25    8/25      8/25   |
+
+En decimales:
+  M_R(D) = | 0.08   0.58   0.08 |
+           | 0.24   0.24   0.74 |
+           | 0.32   0.32   0.32 |
+
+Verificar M_R(D) · R*(D) = R*(D) con R* = (7/25, 10/25, 8/25):
+
+  Fila 1: 0.08·0.28 + 0.58·0.40 + 0.08·0.32
+        = 0.0224 + 0.2320 + 0.0256 = 0.2800 = 7/25 ✓
+
+  Fila 2: 0.24·0.28 + 0.24·0.40 + 0.74·0.32
+        = 0.0672 + 0.0960 + 0.2368 = 0.4000 = 10/25 ✓
+
+  Fila 3: 0.32·0.28 + 0.32·0.40 + 0.32·0.32
+        = 0.32·(0.28 + 0.40 + 0.32) = 0.32·1.00 = 0.3200 = 8/25 ✓
+
+
+Lema 6.2. Caso DAG: Q_D nilpotente
+
+Si G restringido a A_D es acíclico (grafo dirigido acíclico, DAG), entonces Q_D es nilpotente: existe m ≤ n_D tal que Q_D^m = 0.
+
+Consecuencia. ρ(Q_D) = 0 < 1. La condición del Teorema 6 se satisface sin necesidad de verificación adicional. La serie de Neumann se trunca exactamente en el término m:
+
+r_D = (I + Q_D + Q_D² + … + Q_D^{m−1}) b_D = Σ_{k=0}^{m−1} Q_D^k b_D
+
+No se introduce ninguna estructura artificial (lazos, teleportación, factor de amortiguación) para garantizar la convergencia.
+
+En el ejemplo numérico: m = 3 (la ruta más larga tiene dos intermediarios: 1→2→3→D). Q_D³ = 0 y la serie se reduce a tres términos. ✓
+
+
+Lema 6.3. Caso con feedback causal
+
+Si G contiene ciclos entre nodos de A_D, entonces Q_D no es nilpotente. La condición de existencia exige verificar explícitamente ρ(Q_D) < 1.
+
+Procedimiento cuando hay feedback.
+
+1. Verificar ρ(Q_D) < 1. Si se cumple, proceder con el algoritmo estándar.
+2. Si ρ(Q_D) ≥ 1, el dominio del modelo no admite solución por composición de rutas infinita. El caso requiere descomposición temporal, modelado explícito del feedback, o redefinición del dominio.
+
+Ejemplo con feedback. Sistema de dos nodos con feedback mutuo:
+  w(1→2) = 0.4    w(1→D) = 0.6
+  w(2→1) = 0.3    w(2→D) = 0.7
+
+  Q_D = | 0    0.4 |     b_D = (0.6, 0.7)ᵀ
+        | 0.3   0  |
+
+Verificar ρ(Q_D). Los eigenvalores de Q_D satisfacen λ² − 0 = 0.12, luego λ = ±√0.12 ≈ ±0.346.
+ρ(Q_D) = 0.346 < 1 ✓
+
+Construir (I − Q_D) y la matriz ampliada:
+
+  (I − Q_D) = |  1   −0.4 |
+              | −0.3   1  |
+
+  Ampliada: |  1   −0.4  |  0.6 |
+            | −0.3   1   |  0.7 |
+
+Eliminación gaussiana: eliminar el elemento (2,1) = −0.3.
+Factor = −0.3 / 1 = −0.3
+Fila 2 ← Fila 2 − (−0.3) · Fila 1 = Fila 2 + 0.3 · Fila 1:
+  Columna 1: −0.3 + 0.3·1 = 0
+  Columna 2: 1 + 0.3·(−0.4) = 1 − 0.12 = 0.88
+  RHS: 0.7 + 0.3·0.6 = 0.7 + 0.18 = 0.88
+
+  | 1   −0.4  |  0.6 |
+  | 0    0.88 |  0.88 |
+
+Normalizar fila 2: dividir por 0.88:
+  | 1   −0.4  |  0.6 |
+  | 0    1    |  1   |
+
+Eliminar el elemento (1,2) = −0.4 usando la fila 2:
+Fila 1 ← Fila 1 + 0.4 · Fila 2:
+  Columna 1: 1; Columna 2: −0.4 + 0.4·1 = 0; RHS: 0.6 + 0.4·1 = 1.0
+
+  | 1   0  |  1.0 |
+  | 0   1  |  1.0 |
+
+Leer r_D: r_{D,1} = 1.0, r_{D,2} = 1.0
+Z_D = 2.0
+R*₁(D) = 1/2 = 0.500
+R*₂(D) = 1/2 = 0.500
+
+Verificación: r_{D,1} = b₁ + Q_{D,12}·r_{D,2} = 0.6 + 0.4·1.0 = 1.0 ✓
+             r_{D,2} = b₂ + Q_{D,21}·r_{D,1} = 0.7 + 0.3·1.0 = 1.0 ✓
+
+
+Lema 6.4. Rangos de evidencia y estimación por intervalos
+
+Cuando los pesos están expresados como intervalos [a_{ij}, b_{ij}], el procedimiento estándar produce tres estimaciones de R*.
+
+R*(mid)   Ejecutar el algoritmo con m_{ij} = (a_{ij}+b_{ij})/2. Estimación puntual central de R*.
+R*(min)   Ejecutar con a_{ij} para cada arista. Cota inferior del intervalo de R*.
+R*(max)   Ejecutar con b_{ij} para cada arista. Cota superior del intervalo de R*.
+
+El nivel de certeza se declara según la anchura máx_i (R*(max)_i − R*(min)_i): anchura ≤ 0.05 → declaración A; anchura ≤ 0.10 → declaración B; anchura > 0.10 → declaración C.
+
+El intervalo [R*(min), R*(max)] refleja la incertidumbre del analista sobre los pesos del grafo G, no la incertidumbre ontológica del sistema. El vector R*(D) del sistema real es único y determinado (Teorema 6). Los intervalos de R* son incertidumbre epistémica del analista; la REC (Parte VII) es incertidumbre del sistema sobre su propio estado I(t). Son dos fuentes conceptualmente distintas.
+
 
 [TABLA]
 | Objeto | Notación | Tipo matemático | Parte |
 | Grafo causal | G = (N, A, w) | Dígrafo ponderado | Definición 6 |
-| Nodo final | n+1 ∈ N | Sumidero; fila de W nula | Definición 6 |
-| Matriz de pesos | W ∈ ℝ^{(n+1)×(n+1)} | No negativa; estocástica en {1,…,n} | Definición 6 |
-| Vector R* | Wᵀ R* = λ₁ R*, R* ∈ Δⁿ | Distribución sobre N | Definición 6.1 |
-| Eigenvalor dominante | λ₁ = 1 | Para W estocástica por filas | Teorema 6 |
-| Positividad | R*ᵢ > 0 ∀i | Garantiza Δᵢ ∈ [−1,1] | Teorema 6 |
-| Unicidad | dim ker(Wᵀ−I) = 1 | Espacio propio unidimensional | Teorema 6 |
-| Perturbación | W(ε)=(1−ε)W+(ε/n)J | Hace W primitiva; ε → 0 → R* | Teorema 6 |
-| Método de potencias | R*(k+1)=Wᵀ R*(k)/‖·‖₁ | Converge con razón ¦λ₂¦ | Lema 6.1 |
-| Criterio de conv. | ‖R*(k+1)−R*(k)‖₁<ε_conv | ε_conv=10⁻⁶ estándar | Lema 6.1 |
-| Intervalo de R* | [R*(min), R*(max)] | Incertidumbre empírica del analista | Lema 6.1 |
+| Nodo resultado | D ∈ N | Sumidero; sin aristas salientes | Definición 6 |
+| Matriz de pesos | W ∈ ℝ^{(n+1)×(n+1)} | No negativa; no necesariamente estocástica | Definición 6 |
+| Ancestros de D | A_D ⊆ N\{D} | Nodos con camino a D | Definición 6.1 |
+| Submatriz causal | Q_D ∈ ℝ^{n_D×n_D} | W restringida a A_D×A_D | Definición 6.1 |
+| Vector directo | b_D ∈ ℝ^{n_D} | Pesos de aristas directas a D | Definición 6.1 |
+| Ecuación de atribución | r_D = b_D + Q_D r_D | Sistema lineal (I−Q_D)r=b | Definición 6.1 |
+| Solución | r_D = (I−Q_D)⁻¹ b_D | Con ρ(Q_D)<1 | Definición 6.2 |
+| Normalización | R* = r_D / Z_D | Z_D = 1ᵀ r_D | Definición 6.2 |
+| Genealogía | φ₁→W→Q_D,b_D→r_D→R* | Cadena de construcción | Definición 6.2 |
+| Condición existencia | ρ(Q_D) < 1 | Radio espectral de Q_D | Teorema 6 |
+| Operador | M_R(D) = Q_D + η_D b_D 1ᵀ | No negativo; Perron-eigenvector = R* | Teorema 6 |
+| Eigenvalor | λ₁ = 1 | Dominante de M_R(D) | Teorema 6 |
+| Positividad | R*_i > 0 ∀i | Garantiza Δ_i ∈ [−1,1] | Teorema 6 |
+| Series de Neumann | r_D = Σ Q_D^k b_D | Caminos de longitud k | Lema 6.1 |
+| Caso DAG | Q_D^m = 0 | ρ = 0; serie finita | Lema 6.2 |
+| Caso feedback | ρ(Q_D) < 1 requerido | Verificación explícita | Lema 6.3 |
+| Intervalo R* | [R*(min), R*(max)] | Incertidumbre epistémica del analista | Lema 6.4 |
 [/TABLA]
