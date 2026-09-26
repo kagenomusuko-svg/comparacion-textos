@@ -19,13 +19,7 @@ Nivel 2 — Aproximación operativa. El modelo utiliza la forma compacta:
 
 Esta aproximación es la que aparece en la enunciación del Lema 8.1 (Parte VIII), en los cálculos de los 18 casos del Apéndice B y en las extensiones del Apéndice D. No es una consecuencia algebraica directa de la cota del Nivel 1: es una aproximación calibrada al régimen institucional (m ∈ [4, 10], δ > 0.5, S_est(E) > 0.75). Su motivación estructural y sus condiciones de validez se especifican en la Nota A.4.2.
 
-Las hipótesis estructurales de la derivación son:
-(H1) ‖ΔM‖₂ = ‖E_mat‖₂: la transformación W → M_R(D) preserva la norma espectral de la perturbación de fila.
-(H2) ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m): la desviación de la fila E está acotada en términos de S_est.
-
-Las condiciones de aplicabilidad son:
-(C1) M_R(D) es primitivo con gap espectral δ = 1 − |λ₂(M_R(D))| > 0.
-(C2) ρ(R*, R*^(E)) ≥ 0.
+La derivación procede bajo dos hipótesis estructurales. H1 establece que la transformación W → M_R(D) preserva la norma espectral de la perturbación de fila: ‖ΔM‖₂ = ‖E_mat‖₂. H2 establece que la desviación de la fila E de W está acotada en términos de S_est: ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m). Las condiciones de aplicabilidad son C1 —M_R(D) primitivo con gap espectral δ = 1 − |λ₂(M_R(D))| > 0— y C2 —ρ(R*, R*^(E)) ≥ 0—.
 
 S_est(E) = |ρ(R*, R*^(E))| (Definición 3.2, Parte III). El paso A.1 conecta S_est con la correlación de Pearson. El paso A.2 (probado bajo C2) acota ‖R* − R*^(E)‖₂. El paso A.3 (bajo H1) aplica Davis-Kahan. El paso A.4 combina los anteriores para obtener la cota del Nivel 1.
 

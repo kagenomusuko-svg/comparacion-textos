@@ -4,8 +4,6 @@ Teorema de Inversión Causal
 
 Esta parte demuestra que, bajo condiciones estructurales verificables desde el expediente, los sistemas de imputación convencionales producen una inversión sistemática: el nodo que más causó asume menos, y el nodo que menos causó asume más. La inversión no requiere mala intención: ocurre estructuralmente cuando S_est(E) > θ_S y V(D) << V(E).
 
-La Condición (1) del TIC —R*(D) > R*(E)— no se asume sin verificación: el Apéndice B, Sección 2 documenta 18 casos en 9 dominios distintos donde la condición se establece de forma independiente al TIC por al menos uno de cinco mecanismos: jerarquía estructural documentada, resolución judicial o regulatoria, estudios econométricos independientes, lógica del grafo sin cómputo de eigenvector, y alta S_est(E) como cota directa vía el Lema 8.1.
-
 
 Definiciones 8.1–8.5. Objetos específicos del TIC
 

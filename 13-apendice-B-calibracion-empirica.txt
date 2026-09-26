@@ -4,8 +4,6 @@ Calibración empírica
 
 Este apéndice tiene dos secciones. La Sección B.1 calibra los parámetros de las funciones φ y ψ de los Axiomas 8.1–8.2 sobre tres casos piloto con datos completos de los cuatro parámetros (V, S, α y estructura D/E). La Sección B.2 verifica la Condición (1) del TIC —R*(D) > R*(E)— de forma independiente al propio TIC, sobre 18 casos de nueve dominios distintos; esos mismos 18 casos corroboran además la propiedad estructural de ψ —que es decreciente en 1−S— ampliando sustancialmente la base empírica del sistema. Ambas secciones son necesarias para el Apéndice A y para la Parte VIII.
 
-Limitaciones de calibración. Los exponentes β = 1.54 (φ) y α_exp = 0.55 (ψ) se calibran sobre n = 3 casos piloto. Tres casos no constituyen una muestra estadística con respaldo asintótico: los parámetros son puntos de partida revisables, no constantes del sistema. La propiedad cualitativa central de ψ —que es decreciente en 1−S— está corroborada por los 18 casos de la Sección B.2. La corroboración cualitativa (base: 18 casos, 9 dominios) y la calibración paramétrica (base: 3 casos) son objetos distintos. Todo análisis de casos reales que use estos valores paramétricos debe declarar que la calibración se basa en n = 3 casos piloto.
-
 B.1. Los tres casos piloto y calibración de φ y ψ
 
 Los tres casos satisfacen simultáneamente: (1) evidencia documental suficiente para estimar S, V y α con nivel de certeza ≥ B en la escala E0–E8; (2) estructura D/E claramente distinguible en el expediente; (3) dominios distintos para que la calibración no sea específica de un solo dominio.
