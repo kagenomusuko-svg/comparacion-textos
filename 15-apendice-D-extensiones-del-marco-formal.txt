@@ -86,7 +86,7 @@ R*_struct(i) = R*^(i)_i (responsabilidad que cualquier nodo en posición i tendr
 
 R*_net(i) = R*(i) − R*_struct(i) (exceso idiosincrático sobre la línea base estructural)
 
-R*_struct(i) = R*^(i)_i es la i-ésima componente del vector R* calculado sobre el grafo de sustitución W^(i) · R*_net(i) ≥ 0 por la cota del Lema 8.1
+R*_struct(i) = R*^(i)_i es la i-ésima componente del vector R* calculado sobre el grafo de sustitución W^(i) · R*_net(i) = R*(i) − R*^(i)_i: su signo depende de los valores calculados por eliminación gaussiana en cada caso concreto y debe verificarse directamente; no se sigue de ninguna cota del Lema 8.1
 
 Ausencia de doble conteo. La descomposición R* = R*_struct + R*_net no usa S_est en su definición: R*_struct se obtiene directamente del vector R* calculado sobre el grafo W^(i) por eliminación gaussiana, que es un objeto del grafo causal. S_est es una función de R* y R*^(i), no al revés. Usar R*_net = R*(i) − R*^(i)_i evita la circularidad de multiplicar R* por (1−S_est), que combina dos objetos derivados del mismo vector de responsabilidad.
 

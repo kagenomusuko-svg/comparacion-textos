@@ -17,6 +17,8 @@ Nivel 2 — Aproximación operativa. El modelo utiliza la forma compacta:
 
   R*(E) ≲ (1 − S_est(E)) / (m − 1)
 
+El símbolo ≲ denota una estimación operativa calibrada dentro del régimen institucional (m ∈ [4, 10], δ > 0.5, S_est(E) > 0.75): no es una desigualdad matemática exacta, y no debe usarse para demostrar signos, implicaciones lógicas ni resultados rigurosos. Fuera del régimen institucional, debe emplearse la cota derivada del Nivel 1.
+
 Esta aproximación es la que aparece en la enunciación del Lema 8.1 (Parte VIII), en los cálculos de los 18 casos del Apéndice B y en las extensiones del Apéndice D. No es una consecuencia algebraica directa de la cota del Nivel 1: es una aproximación calibrada al régimen institucional (m ∈ [4, 10], δ > 0.5, S_est(E) > 0.75). Su motivación estructural y sus condiciones de validez se especifican en la Nota A.4.2.
 
 La derivación procede bajo dos hipótesis estructurales. H1 establece que la transformación W → M_R(D) preserva la norma espectral de la perturbación de fila: ‖ΔM‖₂ = ‖E_mat‖₂. H2 establece que la desviación de la fila E de W está acotada en términos de S_est: ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m). Las condiciones de aplicabilidad son C1 —M_R(D) primitivo con gap espectral δ = 1 − |λ₂(M_R(D))| > 0— y C2 —ρ(R*, R*^(E)) ≥ 0—.

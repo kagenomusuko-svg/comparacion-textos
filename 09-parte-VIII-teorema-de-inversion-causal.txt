@@ -42,6 +42,8 @@ Aproximación operativa (régimen institucional: m ∈ [4, 10], δ > 0.5, S_est(
 
   R*(E) ≲ (1 − S_est(E)) / (m − 1)
 
+El símbolo ≲ denota una estimación operativa calibrada en el régimen institucional: no es una desigualdad matemática exacta. Su definición precisa y sus condiciones de aplicabilidad se especifican en el Apéndice A, Nivel 2.
+
 m = |N| nodos activos. La dependencia de R*(E) en S_est(E) es monótonamente decreciente en ambas expresiones: mayor sustituibilidad implica menor responsabilidad causal estructural. La derivación completa y las condiciones de la aproximación operativa se documentan en el Apéndice A (Teorema A.4 y Nota A.4.2).
 
 Cadena de derivación. S_est(E) alto con ρ(R*, R*^(E)) ≥ 0 (condición C2) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas. En sistemas institucionales, S_est(E) alto corresponde a ρ → +1: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. E aporta poca idiosincrasia a la determinación de R*; su contribución causal estructural R*(E) es pequeña en relación al total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D).
@@ -122,7 +124,7 @@ Combinación. La estimación operativa del déficit es Δ(E) = R*(E) − α(E) �
 
 En el régimen institucional definido (S_est(E) > 0.75, m ∈ [4, 10]), el modelo operativo estima Δ(E) < 0: el ejecutor asumió más de lo que causó según la distribución de responsabilidad causal calculada. ∎
 
-Los Teoremas 8.1 y 8.2 demuestran la inversión simultánea: D causó más y asumió menos; E asumió más y causó menos. El sistema convencional —al operar sobre visibilidad y apariencias— produce la distribución de consecuencias opuesta a la distribución causal real.
+El Teorema 8.1 demuestra rigurosamente que Δ(D) > 0. El Teorema 8.2 establece operativamente que Δ(E) < 0 en el régimen institucional. Los dos resultados —uno exacto, el otro operativo— caracterizan la inversión simultánea: D causó más y asumió menos; E asumió más de lo que le corresponde causalmente según el modelo operativo. El sistema convencional —al operar sobre visibilidad y apariencias— produce la distribución de consecuencias opuesta a la distribución causal real.
 
 
 Definición 8.6 + Teorema 8.3. Índice de inversión y monotonicidad
@@ -168,7 +170,7 @@ La brecha del nodo de diseño es prácticamente igual a toda su responsabilidad 
 
 Demostración.
 
-(b) α(E) > R*(E). Directo del Teorema 8.2: Δ(E) < 0 implica α(E) > R*(E). ✓
+(b) α(E) > R*(E). El Teorema 8.2 establece operativamente que Δ(E) = R*(E) − α(E) ≲ −0.5625 en el régimen institucional. Bajo esa estimación operativa, α(E) > R*(E) se sigue por álgebra directa: Δ(E) < 0 equivale a α(E) > R*(E). La condición (b) es una consecuencia operativa del Teorema 8.2 en el régimen institucional; no la implicación de un resultado exacto. ✓
 
 (c) α(D) ≈ 0. V(D) ≈ 0 → φ(V(D)) ≈ 0 (Axioma 8.1) → contribución de visibilidad al α(D) es mínima. Si α_vol(D) ≈ 0 y h(D) ≈ 0 (sin asunción voluntaria ni proceso): α(D) ≈ 0. ✓
 
