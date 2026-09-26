@@ -30,7 +30,7 @@ Sean r̃ = R* − R̄ y s̃ = R*^(E) − R̄ los vectores media-centrados. Enton
 
   S_est(E) = |⟨r̃, s̃⟩| / (‖r̃‖₂ · ‖s̃‖₂)
 
-Propiedad fundamental. S_est(E) = 1 si y solo si r̃ = λ·s̃ para algún escalar λ > 0: los vectores media-centrados son paralelos, es decir, R* y R*^(E) son proporcionales. S_est(E) cercano a 1 implica R* y R*^(E) tienen forma casi proporcional.
+Propiedad fundamental. S_est(E) = 1 si y solo si r̃ = λ·s̃ para algún escalar λ ≠ 0: los vectores media-centrados son colineales. Dos sub-casos: (a) λ > 0 ↔ ρ = +1: las proporciones relativas de R* se preservan bajo la sustitución de E; (b) λ < 0 ↔ ρ = −1: las proporciones relativas de R* se invierten bajo la sustitución de E. El Lema 8.1 y el Teorema A.4 aplican bajo la condición ρ ≥ 0 (condición C2 de la Parte VIII).
 
 Consecuencia para R*(E). Cuando S_est(E) = 1: R*(E)/R*^(E)_E = R*(j)/R*^(E)_j para todo j. La posición de E en la distribución es idéntica en R* y R*^(E). La idiosincrasia causal de E es cero: su presencia o ausencia no cambia la distribución relativa de responsabilidad.
 
@@ -39,13 +39,13 @@ Cuando S_est(E) = 0 (correlación nula): R* y R*^(E) son ortogonales —la susti
 
 A.2. Lema A.2 — Cota de Pearson a norma L2
 
-Lema A.2. Para distribuciones de probabilidad r, s ∈ Δ^{m−1} (Σᵢ rᵢ = Σᵢ sᵢ = 1, rᵢ ≥ 0) con correlación de Pearson ρ = ρ(r, s):
+Lema A.2. Para distribuciones de probabilidad r, s ∈ Δ^{m−1} (Σᵢ rᵢ = Σᵢ sᵢ = 1, rᵢ ≥ 0) con correlación de Pearson ρ = ρ(r, s) ≥ 0:
 
-  ‖r − s‖₂² ≤ (‖r̃‖₂ + ‖s̃‖₂)² · (1 − |ρ|)
+  ‖r − s‖₂ ≤ 2σ · √(1 − ρ)
 
-En particular, cuando ‖r̃‖₂ ≈ ‖s̃‖₂ = σ:
+donde σ = ‖r̃‖₂ = ‖s̃‖₂ (norma de los vectores media-centrados; esta igualdad se asume o se acota por el máximo √((m−1)/m)).
 
-  ‖r − s‖₂ ≤ 2σ · √(1 − |ρ|)
+Condición de validez. El Lema A.2 requiere ρ ≥ 0. Para ρ < 0, la distancia ‖r − s‖₂ aumenta cuando |ρ| aumenta (el vector s̃ apunta en dirección opuesta a r̃), de modo que la cota en √(1 − |ρ|) sería menguante cuando la distancia real es creciente. En el caso extremo ρ = −1: ‖r − s‖₂ = ‖r̃‖₂ + ‖s̃‖₂ > 0, pero 2σ·√(1 − |ρ|) = 0, contradiciendo la cota. Por tanto, el Lema A.2 no aplica para ρ < 0.
 
 Demostración del Lema A.2.
 
@@ -54,29 +54,23 @@ Paso 1. Expansión de ‖r − s‖₂².
   ‖r − s‖₂² = ‖r̃ − s̃‖₂²   (la media 1/m se cancela)
              = ‖r̃‖₂² + ‖s̃‖₂² − 2⟨r̃, s̃⟩
 
-Paso 2. Acotación de ‖r̃ − s̃‖₂². Por definición de correlación y Cauchy-Schwarz:
+Paso 2. Acotación con ρ ≥ 0. Por definición de correlación: ⟨r̃, s̃⟩ = ρ·‖r̃‖₂·‖s̃‖₂. Como ρ ≥ 0:
 
-  ⟨r̃, s̃⟩ ≥ −‖r̃‖₂·‖s̃‖₂
+  ‖r̃ − s̃‖₂² = ‖r̃‖₂² + ‖s̃‖₂² − 2ρ·‖r̃‖₂·‖s̃‖₂
 
-  ‖r̃ − s̃‖₂² = ‖r̃‖₂² + ‖s̃‖₂² − 2|ρ|·‖r̃‖₂·‖s̃‖₂   (usando |ρ(r,s)| = |⟨r̃,s̃⟩|/(‖r̃‖·‖s̃‖))
+Esta es la expansión exacta. La sustitución de ρ por |ρ| solo es válida cuando ρ ≥ 0; para ρ < 0 daría − 2|ρ|·‖r̃‖₂·‖s̃‖₂ con signo incorrecto.
 
-Paso 3. Reescritura.
+Paso 3. Caso de normas iguales ‖r̃‖₂ = ‖s̃‖₂ = σ.
 
-  ‖r − s‖₂² = (‖r̃‖₂ − ‖s̃‖₂)² + 2‖r̃‖₂·‖s̃‖₂·(1 − |ρ|) ≤ (‖r̃‖₂ + ‖s̃‖₂)²·(1 − |ρ|)
+  ‖r̃ − s̃‖₂² = 2σ² − 2ρσ² = 2σ²(1 − ρ)   →   ‖r − s‖₂ = σ√2 · √(1 − ρ) ≤ 2σ · √(1 − ρ) ✓
 
-La última desigualdad sigue de (a−b)² ≤ (a+b)²·(1−|ρ|) cuando |ρ| ≤ 1. ✓
-
-Paso 4. Para ‖r̃‖₂ = ‖s̃‖₂ = σ:
-
-  ‖r − s‖₂² ≤ 4σ²·(1 − |ρ|)   →   ‖r − s‖₂ ≤ 2σ·√(1 − |ρ|)
-
-Con σ = ‖R* − R̄‖₂ ≤ √((m−1)/m) (máxima varianza de distribución de probabilidad sobre m puntos) y ρ = S_est(E):
+Paso 4. Cota con norma máxima. Con σ ≤ √((m−1)/m) (máxima norma de distribución de probabilidad sobre m puntos centrada en 1/m) y ρ = S_est(E) ≥ 0:
 
   ‖R* − R*^(E)‖₂ ≤ 2·√((m−1)/m)·√(1 − S_est(E))
 
 ∎
 
-Interpretación. El Lema A.2 conecta la correlación de Pearson con la distancia L2. Cuando S_est(E) → 1, ‖R* − R*^(E)‖₂ → 0 en escala de 2σ. La distancia L2 decrece como √(1 − S_est), no linealmente en (1 − S_est).
+Interpretación. El Lema A.2 conecta la correlación de Pearson con la distancia L2. Bajo ρ ≥ 0, cuando S_est(E) → 1, ‖R* − R*^(E)‖₂ → 0 en escala de 2σ. La distancia L2 decrece como √(1 − S_est), no linealmente en (1 − S_est). Esta monotonicidad falla para ρ < 0.
 
 Ejemplo numérico. S_est = 0.85, m = 5, σ = ‖R* − R̄‖₂ estimado en 0.15:
 
@@ -85,7 +79,9 @@ Ejemplo numérico. S_est = 0.85, m = 5, σ = ‖R* − R̄‖₂ estimado en 0.1
 
 A.3. Teorema A.3 — Davis-Kahan: perturbación de fila y eigenvector
 
-Sea W la matriz de pesos del grafo G (no necesariamente estocástica por filas; ver Definición 6, Parte VI). Sea M_R(D) el operador de responsabilidad primitivo con eigenvalor dominante λ₁ = 1 y gap espectral δ = 1 − |λ₂| > 0. Sea W^(E) la matriz obtenida sustituyendo la fila E de W por el promedio W̄_E = (1/(m−1)) Σ_{j≠E} W_{j·}. Sea E_mat = W^(E) − W la perturbación, que es no nula solo en la fila E.
+Puente con la Parte VI. R* se calcula mediante eliminación gaussiana del sistema (I−Q_D)r = b_D (Definición 6.2, Parte VI), donde Q_D y b_D se construyen a partir de W. Este vector r normalizado es idéntico al eigenvector dominante izquierdo de M_R(D)^T, donde M_R(D) = Q_D + η_D b_D 1^T es el operador de responsabilidad (Parte VI). La equivalencia entre ambas definiciones se sigue del hecho que la solución del sistema lineal (I−Q_D)r = b_D y el eigenvector de M_R(D)^T asociado a λ₁ = 1 satisfacen la misma ecuación después de la normalización. El Teorema de Davis-Kahan se aplica a M_R(D), no directamente a W. La condición de primitividad (C1) garantiza que el gap espectral δ = 1 − |λ₂(M_R(D))| sea estrictamente positivo.
+
+Sea W la matriz de pesos del grafo G (no necesariamente estocástica por filas; ver Definición 6, Parte VI). Sea M_R(D) el operador de responsabilidad primitivo con eigenvalor dominante λ₁ = 1 y gap espectral δ = 1 − |λ₂| > 0 (condición C1). Sea W^(E) la matriz obtenida sustituyendo la fila E de W por el promedio W̄_E = (1/(m−1)) Σ_{j≠E} W_{j·}. Sea E_mat = W^(E) − W la perturbación, que es no nula solo en la fila E.
 
 Teorema A.3 (Davis-Kahan en forma matricial).
 
@@ -110,7 +106,11 @@ Paso 3. Norma L¹. Por Cauchy-Schwarz: ‖r‖₁ ≤ √m · ‖r‖₂ ≤ (�
 
 A.4. Teorema A.4 — Cota final del Lema 8.1
 
-Teorema A.4. Sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
+Condiciones explícitas.
+  (C1) M_R(D) es primitivo: su eigenvalor dominante es simple con gap espectral δ = 1 − |λ₂(M_R(D))| > 0. Esta condición garantiza que el Teorema de Davis-Kahan (A.3) sea aplicable con una cota finita.
+  (C2) ρ(R*, R*^(E)) ≥ 0: la correlación de Pearson entre R* y R*^(E) es no negativa. Esta condición garantiza que el Lema A.2 sea aplicable; sin ella, la distancia ‖R* − R*^(E)‖₂ puede ser mayor, no menor, a medida que S_est(E) crece.
+
+Teorema A.4. Bajo las condiciones (C1) y (C2), sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
 
   R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m)
 

@@ -100,9 +100,13 @@ Propiedades:
 
 (i) S_est(i) ∈ [0,1]: |ρ| ∈ [0,1] por la desigualdad de Cauchy-Schwarz.
 
-(ii) S_est(i) → 1 cuando R*^(i) ≈ R*: sustituir el nodo no altera la estructura de responsabilidad.
+(ii) S_est(i) → 1 cuando |ρ(R*, R*^(i))| → 1. Este límite tiene dos sub-casos con interpretaciones distintas:
+    — ρ → +1: R*^(i) ≈ λR* con λ > 0. Las proporciones relativas de R* se preservan bajo la sustitución: sustituir el nodo no altera la estructura de responsabilidad.
+    — ρ → −1: R*^(i) ≈ λR* con λ < 0 (centrados). Las proporciones relativas de R* se invierten bajo la sustitución: el nodo más responsable en R* pasa a ser el menos responsable en R*^(i). El Lema 8.1 y el TIC aplican bajo la condición ρ ≥ 0; ver Apéndice A.
 
 (iii) S_est(i) → 0 cuando R*^(i) y R* son ortogonales (centrados): sustituir el nodo altera la estructura de responsabilidad al máximo.
+
+(iv) En contextos institucionales típicos del TIC, ρ(R*, R*^(i)) > 0 porque los grafos de responsabilidad tienen estructura positivamente correlacionada: sustituir un nodo por el promedio reduce pero no invierte las cargas de responsabilidad. El Apéndice B documenta esta regularidad empírica.
 
 Procedimiento de cálculo.
 
@@ -236,9 +240,9 @@ g depende de la geometría del grafo G y las métricas de C y E; no tiene forma 
 
 Demostración.
 
-Paso 1 — Extremos. S_est → 1 implica ρ(R*, R*^(i)) → 1, es decir, sustituir el nodo no altera la estructura relativa de R*. Esto ocurre cuando W_{i·} ≈ W̄ (la fila del nodo es similar al promedio), que corresponde a ‖a_t‖_E pequeño relativo a ‖c‖_C. Luego S_op → 1. El extremo S_est → 0 es análogo: ρ → 0, W_{i·} maximalmente diferente de W̄, ‖a_t‖_E >> ‖c‖_C, S_op → 0.
+Paso 1 — Extremos. S_est → 1 implica |ρ(R*, R*^(i))| → 1. Para la correspondencia con S_op se requiere ρ → +1 (ver Propiedad (ii)): sustituir el nodo no altera la estructura relativa de R*. Esto ocurre cuando W_{i·} ≈ W̄ (la fila del nodo es similar al promedio), que corresponde a ‖a_t‖_E pequeño relativo a ‖c‖_C. Luego S_op → 1. El extremo S_est → 0 es análogo: ρ → 0, W_{i·} maximalmente diferente de W̄, ‖a_t‖_E >> ‖c‖_C, S_op → 0.
 
-Paso 2 — Monotonicidad. Sea Δ_i = ‖W_{i·} − W̄‖₂. Por la desigualdad de Pinsker (o sus análogos para correlación): a mayor Δ_i, menor ρ(R*, R*^(i)), es decir, S_est(i) menor. Δ_i es el análogo estructural de ‖a_t‖_E: a mayor Δ_i, mayor contribución idiosincrática, menor S_op(i). Por tanto: S_est(i) ≤ S_est(j) implica Δ_i ≥ Δ_j implica S_op(i) ≤ S_op(j). El orden se preserva. ✓
+Paso 2 — Monotonicidad. Sea Δ_i = ‖W_{i·} − W̄‖₂. A mayor Δ_i, la fila del nodo se aleja del promedio, y R*^(i) se aleja de R*: la correlación ρ(R*, R*^(i)) decrece (en sentido absoluto), de modo que S_est(i) = |ρ| es menor. La razón es que R* depende linealmente de las filas de W a través del sistema (I−Q_D)r = b_D; una perturbación mayor en W_{i·} produce una perturbación mayor en R*^(i) respecto a R*, reduciendo la covarianza entre ambos vectores. Δ_i es el análogo estructural de ‖a_t‖_E: a mayor Δ_i, mayor contribución idiosincrática, menor S_op(i). Por tanto: S_est(i) ≤ S_est(j) implica Δ_i ≥ Δ_j implica S_op(i) ≤ S_op(j). El orden se preserva. ✓
 
 Paso 3 — Existencia de g. S_op y S_est son continuas en sus argumentos bajo hipótesis regulares sobre W y las normas, y monótonamente relacionadas por el Paso 2. La función g existe como función de la geometría de G y las métricas específicas del sistema. ∎
 

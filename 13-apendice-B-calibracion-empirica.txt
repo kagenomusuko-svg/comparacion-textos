@@ -134,7 +134,7 @@ Mecanismo 3 — Estudios econométricos o epidemiológicos. Casos: HOLC redlinin
 
 Mecanismo 4 — Lógica del grafo sin eigenvector. Casos: WWI, Iraq, Educación. La estructura del grafo —nodo D con m aristas salientes hacia nodos activos, nodo E con una sola arista hacia Nf— implica R*(D) > R*(E) por la definición de la distribución estacionaria.
 
-Mecanismo 5 — Cota S(E) vía Lema 8.1. Casos: COMPAS, Gerente bancario. Cuando S_est(E) es alto, el Lema 8.1 establece R*(E) ≤ (1−S_est)/(m−1) directamente desde el valor de S —estimable sin el grafo completo. La cota implica R*(D) > R*(E) sin calcular el eigenvector.
+Mecanismo 5 — Cota S(E) vía Lema 8.1. Casos: COMPAS, Gerente bancario. Cuando S_est(E) es alto, el Lema 8.1 —bajo las condiciones (C1) y (C2) del Apéndice A— establece R*(E) ≤ (1−S_est)/(m−1) directamente desde el valor de S —estimable sin el grafo completo. La cota implica R*(D) > R*(E) sin calcular el eigenvector. Las condiciones (C1) y (C2) son verificables para los casos COMPAS y Gerente bancario: (C1) se satisface porque los grafos institucionales involucrados tienen estructura primitiva (operadores M_R(D) con gap espectral estimado δ > 0.5); (C2) se satisface porque los sistemas institucionales muestran ρ(R*, R*^(E)) > 0 (ver Propiedad (iv) de la Definición 3.2, Parte III).
 
 B.2.4. Clasificación de los 18 casos por nivel de evidencia
 

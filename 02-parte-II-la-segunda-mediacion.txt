@@ -178,13 +178,15 @@ Fórmula.
 
 RSC(t) = {c(τ) : τ ∈ [0, t]} ⊆ E
 
-Relación entre RSC(t) e I(t). I(t) = ∫₀ᵗ c(τ)w(τ) 1_{eval(c(τ),I(τ))>θ} dτ es la integral de los colapsos aceptados. RSC(t) \ I(t) —los colapsos producidos pero no integrados— es el conjunto de determinaciones que φ₁ generó pero φ₂ rechazó. El coeficiente de asunción α de la Parte IV mide la proporción ponderada de RSC(t) que está integrada en I(t). El déficit de asunción Δ de la Parte V cuantifica la brecha entre R* y α.
+RSC_rec(t) = {c(τ) : τ ∈ [0, t], eval(c(τ), I(τ⁻)) ≤ θ} ⊆ E
+
+Relación entre RSC(t) e I(t). I(t) = ∫₀ᵗ c(τ)w(τ) 1_{eval(c(τ),I(τ⁻))>θ} dτ es la integral de los colapsos aceptados. RSC_rec(t) —los colapsos producidos pero no integrados— es el conjunto de determinaciones que φ₁ generó pero φ₂ rechazó: un colapso c(τ) pertenece a RSC_rec(t) si y solo si la evaluación eval(c(τ), I(τ⁻)) no superó el umbral θ en el instante τ. Nota: RSC(t) es una colección de vectores en E, mientras que I(t) es un único vector en E; por ello la diferencia de conjuntos RSC(t) \ I(t) no es una operación bien definida entre objetos del mismo tipo. RSC_rec(t) reemplaza esa notación con una definición directamente formulada sobre la condición de rechazo. El coeficiente de asunción α de la Parte IV mide la proporción ponderada de RSC(t) que está integrada en I(t). El déficit de asunción Δ de la Parte V cuantifica la brecha entre R* y α.
 
 Procedimiento de determinación.
 
 1. Registrar todos los colapsos producidos por φ₁ en [0, t]: RSC(t) = {c(τ₁), c(τ₂), …, c(τₙ)} para los n instantes de colapso en [0, t].
 2. Calcular I(t) según la Definición 2 (solo los colapsos aceptados por φ₂ contribuyen).
-3. La diferencia RSC(t) \ I(t) identifica los colapsos rechazados.
+3. RSC_rec(t) identifica los colapsos rechazados: los c(τ) con eval(c(τ), I(τ⁻)) ≤ θ.
 
 Ejemplo. Sea E = ℝ², T = [0, 3], colapsos en instantes τ₁=0.5, τ₂=1.5, τ₃=2.5:
 
@@ -196,9 +198,9 @@ Ejemplo. Sea E = ℝ², T = [0, 3], colapsos en instantes τ₁=0.5, τ₂=1.5, 
 
   I(3) se construye integrando solo los colapsos aceptados: c(0.5) y c(2.5) contribuyen; c(1.5) no contribuye.
 
-  Colapsos rechazados: RSC(3) \ I(3) contiene la imagen de c(1.5) = (−0.3, 0.4).
+  Colapsos rechazados: RSC_rec(3) = {c(1.5)} = {(−0.3, 0.4)}, porque eval(c(1.5), I(1.5⁻)) = 0.21 ≤ θ = 0.5.
 
-Interpretación. RSC(t) es el registro completo de lo que el sistema determinó. I(t) es lo que el sistema integró como propio. La brecha RSC(t) \ I(t) son los colapsos que ocurrieron pero no fueron asumidos por el sistema.
+Interpretación. RSC(t) es el registro completo de lo que el sistema determinó. I(t) es lo que el sistema integró como propio. RSC_rec(t) son los colapsos que ocurrieron pero no fueron asumidos por el sistema.
 
 
 Teorema 2.2. Representación de φ₂ y condiciones sobre eval
@@ -285,7 +287,7 @@ Interpretación. eval mide la compatibilidad del colapso a con el estado acumula
 | Existencia y unicidad | Teorema 2 | f ∈ L¹(T;E) + Bochner | Teorema 2 |
 | Irreversibilidad | ‖I(t₂)−I(t₁)‖_E > 0 | Desigualdad en E | Teorema 2.1 |
 | Registro de colapsos | RSC(t) = {c(τ): τ∈[0,t]} | Imagen de c en [0,t] | Definición 2.1 |
-| Colapsos rechazados | RSC(t) \ I(t) | Diferencia de conjuntos | Definición 2.1 |
+| Colapsos rechazados | RSC_rec(t) = {c(τ):τ∈[0,t], eval(c(τ),I(τ⁻))≤θ} | Subconjunto de E definido por condición sobre eval | Definición 2.1 |
 | Representación de φ₂ | I(t)+δ(a)·1_{eval>θ} | Suma en E con indicadora | Teorema 2.2 |
 | Función de evaluación | eval : A×E → ℝ | Medible; familia: similitud coseno | Teorema 2.2 |
 | Modificación | δ(a) ∈ E, ‖δ‖_E ≤ ‖a‖_E | Vector en E; condición de no-amplificación | Teorema 2.2 |

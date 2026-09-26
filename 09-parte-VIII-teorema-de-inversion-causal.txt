@@ -30,13 +30,17 @@ Def. 8.5 α descompuesto — α(i) = α_vol(i) + α_for(i) + α_imp(i): asunció
 
 Lema 8.1. Cota superior R*(E)
 
-Si S_est(E) > θ_S con θ_S ∈ (0.5, 1], entonces:
+Resultado condicional. El Lema 8.1 es válido bajo las siguientes condiciones explícitas, cuya verificación se delega al Apéndice A:
+  (C1) El operador M_R(D) es primitivo: su valor propio dominante es simple con brecha espectral δ > 0.
+  (C2) ρ(R*, R*^(E)) ≥ 0: la correlación de Pearson entre R* y el vector de responsabilidad contrafactual es no negativa.
+
+Bajo (C1) y (C2), si S_est(E) > θ_S con θ_S ∈ (0.5, 1], entonces:
 
   R*(E) ≤ (1 − S_est(E)) / (m − 1)
 
 m = |N| nodos activos · cota decreciente en S_est(E) · demostración completa en el Apéndice A.
 
-Cadena de derivación. S_est(E) alto (|ρ| → 1) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas. En términos del grafo: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. Esto significa que E aporta poca idiosincrasia a la determinación de R*: su contribución causal estructural R*(E) es pequeña en relación con el total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D) al eliminar el nodo E, derivando la cota lineal en (1 − S_est(E)).
+Cadena de derivación. S_est(E) alto con ρ(R*, R*^(E)) ≥ 0 (condición C2) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas (correlación positiva próxima a 1). En sistemas institucionales típicos del TIC, S_est(E) alto corresponde a ρ(R*, R*^(E)) → +1: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. Esto significa que E aporta poca idiosincrasia a la determinación de R*: su contribución causal estructural R*(E) es pequeña en relación con el total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D) al eliminar el nodo E, derivando la cota lineal en (1 − S_est(E)) bajo (C1) y (C2).
 
 Tabla de cotas para m = 5:
 

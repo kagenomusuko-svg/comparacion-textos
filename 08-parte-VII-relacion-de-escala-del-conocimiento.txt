@@ -43,9 +43,9 @@ Procedimiento de cálculo.
 2. Calcular ∂ℓ/∂θ. Con h_k(θ) = σ((θ−θ_k)/τ): dh_k/dθ = h_k(1−h_k)/τ.
    ∂ℓ/∂θ = (x/h_k)·(h_k(1−h_k)/τ) − ((1−x)/(1−h_k))·(h_k(1−h_k)/τ)
           = (h_k(1−h_k)/τ)·[x/h_k − (1−x)/(1−h_k)]
-          = (1/τ)·[x·(1−h_k) − (1−x)·h_k]/(h_k(1−h_k)) · h_k(1−h_k)/...
-
-   Forma compacta: ∂ℓ/∂θ = (1/τ)·(x − h_k(θ)).
+          = (1/τ)·[x·(1−h_k) − (1−x)·h_k]
+          = (1/τ)·[x − xh_k − h_k + xh_k]
+          = (1/τ)·(x − h_k(θ)).
 3. Calcular la información de Fisher: 𝒥(θ) = E[(∂ℓ/∂θ)²] = (1/τ²)·E[(x−h_k)²] = (1/τ²)·Var(X) = h_k(1−h_k)/τ², dado que Var(Ber(p)) = p(1−p).
 
 Demostración.
@@ -99,9 +99,7 @@ Demostración.
 
 Paso 1. Por Cramér-Rao: Var(Î) ≥ 1/𝒥_n = τ²/[n·h_k(1−h_k)]. ✓
 
-Paso 2. Cambio de parámetro: 𝒥_h = 𝒥_n·(dh_k/dθ)² = [n·h_k(1−h_k)/τ²]·[h_k(1−h_k)/τ]²/...
-
-Corrección del paso 2: la información de Fisher bajo reparametrización satisface 𝒥_h = 𝒥_θ·(dθ/dh_k)². Con dθ/dh_k = τ/[h_k(1−h_k)]:
+Paso 2. Cambio de parámetro. La información de Fisher bajo reparametrización θ → h_k satisface 𝒥_h = 𝒥_θ·(dθ/dh_k)² (regla de la cadena para información de Fisher). Con dθ/dh_k = τ/[h_k(1−h_k)] (inversa de dh_k/dθ = h_k(1−h_k)/τ):
 
 𝒥_h = [n·h_k(1−h_k)/τ²] · [τ/(h_k(1−h_k))]² = n·h_k(1−h_k)/τ² · τ²/[h_k(1−h_k)]² = n/[h_k(1−h_k)].
 

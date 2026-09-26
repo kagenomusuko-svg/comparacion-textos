@@ -78,7 +78,7 @@ El Defícit Δ(i) = R*(i) − α(i) de la Parte V mide la brecha total entre lo 
 
 Definición D.3. Descomposición de R* en componente estructural y neta
 
-Sea R*^(i) el eigenvector dominante del grafo de sustitución W^(i) (Definición 3.2, Parte III). La componente estructural de R*(i) es:
+Sea R*^(i) el vector calculado por eliminación gaussiana de (I−Q_D^(i))r = b_D^(i) sobre el grafo con matriz W^(i) (Parte VI, Definición 6.2), donde W^(i) es la matriz W con la fila i reemplazada por el promedio W̄_{i·} = (1/(m−1)) Σ_{j≠i} W_{j·} (Definición 3.2, Parte III). La componente estructural de R*(i) es:
 
 Componentes de R*(i)
 
@@ -86,9 +86,9 @@ R*_struct(i) = R*^(i)_i (responsabilidad que cualquier nodo en posición i tendr
 
 R*_net(i) = R*(i) − R*_struct(i) (exceso idiosincrático sobre la línea base estructural)
 
-R*_struct(i) = R*^(i)_i es la i-ésima componente del eigenvector del grafo de sustitución · R*_net(i) ≥ 0 por la cota del Lema 8.1
+R*_struct(i) = R*^(i)_i es la i-ésima componente del vector R* calculado sobre el grafo de sustitución W^(i) · R*_net(i) ≥ 0 por la cota del Lema 8.1
 
-Ausencia de doble conteo. La descomposición R* = R*_struct + R*_net no usa S_est en su definición: R*_struct se obtiene directamente del eigenvector del grafo W^(i), que es un objeto del grafo causal. S_est es una función de R* y R*^(i), no al revés. Usar R*_net = R*(i) − R*^(i)_i evita la circularidad de multiplicar R* por (1−S_est), que combina dos objetos derivados del mismo eigenvector.
+Ausencia de doble conteo. La descomposición R* = R*_struct + R*_net no usa S_est en su definición: R*_struct se obtiene directamente del vector R* calculado sobre el grafo W^(i) por eliminación gaussiana, que es un objeto del grafo causal. S_est es una función de R* y R*^(i), no al revés. Usar R*_net = R*(i) − R*^(i)_i evita la circularidad de multiplicar R* por (1−S_est), que combina dos objetos derivados del mismo vector de responsabilidad.
 
 Por el Lema 8.1 (Apéndice A): R*_net(i) = R*(i) − R*^(i)_i ≤ (1−S_est(i))/(m−1). La cota del Lema 8.1 es una cota superior de R*_net, no una definición de R*_net. La definición correcta de R*_net es la diferencia de eigenvectores; la cota del Lema 8.1 la conecta con S_est.
 
@@ -152,15 +152,17 @@ D.3. Operador contrafactual general
 
 El índice de sustituibilidad S_est(i) responde a la pregunta: ¿cuánto cambia R* si se reemplaza la fila i de W por el promedio de las demás? Esta es una instancia particular de un contrafactual más general: ¿cuánto cambia R* si se reemplaza cualquier fila de W por cualquier fila alternativa? Esta sección define ese operador y deriva sus propiedades.
 
-Definición D.5. Operador contrafactual 𝒞 (G, i, W'_i)
+Definición D.5. Operador contrafactual 𝒞 (G, i, W’_i)
 
-Sea G = (N, A, w) un grafo causal con matriz W y sea W'_i ∈ ℝ^{1×m} una fila alternativa estocástica (Σⱼ W'_{ij} = 1, W'_{ij} ≥ 0). Sea G' el grafo obtenido reemplazando la fila i de W por W'_i, con todas las demás filas iguales. El operador contrafactual es:
+Sea G = (N, A, w) un grafo causal con matriz W y sea W’_i ∈ ℝ^{1×m} una fila alternativa estocástica (Σⱼ W’_{ij} = 1, W’_{ij} ≥ 0). Sea G’ el grafo obtenido reemplazando la fila i de W por W’_i, con todas las demás filas iguales. El operador contrafactual es:
+
+Nota sobre la condición de fila estocástica. La condición Σⱼ W’_{ij} = 1, W’_{ij} ≥ 0 sobre W’_i es específica del operador contrafactual 𝒞 en esta sección: garantiza que R*(G’) sea computable por el mismo algoritmo de eliminación gaussiana de la Parte VI, que requiere probabilidades de transición bien definidas en los nodos. No es una condición sobre W en general: la Parte VI establece que W no necesita ser estocástica por filas (Definición 6, Parte VI). La condición de fila estocástica se impone solo a la fila alternativa W’_i como hipótesis del operador contrafactual.
 
 Operador contrafactual
 
-𝒞 (G, i, W'_i) = R*(G')
+𝒞 (G, i, W’_i) = R*(G’)
 
-R*(G') eigenvector dominante de (W’) ᵀ normalizado · W' coincide con W en todas las filas excepto la i-ésima
+R*(G’) = vector de responsabilidad causal calculado por eliminación gaussiana de (I−Q_D’)r = b_D’ con la fila i reemplazada por W’_i · W’ coincide con W en todas las filas excepto la i-ésima
 
 𝒞 (G, i, W'_i) devuelve el vector de responsabilidad causal que resultaría que el nodo i operara según W'_i en lugar de W_{i·}. La comparación 𝒞 (G, i, W'_i) con R*(G) cuantifica el impacto causal de ese cambio.
 
@@ -229,7 +231,7 @@ El Corolario D.3 tiene consecuencias prácticas: si se quiere reducir Δ_net(D) 
 | Trayectoria con dependencia | c(τₖ) = fₖ(I_d(k−1), v_{τₖ}, C(τₖ)) | Proceso Markov-1 en E | Definición D.2 |
 | Markov en E | Teorema D.1 | P(I_d(k)¦I_d(k−1)) = P(I_d(k)¦toda la historia) | Teorema D.1 |
 | Convergencia al caso continuo | ‖I_d^(n) − I(t)‖_E → 0 | Consistencia de la discretización | Proposición D.1 |
-| R*_struct(i) | R*^(i)_i | Componente estructural del eigenvector | Definición D.3 |
+| R*_struct(i) | R*^(i)_i | Componente estructural de R* bajo sustitución de fila | Definición D.3 |
 | R*_net(i) | R*(i) − R*^(i)_i | Exceso idiosincrático; ≤ (1−S_est)/(m−1) | Definición D.3 |
 | Δ_net(i) | R*_net(i) − α_vol(i) | Escalar en [−1,1]; sin doble conteo | Definición D.4 |
 | Identificabilidad | Proposición D.2 | Bajo (I-1)–(I-4); intervalo de incertidumbre trazable | Proposición D.2 |

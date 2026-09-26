@@ -21,9 +21,9 @@ Variables. R* = vector de responsabilidad causal (Def. 6.2). R*^(i) = vector de 
 
 Verificación.
 
-Paso 1. S_est(i) = |ρ(R*, R*^(i))| = 1 si y solo si existe una relación lineal exacta entre R* y R*^(i): R*^(i) = a·R* + b·1 para algún escalar a ≠ 0. En ese caso, la proporción relativa de R* se preserva bajo la sustitución de i: la estructura de atribución causal no cambia cuando se elimina la idiosincrasia de i.
+Paso 1. S_est(i) = |ρ(R*, R*^(i))| = 1 si y solo si existe una relación lineal exacta entre R* y R*^(i): R*^(i) = a·R* + b·1 para algún escalar a ≠ 0. Dos sub-casos: (a) a > 0 ↔ ρ = +1: la proporción relativa de R* se preserva bajo la sustitución de i, y la estructura de atribución causal no cambia; (b) a < 0 ↔ ρ = −1: las proporciones relativas se invierten. Solo cuando a > 0 (ρ → +1) es válido concluir que eliminar la idiosincrasia de i no altera la estructura de responsabilidad. El Lema 8.1 se aplica bajo la condición ρ ≥ 0 (ver Apéndice A).
 
-Paso 2. S_est(i) → 1 implica que las proporciones relativas de R*^(i) se aproximan progresivamente a las de R*. El nodo i aporta cada vez menos información causal idiosincrática sobre la distribución de responsabilidad en G.
+Paso 2. S_est(i) → 1 (con ρ > 0) implica que las proporciones relativas de R*^(i) se aproximan progresivamente a las de R*. El nodo i aporta cada vez menos información causal idiosincrática sobre la distribución de responsabilidad en G.
 
 Paso 3. Coherencia con S_op (Def. 3.1). S_op alto indica que el contexto c puede ser reemplazado por cualquier otro elemento de A sin alterar el colapso: la idiosincrasia operacional del nodo es baja. S_est alto indica que la estructura causal de R* no cambia al sustituir i: la idiosincrasia causal del nodo es baja. Los dos índices miden idiosincrasia en dimensiones complementarias (operacional y causal) y son coherentes: mayor sustituibilidad implica menor idiosincrasia en ambas dimensiones. ✓
 
