@@ -322,6 +322,8 @@ Sea G un grafo con Q_D ≥ 0, b_D ≥ 0, ρ(Q_D) < 1, y todo nodo de A_D con al 
 
 (iv) λ₁ = 1 es el eigenvalor dominante de M_R(D). Perron-Frobenius se aplica a M_R(D), no a W.
 
+Nota sobre M_R(D). La definición primaria de R* es la solución del sistema lineal del ítem (i): r_D = (I − Q_D)⁻¹ b_D, R*(D) = r_D / Z_D. El operador M_R(D) es auxiliar y derivado: se construye a partir de r_D ya calculado (η_D = 1/Z_D depende de Z_D = 1ᵀr_D). El ítem (iii) establece la equivalencia entre las dos representaciones bajo las condiciones del enunciado (Q_D ≥ 0, b_D ≥ 0, ρ(Q_D) < 1). Esta equivalencia no convierte a M_R(D) en la definición de R*; el algoritmo computacional sigue siendo la eliminación gaussiana de (I − Q_D)r = b_D. La representación vía eigenvector de M_R(D) es válida como resultado del Teorema 6 y útil para aplicaciones analíticas (como el Apéndice A), pero bajo las condiciones exactas de este teorema, no como sustituto general.
+
 Demostración.
 
 Paso 1 — Existencia y unicidad de r_D. Con ρ(Q_D) < 1, (I − Q_D) es invertible (Teorema de Neumann). La serie Σ Q_D^k converge. Luego r_D = (I − Q_D)⁻¹ b_D existe y es único.

@@ -1,20 +1,28 @@
 Apéndice A
 
-Demostración completa del Lema 8.1
+Demostración condicional del Lema 8.1 — hipótesis explícitas
 
 
 Introducción
 
-El Lema 8.1 (Parte VIII) establece la cota R*(E) ≤ (1 − S_est(E))/(m − 1) para el componente E del vector de responsabilidad causal bajo la condición S_est(E) ≥ θ_S. Esta cota es el ingrediente técnico central del Teorema de Inversión Causal (Parte VIII). La demostración tiene cuatro pasos encadenados.
+El Lema 8.1 (Parte VIII) establece la cota R*(E) ≤ (1 − S_est(E))/(m − 1) para el componente E del vector de responsabilidad causal bajo la condición S_est(E) ≥ θ_S. Esta cota es el ingrediente técnico central del Teorema de Inversión Causal (Parte VIII). La demostración es condicional: los pasos A.3 y A.4 dependen de hipótesis que no se derivan completamente en este apéndice. Las hipótesis requeridas son:
 
-S_est(E) = |ρ(R*, R*^(E))| es la correlación de Pearson entre R* y R*^(E) (Definición 3.2, Parte III). El primer paso conecta S_est con una cota sobre ‖R* − R*^(E)‖₂. El segundo paso identifica R*^(E)_E ≈ 1/m. El tercero aplica el Teorema de Davis-Kahan para acotar la perturbación del eigenvector. El cuarto combina los tres para obtener la cota final.
+(H1) La transformación W → M_R(D) preserva la norma de la perturbación: ‖ΔM‖₂ = ‖E_mat‖₂.
+(H2) La norma de la perturbación de fila está acotada por S_est: ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m).
+(H3) El término 1/m es despreciable respecto a (1 − S_est(E))/(m − 1) para los valores del sistema (no válida en general: para m = 3, 1/m = 0.333).
+
+Las condiciones de validez son:
+(C1) M_R(D) es primitivo con gap espectral δ = 1 − |λ₂(M_R(D))| > 0.
+(C2) ρ(R*, R*^(E)) ≥ 0.
+
+S_est(E) = |ρ(R*, R*^(E))| es la correlación de Pearson entre R* y R*^(E) (Definición 3.2, Parte III). El primer paso (A.1) conecta S_est con la interpretación geométrica de correlación. El segundo paso (A.2, probado bajo C2) acota ‖R* − R*^(E)‖₂ en términos de S_est. El tercero (A.3, condicional a H1) aplica Davis-Kahan. El cuarto (A.4, condicional a H1, H2, H3) combina los anteriores para obtener la cota.
 
 [TABLA]
 | Paso | Herramienta | Resultado | Referencia |
 | A.1 | Definición de S_est — correlación de Pearson | S_est = |ρ(R*, R*^(E))|. S_est alto ⟹ R* y R*^(E) tienen forma proporcional. | Definición 3.2, Parte III |
 | A.2 | Cota de Pearson a L2 | ‖R* − R*^(E)‖₂ ≤ σ(R*)·√(2(1 − S_est)) donde σ(R*) = ‖R* − (1/m)·1‖₂. Correlación alta ⟹ L2 pequeño (en escala de σ). | Lema A.2 (este apéndice) |
 | A.3 | Teorema de Davis-Kahan | ‖R* − R*^(E)‖₂ ≤ ‖E_mat‖₂/δ. La perturbación de la fila E controla la perturbación del eigenvector principal. | Teorema A.3 (este apéndice) |
-| A.4 | Combinación A.1–A.3 + R*^(E)_E ≈ 1/m | R*(E) ≤ (1 − S_est(E))/(m − 1) + ε(δ, m). ε < 0.01 para m ≤ 10 y δ > 0.5. | Teorema A.4 (este apéndice) |
+| A.4 | Combinación A.1–A.3 + R*^(E)_E ≈ 1/m | Bajo H1, H2, C1, C2: R*(E) ≤ 1/m + (m/δ)·(1−S_est(E))·√(2/m). La simplificación a (1−S_est(E))/(m−1) requiere además H3, que no es válida en general. | Teorema A.4 (este apéndice) |
 [/TABLA]
 
 
@@ -79,7 +87,11 @@ Ejemplo numérico. S_est = 0.85, m = 5, σ = ‖R* − R̄‖₂ estimado en 0.1
 
 A.3. Teorema A.3 — Davis-Kahan: perturbación de fila y eigenvector
 
-Puente con la Parte VI. R* se calcula mediante eliminación gaussiana del sistema (I−Q_D)r = b_D (Definición 6.2, Parte VI), donde Q_D y b_D se construyen a partir de W. Este vector r normalizado es idéntico al eigenvector dominante izquierdo de M_R(D)^T, donde M_R(D) = Q_D + η_D b_D 1^T es el operador de responsabilidad (Parte VI). La equivalencia entre ambas definiciones se sigue del hecho que la solución del sistema lineal (I−Q_D)r = b_D y el eigenvector de M_R(D)^T asociado a λ₁ = 1 satisfacen la misma ecuación después de la normalización. El Teorema de Davis-Kahan se aplica a M_R(D), no directamente a W. La condición de primitividad (C1) garantiza que el gap espectral δ = 1 − |λ₂(M_R(D))| sea estrictamente positivo.
+Puente con la Parte VI. R* se calcula mediante eliminación gaussiana del sistema (I−Q_D)r = b_D (Definición 6.2, Parte VI). Esta es la definición primaria de R*; M_R(D) es un operador auxiliar derivado. La equivalencia entre la solución del sistema lineal y el eigenvector dominante de M_R(D) está demostrada algebraicamente en el Paso 3 del Teorema 6 (Parte VI): M_R(D) R* = Q_D R* + η_D b_D (1ᵀR*) = (Q_D r_D + b_D)/Z_D = r_D/Z_D = R*, bajo las condiciones Q_D ≥ 0, b_D ≥ 0, ρ(Q_D) < 1. El Teorema de Davis-Kahan se aplica a M_R(D), no directamente a W. La condición de primitividad (C1) garantiza que el gap espectral δ = 1 − |λ₂(M_R(D))| sea estrictamente positivo.
+
+Para conectar la perturbación de la fila E de W con la perturbación del eigenvector de M_R(D), se requiere la siguiente hipótesis no demostrada:
+
+(H1) ‖ΔM‖₂ = ‖E_mat‖₂. La norma espectral de la perturbación de M_R(D) (producida al sustituir la fila E de W por su promedio) es igual a la norma espectral de la perturbación de la fila E. Esta igualdad requeriría demostrar que la transformación W → M_R(D) preserva la norma espectral de la perturbación, lo que depende de la estructura de η_D y b_D. Sin H1, el Teorema A.3 no conecta la perturbación de W con la del eigenvector de M_R(D).
 
 Sea W la matriz de pesos del grafo G (no necesariamente estocástica por filas; ver Definición 6, Parte VI). Sea M_R(D) el operador de responsabilidad primitivo con eigenvalor dominante λ₁ = 1 y gap espectral δ = 1 − |λ₂| > 0 (condición C1). Sea W^(E) la matriz obtenida sustituyendo la fila E de W por el promedio W̄_E = (1/(m−1)) Σ_{j≠E} W_{j·}. Sea E_mat = W^(E) − W la perturbación, que es no nula solo en la fila E.
 
@@ -110,11 +122,13 @@ Condiciones explícitas.
   (C1) M_R(D) es primitivo: su eigenvalor dominante es simple con gap espectral δ = 1 − |λ₂(M_R(D))| > 0. Esta condición garantiza que el Teorema de Davis-Kahan (A.3) sea aplicable con una cota finita.
   (C2) ρ(R*, R*^(E)) ≥ 0: la correlación de Pearson entre R* y R*^(E) es no negativa. Esta condición garantiza que el Lema A.2 sea aplicable; sin ella, la distancia ‖R* − R*^(E)‖₂ puede ser mayor, no menor, a medida que S_est(E) crece.
 
-Teorema A.4. Bajo las condiciones (C1) y (C2), sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
+Teorema A.4 (condicional). Bajo las condiciones (C1), (C2) y las hipótesis (H1), (H2), (H3), sea S_est(E) = |ρ(R*, R*^(E))| y sea R*^(E)_E ≈ 1/m (ver nota A.4.1). Entonces:
 
-  R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m)
+  R*(E) ≤ (1 − S_est(E)) / (m − 1)
 
-con ε(δ, m) < 0.01 para m ≤ 10 y δ > 0.5.
+Sin H3, la cota demostrada bajo H1, H2, C1 y C2 es:
+
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
 
 Demostración del Teorema A.4.
 
@@ -128,21 +142,31 @@ Paso 2. Cota del segundo término.
 
 Por el Teorema A.3: ‖R* − R*^(E)‖₁ ≤ (m/δ)·‖E_mat‖₂.
 
-Paso 3. Conexión de ‖E_mat‖₂ con S_est(E). La norma ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ mide la desviación de la fila E respecto al promedio. Esta desviación produce la diferencia entre R* y R*^(E). Por la definición del Lema A.2 y usando que la desviación de fila está acotada por √2 · σ / m (cuando la desviación se distribuye uniformemente en los m−1 componentes activos de la fila):
+Paso 3. Conexión de ‖E_mat‖₂ con S_est(E). Para conectar la norma de la perturbación ‖E_mat‖₂ = ‖W_{E·} − W̄_{E·}‖₂ con la correlación S_est(E), se requiere la siguiente hipótesis no demostrada:
+
+(H2) ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m). Esta desigualdad conecta la desviación en el espacio de filas de W con S_est(E) en el espacio del eigenvector de M_R(D). No se deriva aquí: su demostración requeriría caracterizar cómo la desviación de la fila E de W se propaga a la correlación entre R* y R*^(E), lo que involucra la estructura de toda la matriz W, no solo la fila E.
+
+Bajo la hipótesis H2:
 
   ‖E_mat‖₂ ≤ (1 − S_est(E)) · √(2/m)
 
-Paso 4. Combinación. Con R*^(E)_E ≈ 1/m (nota A.4.1):
+Paso 4. Combinación. Con R*^(E)_E ≈ 1/m (nota A.4.1) y bajo H1 y H2:
 
-  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m) · (1/(m−1))^{1/2}
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m)
 
-En el régimen estándar (δ ≈ 1, m en [3,10], desviación uniforme), el término principal es:
+Este es el resultado demostrado bajo H1, H2, C1 y C2. El término 1/m no es despreciable: para m = 3 y δ = 1, R*(E) ≤ 0.333 + (1 − S_est(E)) · 0.816.
 
-  R*(E) ≤ 1/m + (1 − S_est(E)) / (m − 1) · C(δ, m)
+La simplificación del Lema 8.1, R*(E) ≤ (1 − S_est(E))/(m − 1), requiere la hipótesis adicional:
 
-con C(δ, m) < 1 para δ > 0.5 y m ≤ 10. El término ε(δ, m) absorbe 1/m y las correcciones de C:
+(H3) El término 1/m es despreciable respecto a (m/δ)·(1 − S_est(E))·√(2/m) en el rango de parámetros considerado. Esta hipótesis no es válida en general: para m = 3 y cualquier valor de S_est, 1/m = 0.333 domina o es comparable al segundo término.
 
-  R*(E) ≤ (1 − S_est(E)) / (m − 1) + ε(δ, m),   ε(δ, m) < 0.01. ∎
+El resultado condicional completo del Lema 8.1 bajo H1, H2, H3, C1 y C2 es:
+
+  R*(E) ≤ (1 − S_est(E)) / (m − 1)   [condicional a H1, H2, H3, C1, C2]
+
+Sin H3, la cota demostrada (bajo H1, H2, C1, C2) es:
+
+  R*(E) ≤ 1/m + (m/δ) · (1 − S_est(E)) · √(2/m). ∎
 
 Nota A.4.1 — R*^(E)_E ≈ 1/m. Cuando la fila E se reemplaza por el promedio W̄_{E·}, la fila E del grafo de sustitución es la media aritmética de las m−1 filas restantes. Si W es aproximadamente uniforme en promedio (cada nodo tiene peso típico ≈ 1/m en la distribución estacionaria), entonces R*^(E)_E ≈ 1/m. La corrección |R*^(E)_E − 1/m| está acotada por el máximo desequilibrio del grafo; para grafos donde el desequilibrio es ≤ 0.10 en todos los nodos, |R*^(E)_E − 1/m| ≤ 0.10·(1/m).
 

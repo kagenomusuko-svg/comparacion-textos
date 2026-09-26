@@ -38,7 +38,7 @@ Bajo (C1) y (C2), si S_est(E) > θ_S con θ_S ∈ (0.5, 1], entonces:
 
   R*(E) ≤ (1 − S_est(E)) / (m − 1)
 
-m = |N| nodos activos · cota decreciente en S_est(E) · demostración completa en el Apéndice A.
+m = |N| nodos activos · cota decreciente en S_est(E) · demostración condicional (bajo H1, H2, H3, C1, C2) en el Apéndice A.
 
 Cadena de derivación. S_est(E) alto con ρ(R*, R*^(E)) ≥ 0 (condición C2) implica que R* y R*^(E) tienen la misma estructura de proporciones relativas (correlación positiva próxima a 1). En sistemas institucionales típicos del TIC, S_est(E) alto corresponde a ρ(R*, R*^(E)) → +1: la eliminación del nodo E no altera la forma de la distribución de responsabilidad causal. Esto significa que E aporta poca idiosincrasia a la determinación de R*: su contribución causal estructural R*(E) es pequeña en relación con el total. El Apéndice A formaliza esta intuición mediante el análisis de perturbación del operador M_R(D) al eliminar el nodo E, derivando la cota lineal en (1 − S_est(E)) bajo (C1) y (C2).
 

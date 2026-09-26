@@ -90,7 +90,7 @@ R*_struct(i) = R*^(i)_i es la i-ésima componente del vector R* calculado sobre 
 
 Ausencia de doble conteo. La descomposición R* = R*_struct + R*_net no usa S_est en su definición: R*_struct se obtiene directamente del vector R* calculado sobre el grafo W^(i) por eliminación gaussiana, que es un objeto del grafo causal. S_est es una función de R* y R*^(i), no al revés. Usar R*_net = R*(i) − R*^(i)_i evita la circularidad de multiplicar R* por (1−S_est), que combina dos objetos derivados del mismo vector de responsabilidad.
 
-Por el Lema 8.1 (Apéndice A): R*_net(i) = R*(i) − R*^(i)_i ≤ (1−S_est(i))/(m−1). La cota del Lema 8.1 es una cota superior de R*_net, no una definición de R*_net. La definición correcta de R*_net es la diferencia de eigenvectores; la cota del Lema 8.1 la conecta con S_est.
+Por el Lema 8.1 (Apéndice A): R*_net(i) = R*(i) − R*^(i)_i ≤ (1−S_est(i))/(m−1). La cota del Lema 8.1 es una cota superior de R*_net, no una definición de R*_net. La definición correcta de R*_net es R*_net(i) = R*(i) − R*^(i)_i, donde ambos vectores se calculan mediante eliminación gaussiana sobre el sistema correspondiente (R* de (I−Q_D)r = b_D y R*^(i) de (I−Q_D^(i))r = b_D^(i)); la cota del Lema 8.1 la conecta con S_est.
 
 Definición D.4. Función de imputación neta Δ_net
 
